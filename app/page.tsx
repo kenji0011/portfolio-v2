@@ -82,6 +82,16 @@ const projects = [
     github: "#",
     live: "#",
   },
+  {
+    title: "Kasangkap-Hunt Chefbot",
+    description:
+      "A chatbot that helps users find Philippine recipes and ingredients for their meals.",
+    tags: ["Chatbot", "Machine Learning", "UI/UX"],
+    icon: <Terminal size={24} />,
+    image: null,
+    github: "https://github.com/kenji0011/Chefbot_KasangKap-Hunt.git",
+    live: "#",
+  },
 ];
 
 type Certification = {
