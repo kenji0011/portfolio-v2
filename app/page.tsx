@@ -58,7 +58,7 @@ const projects = [
       "My 1st project in my college years. I used C# and Windows Forms to create a simple inventory management system for a small business. The system allows the user to add, edit, delete, and search for products in the inventory. ",
     tags: ["C#", "Windows Forms", "Inventory Management"],
     icon: <Cpu size={24} />,
-    image: "/shueyschips.jpg",
+    image: "/images/shueyschips.jpg",
     github: "#",
     live: "#",
   },
@@ -68,7 +68,7 @@ const projects = [
       "GetGoods is a full-featured e-commerce website application that allows users to browse, add to cart, and purchase goods.",
     tags: ["Web Application", "E-Commerce", "UI/UX"],
     icon: <Brain size={24} />,
-    image: "/getgoodsapp.jpg",
+    image: "/images/getgoodsapp.jpg",
     github: "https://github.com/kenji0011/Projects.git",
     live: "#",
   },
@@ -78,7 +78,7 @@ const projects = [
       "An alternate design variant of the GetGoods application featuring a refined purple/dark theme with updated UI components and improved user experience flow.",
     tags: ["Mobile", "E-Commerce", "UI/UX"],
     icon: <Terminal size={24} />,
-    image: "/getgoodsapp.jpg",
+    image: "/images/getgoodsapp.jpg",
     github: "#",
     live: "#",
   },
@@ -184,12 +184,34 @@ const certifications: Certification[] = [
 export default function Portfolio() {
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setSending(true);
+    setSendError(false);
+    try {
+      const res = await fetch("https://formspree.io/f/mlgwvglr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(formState),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setFormState({ name: "", email: "", message: "" });
+        setTimeout(() => setSubmitted(false), 4000);
+      } else {
+        setSendError(true);
+        setTimeout(() => setSendError(false), 4000);
+      }
+    } catch {
+      setSendError(true);
+      setTimeout(() => setSendError(false), 4000);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -325,7 +347,7 @@ export default function Portfolio() {
                   <span className="text-xs font-mono opacity-50">photo coming soon</span>
                 </div>
                 {/* Once you have the photo: uncomment below and remove the div above */}
-                {<Image src="/pogiko.jpg" alt="Kean Salvahan" fill className="object-cover" />}
+                {<Image src="/images/pogiko.jpg" alt="Kean Salvahan" fill className="object-cover" />}
               </motion.div>
             </motion.div>
           </div>
@@ -721,12 +743,25 @@ export default function Portfolio() {
                 <motion.div variants={fadeUp}>
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-500/20"
+                    disabled={sending}
+                    whileHover={sending ? {} : { scale: 1.03 }}
+                    whileTap={sending ? {} : { scale: 0.97 }}
+                    className={`w-full flex items-center justify-center gap-2 px-6 py-3.5 font-semibold rounded-xl transition-all shadow-lg ${submitted
+                        ? "bg-emerald-500/80 text-white shadow-emerald-500/20"
+                        : sendError
+                          ? "bg-red-500/80 text-white shadow-red-500/20"
+                          : "bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white shadow-cyan-500/20"
+                      } disabled:opacity-70 disabled:cursor-not-allowed`}
                   >
-                    {submitted ? (
+                    {sending ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+                        Sending…
+                      </span>
+                    ) : submitted ? (
                       <span className="flex items-center gap-2">✓ Message Sent!</span>
+                    ) : sendError ? (
+                      <span className="flex items-center gap-2">✗ Failed — try again</span>
                     ) : (
                       <>
                         <Send size={16} />
