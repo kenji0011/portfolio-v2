@@ -795,7 +795,7 @@ export default function Portfolio() {
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
             variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-2"
           >
             {certifications.map((cert) => {
               const isBadge = cert.category === "Badge";
@@ -805,33 +805,32 @@ export default function Portfolio() {
                   variants={fadeUp}
                   whileHover={{ scale: 1.02 }}
                   onClick={() => setSelectedCert(cert)}
-                  className={`group flex items-center gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/5 transition-all cursor-pointer hover:bg-white/[0.04] ${isBadge ? "hover:border-violet-500/30" : "hover:border-cyan-500/30"
+                  className={`group flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 transition-all cursor-pointer hover:bg-white/[0.04] ${isBadge ? "hover:border-violet-500/30" : "hover:border-cyan-500/30"
                     }`}
                 >
                   {/* Icon Box */}
                   <div
-                    className={`shrink-0 p-3 rounded-xl transition-colors ${isBadge
+                    className={`shrink-0 p-2 rounded-lg transition-colors ${isBadge
                       ? "bg-violet-500/10 text-violet-400 group-hover:bg-violet-500/20"
                       : "bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20"
                       }`}
                   >
-                    {/* Keep original icon size but force it into the smaller box visually using scale if needed, or just let lucide handle it since they are size={28} */}
-                    <div className="scale-90">{cert.icon}</div>
+                    <div className="scale-75">{cert.icon}</div>
                   </div>
 
                   {/* Content */}
-                  <div className="flex flex-col flex-1 overflow-hidden">
-                    <p className="font-semibold text-slate-200 text-sm truncate">{cert.title}</p>
-                    <p className="text-slate-400 text-xs mt-0.5 truncate">{cert.issuer}</p>
-                    <div className="flex items-center justify-between mt-1.5">
-                      <p className="text-slate-500 text-[10px]">{cert.year}</p>
+                  <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+                    <p className="font-semibold text-slate-200 text-xs truncate">{cert.title}</p>
+                    <p className="text-slate-400 text-[10px] mt-0.5 truncate">{cert.issuer}</p>
+                    <div className="flex items-center justify-between mt-1 gap-2">
+                      <p className="text-slate-500 text-[9px]">{cert.year}</p>
                       <span
-                        className={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${isBadge
+                        className={`shrink-0 text-[8px] font-mono px-1.5 py-px rounded-full border ${isBadge
                           ? "text-violet-400 bg-violet-500/10 border-violet-500/20"
                           : "text-cyan-400 bg-cyan-500/10 border-cyan-500/20"
                           }`}
                       >
-                        {cert.category}
+                        {isBadge ? "Badge" : "Cert"}
                       </span>
                     </div>
                   </div>
