@@ -35,10 +35,7 @@ body {
   display: none;
 }
 
-/* ── Performance-optimised CSS animations ─────────────────────────────
-   These run on the GPU compositor thread (transform/opacity only) with
-   zero JavaScript overhead, replacing Framer Motion repeat:Infinity      */
-
+/* ── Performance-optimised CSS animations ───────────────────────────── */
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);
@@ -67,4 +64,142 @@ body {
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+}
+
+/* ── Theme tokens ────────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg-page: #050816;
+  --bg-nav: rgba(5, 8, 22, 0.70);
+  --bg-modal: #0a0f1e;
+  --text-base: #e2e8f0;
+  --text-muted: #94a3b8;
+}
+
+[data-theme="light"] {
+  --bg-page: #eef2ff;
+  --bg-nav: rgba(238, 242, 255, 0.85);
+  --bg-modal: #ffffff;
+  --text-base: #1e293b;
+  --text-muted: #475569;
+}
+
+/* ── Light-mode element-level overrides ──────────────────────────────
+   Tailwind v4 compiles classes into internal names so we CANNOT match
+   them by class. Instead we force colour via element-level selectors
+   and the cascade.                                                     */
+
+/* Headings → very dark */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4 {
+  color: #0f172a !important;
+}
+
+/* Body text → dark gray */
+[data-theme="light"] p {
+  color: #334155 !important;
+}
+
+/* Spans & inline text → medium gray (pill labels, tags, etc.) */
+[data-theme="light"] span {
+  color: #475569 !important;
+}
+
+/* Keep gradient text (KS., AI/ML) — they use bg-clip-text so color must be transparent */
+[data-theme="light"] .bg-clip-text {
+  color: transparent !important;
+}
+
+/* Keep white text on gradient buttons */
+[data-theme="light"] .from-cyan-500 {
+  color: #fff !important;
+}
+
+/* Links & nav */
+[data-theme="light"] a {
+  color: #334155 !important;
+}
+
+[data-theme="light"] a:hover {
+  color: #0891b2 !important;
+}
+
+/* Buttons */
+[data-theme="light"] button {
+  color: #475569;
+}
+
+/* Cards — give them a visible white bg + subtle border */
+[data-theme="light"] [class*="bg-white"] {
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Borders that use white/ opacity → flip to black/ opacity */
+[data-theme="light"] [class*="border-white"] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Slate-colored borders */
+[data-theme="light"] [class*="border-slate"] {
+  border-color: rgba(0, 0, 0, 0.10) !important;
+}
+
+/* Slate backgrounds → light */
+[data-theme="light"] [class*="bg-slate-8"],
+[data-theme="light"] [class*="bg-slate-9"] {
+  background-color: #e2e8f0 !important;
+}
+
+/* Backdrop blur nav → light bg */
+[data-theme="light"] nav {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Orbs → reduce intensity in light mode */
+[data-theme="light"] .blur-3xl {
+  opacity: 0.05 !important;
+}
+
+/* Form inputs */
+[data-theme="light"] input,
+[data-theme="light"] textarea {
+  background-color: rgba(255, 255, 255, 0.80) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #1e293b !important;
+}
+
+/* Icon colors in cert/badge cards — keep cyan/violet */
+[data-theme="light"] [class*="text-cyan-4"] {
+  color: #0891b2 !important;
+}
+
+[data-theme="light"] [class*="text-violet-4"] {
+  color: #7c3aed !important;
+}
+
+/* Cert/badge backgrounds — keep but bump opacity */
+[data-theme="light"] [class*="bg-cyan-500"] {
+  background-color: rgba(8, 145, 178, 0.08) !important;
+}
+
+[data-theme="light"] [class*="bg-violet-500"] {
+  background-color: rgba(124, 58, 237, 0.08) !important;
+}
+
+/* Gradient divider lines */
+[data-theme="light"] [class*="from-slate-7"] {
+  opacity: 0.25;
+}
+
+/* Tech icon labels */
+[data-theme="light"] [class*="font-mono"][class*="text-center"] {
+  color: #475569 !important;
+}
+
+/* Smooth transitions on root container */
+[data-theme] {
+  transition: background-color 0.35s ease, color 0.35s ease;
 }

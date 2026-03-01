@@ -18,8 +18,10 @@ import {
   MessageSquare,
   Brain,
   Cpu,
+  Sun,
+  Moon,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // ── Animation variants ──────────────────────────────────────────────────
 const fadeUp: Variants = {
@@ -290,6 +292,21 @@ export default function Portfolio() {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [certPage, setCertPage] = useState(0);
   const CERTS_PER_PAGE = 12;
+  const [isDark, setIsDark] = useState(true);
+
+  // Persist theme preference
+  useEffect(() => {
+    const saved = localStorage.getItem("portfolio-theme");
+    if (saved) setIsDark(saved === "dark");
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDark((prev) => {
+      const next = !prev;
+      localStorage.setItem("portfolio-theme", next ? "dark" : "light");
+      return next;
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -318,7 +335,11 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#050816] text-slate-200 font-sans selection:bg-cyan-500/30 overflow-x-hidden">
+    <div
+      data-theme={isDark ? "dark" : "light"}
+      style={{ background: "var(--bg-page)", color: "var(--text-base)" }}
+      className="relative min-h-screen font-sans selection:bg-cyan-500/30 overflow-x-hidden"
+    >
 
       {/* ── Animated Background ─────────────────────────────────────── */}
       <div className="fixed inset-0 z-0 pointer-events-none">
@@ -340,7 +361,10 @@ export default function Portfolio() {
       </div>
 
       {/* ── Navigation ──────────────────────────────────────────────── */}
-      <nav className="fixed top-0 w-full z-50 border-b border-white/5 backdrop-blur-xl bg-[#050816]/70">
+      <nav
+        style={{ background: "var(--bg-nav)" }}
+        className="fixed top-0 w-full z-50 border-b border-white/5 backdrop-blur-xl"
+      >
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <motion.span
             initial={{ opacity: 0, x: -20 }}
@@ -352,18 +376,52 @@ export default function Portfolio() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex gap-8 text-sm font-medium text-slate-400"
+            className="flex items-center gap-6 text-sm font-medium text-slate-400"
           >
             {["about", "projects", "certifications", "contact"].map((link) => (
               <motion.a
                 key={link}
                 href={`#${link}`}
-                className="capitalize hover:text-cyan-400 transition-colors"
+                className="capitalize hover:text-cyan-400 transition-colors hidden sm:block"
                 whileHover={{ y: -2 }}
               >
                 {link}
               </motion.a>
             ))}
+            {/* Theme toggle */}
+            <motion.button
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.12 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Toggle theme"
+              className="relative p-2 rounded-xl border border-white/10 hover:border-cyan-400/40 text-slate-400 hover:text-cyan-400 transition-colors overflow-hidden"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {isDark ? (
+                  <motion.span
+                    key="sun"
+                    initial={{ rotate: -90, opacity: 0, y: 8 }}
+                    animate={{ rotate: 0, opacity: 1, y: 0 }}
+                    exit={{ rotate: 90, opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex"
+                  >
+                    <Sun size={15} />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="moon"
+                    initial={{ rotate: 90, opacity: 0, y: 8 }}
+                    animate={{ rotate: 0, opacity: 1, y: 0 }}
+                    exit={{ rotate: -90, opacity: 0, y: -8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex"
+                  >
+                    <Moon size={15} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
           </motion.div>
         </div>
       </nav>
@@ -665,7 +723,8 @@ export default function Portfolio() {
                   exit={{ opacity: 0, y: 50, scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 280, damping: 30 }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto overflow-x-hidden no-scrollbar rounded-3xl border border-white/10 bg-[#0a0f1e] shadow-2xl shadow-cyan-500/10"
+                  style={{ background: "var(--bg-modal)" }}
+                  className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto overflow-x-hidden no-scrollbar rounded-3xl border border-white/10 shadow-2xl shadow-cyan-500/10"
                 >
                   {/* Ambient glows */}
                   <div className="absolute -top-32 -right-32 w-80 h-80 bg-violet-600/20 rounded-full blur-3xl pointer-events-none" />
