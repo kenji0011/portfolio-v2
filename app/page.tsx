@@ -207,24 +207,24 @@ const certifications: Certification[] = [
     category: "Certification",
   },
   {
-    title: "Your Certificate 8",
-    issuer: "Issuer Name",
-    icon: <BadgeCheck size={28} />,
-    year: "2024",
-    description: "Short description of what this certification covers.",
-    image: null,
-    credential: "#",
-    category: "Certification",
+    title: "Professional Machine Learning Engineer Guide Study",
+    issuer: "Google",
+    icon: <Star size={28} />,
+    year: "2026",
+    description: "",
+    image: "/images/badge1.jpg",
+    credential: "https://www.skills.google/public_profiles/b1f37c59-8b3b-49db-8249-d692905fa6d9/badges/20606343",
+    category: "Badge",
   },
   {
-    title: "Your Certificate 9",
-    issuer: "Issuer Name",
-    icon: <BadgeCheck size={28} />,
-    year: "2024",
-    description: "Short description of what this certification covers.",
-    image: null,
-    credential: "#",
-    category: "Certification",
+    title: "Introduction to Generative AI",
+    issuer: "Google",
+    icon: <Star size={28} />,
+    year: "2026",
+    description: "An online course on basic understanding of the impact AI on the technological landscape",
+    image: "/images/badge2.jpg",
+    credential: "https://www.skills.google/public_profiles/b1f37c59-8b3b-49db-8249-d692905fa6d9/badges/22684019",
+    category: "Badge",
   },
 ];
 
@@ -899,7 +899,7 @@ export default function Portfolio() {
                       <h4 className="text-xl font-bold text-slate-100">{selectedCert.title}</h4>
                     </div>
                     <p className="text-slate-400 text-sm leading-relaxed">{selectedCert.description}</p>
-                    {selectedCert.credential !== "#" && (
+                    {selectedCert.credential !== "#" && selectedCert.category === "Badge" && (
                       <a
                         href={selectedCert.credential}
                         target="_blank"
