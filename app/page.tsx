@@ -34,18 +34,18 @@ const fadeIn: Variants = {
 
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.07 } },
 };
 
 const cardHover = { y: -8, scale: 1.02 };
 
 // ── Floating orb component ──────────────────────────────────────────────
-function Orb({ className, delay = 0 }: { className: string; delay?: number }) {
+function Orb({ className }: { className: string; delay?: number }) {
+  // Disabled Framer Motion infinite animation for performance.
+  // Constant repainting of blur-3xl layers causes severe scroll lag on mobile.
   return (
-    <motion.div
-      className={`absolute rounded-full blur-3xl opacity-20 pointer-events-none ${className}`}
-      animate={{ scale: [1, 1.15, 1], opacity: [0.15, 0.25, 0.15] }}
-      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay }}
+    <div
+      className={`absolute rounded-full blur-3xl opacity-[0.15] pointer-events-none ${className}`}
     />
   );
 }
@@ -380,17 +380,10 @@ export default function Portfolio() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
               className="flex-shrink-0 relative"
             >
-              {/* Glow ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 via-violet-500 to-transparent p-[2px] blur-sm scale-105"
-              />
-              <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl shadow-cyan-500/20"
-              >
+              {/* Glow ring — CSS-only spin for GPU-compositor efficiency */}
+              <div className="animate-spin-slow absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 via-violet-500 to-transparent p-[2px] blur-sm scale-105" />
+              {/* Profile photo — CSS-only float for GPU-compositor efficiency */}
+              <div className="animate-float relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl shadow-cyan-500/20">
                 {/* Photo placeholder — replace src with your actual image path when ready */}
                 <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 gap-2">
                   <User size={64} className="opacity-30" />
@@ -398,7 +391,7 @@ export default function Portfolio() {
                 </div>
                 {/* Once you have the photo: uncomment below and remove the div above */}
                 {<Image src="/images/pogiko.jpg" alt="Kean Salvahan" fill className="object-cover" />}
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -501,10 +494,10 @@ export default function Portfolio() {
                   transition={{ duration: row.speed, repeat: Infinity, ease: "linear" }}
                 >
                   {[...row.items, ...row.items].map((tech, i) => (
-                    <motion.div
+                    /* CSS-only hover — removes 48 Framer listener registrations from a moving container */
+                    <div
                       key={`${tech.name}-${i}`}
-                      whileHover={{ scale: 1.25 }}
-                      className="group flex flex-col items-center gap-2 cursor-default shrink-0 w-20 py-3 px-2"
+                      className="group flex flex-col items-center gap-2 cursor-default shrink-0 w-20 py-3 px-2 hover:scale-125 transition-transform duration-200"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -512,13 +505,14 @@ export default function Portfolio() {
                         alt={tech.name}
                         width={44}
                         height={44}
+                        loading="lazy"
                         className="drop-shadow-[0_0_8px_rgba(0,0,0,0.6)] group-hover:drop-shadow-[0_0_14px_rgba(34,211,238,0.45)] transition-all duration-300"
                         onError={(e) => {
                           (e.currentTarget as HTMLImageElement).src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech.icon}/${tech.icon}-plain.svg`;
                         }}
                       />
                       <span className="text-[10px] font-mono text-slate-500 group-hover:text-cyan-400 text-center leading-tight transition-colors duration-300">{tech.name}</span>
-                    </motion.div>
+                    </div>
                   ))}
                 </motion.div>
               </div>
@@ -551,7 +545,7 @@ export default function Portfolio() {
                 key={project.title}
                 variants={fadeUp}
                 whileHover={cardHover}
-                className="group flex flex-col bg-white/[0.03] border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm hover:border-cyan-500/40 hover:bg-white/[0.06] transition-colors"
+                className="group flex flex-col bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/40 hover:bg-white/[0.07] transition-colors"
               >
                 {/* Project image banner */}
                 {project.image ? (
