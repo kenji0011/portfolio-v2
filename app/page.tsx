@@ -226,6 +226,57 @@ const certifications: Certification[] = [
     credential: "https://www.skills.google/public_profiles/b1f37c59-8b3b-49db-8249-d692905fa6d9/badges/22684019",
     category: "Badge",
   },
+  // ── Placeholder cards (remove/replace when you have more certs) ──
+  {
+    title: "Placeholder Certificate A",
+    issuer: "Issuer Name",
+    icon: <BadgeCheck size={28} />,
+    year: "2026",
+    description: "Placeholder description.",
+    image: null,
+    credential: "#",
+    category: "Certification",
+  },
+  {
+    title: "Placeholder Certificate B",
+    issuer: "Issuer Name",
+    icon: <Award size={28} />,
+    year: "2026",
+    description: "Placeholder description.",
+    image: null,
+    credential: "#",
+    category: "Certification",
+  },
+  {
+    title: "Placeholder Badge C",
+    issuer: "Issuer Name",
+    icon: <Star size={28} />,
+    year: "2026",
+    description: "Placeholder description.",
+    image: null,
+    credential: "#",
+    category: "Badge",
+  },
+  {
+    title: "Placeholder Certificate D",
+    issuer: "Issuer Name",
+    icon: <ShieldCheck size={28} />,
+    year: "2026",
+    description: "Placeholder description.",
+    image: null,
+    credential: "#",
+    category: "Certification",
+  },
+  {
+    title: "Placeholder Badge E",
+    issuer: "Issuer Name",
+    icon: <Cpu size={28} />,
+    year: "2026",
+    description: "Placeholder description.",
+    image: null,
+    credential: "#",
+    category: "Badge",
+  },
 ];
 
 // ── Main Component ──────────────────────────────────────────────────────
@@ -237,6 +288,8 @@ export default function Portfolio() {
   const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [certPage, setCertPage] = useState(0);
+  const CERTS_PER_PAGE = 12;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -790,54 +843,96 @@ export default function Portfolio() {
             </p>
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-2"
-          >
-            {certifications.map((cert) => {
-              const isBadge = cert.category === "Badge";
-              return (
-                <motion.div
-                  key={cert.title}
-                  variants={fadeUp}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => setSelectedCert(cert)}
-                  className={`group flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 transition-all cursor-pointer hover:bg-white/[0.04] ${isBadge ? "hover:border-violet-500/30" : "hover:border-cyan-500/30"
-                    }`}
-                >
-                  {/* Icon Box */}
-                  <div
-                    className={`shrink-0 p-2 rounded-lg transition-colors ${isBadge
-                      ? "bg-violet-500/10 text-violet-400 group-hover:bg-violet-500/20"
-                      : "bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20"
-                      }`}
+          {/* ── Paginated grid + slider arrows ─────────────────── */}
+          {(() => {
+            const totalPages = Math.ceil(certifications.length / CERTS_PER_PAGE);
+            const visible = certifications.slice(
+              certPage * CERTS_PER_PAGE,
+              (certPage + 1) * CERTS_PER_PAGE
+            );
+            return (
+              <div className="relative">
+                {/* Grid */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={certPage}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2"
                   >
-                    <div className="scale-75">{cert.icon}</div>
-                  </div>
+                    {visible.map((cert) => {
+                      const isBadge = cert.category === "Badge";
+                      return (
+                        <motion.div
+                          key={cert.title}
+                          whileHover={{ scale: 1.02 }}
+                          onClick={() => setSelectedCert(cert)}
+                          className={`group flex items-center gap-3 p-3 rounded-xl bg-white/[0.02] border border-white/5 transition-all cursor-pointer hover:bg-white/[0.04] ${isBadge ? "hover:border-violet-500/30" : "hover:border-cyan-500/30"}`}
+                        >
+                          {/* Icon Box */}
+                          <div className={`shrink-0 p-2 rounded-lg transition-colors ${isBadge ? "bg-violet-500/10 text-violet-400 group-hover:bg-violet-500/20" : "bg-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/20"}`}>
+                            <div className="scale-75">{cert.icon}</div>
+                          </div>
+                          {/* Content */}
+                          <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+                            <p className="font-semibold text-slate-200 text-xs truncate">{cert.title}</p>
+                            <p className="text-slate-400 text-[10px] mt-0.5 truncate">{cert.issuer}</p>
+                            <div className="flex items-center justify-between mt-1 gap-2">
+                              <p className="text-slate-500 text-[9px]">{cert.year}</p>
+                              <span className={`shrink-0 text-[8px] font-mono px-1.5 py-px rounded-full border ${isBadge ? "text-violet-400 bg-violet-500/10 border-violet-500/20" : "text-cyan-400 bg-cyan-500/10 border-cyan-500/20"}`}>
+                                {isBadge ? "Badge" : "Cert"}
+                              </span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+                </AnimatePresence>
 
-                  {/* Content */}
-                  <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-                    <p className="font-semibold text-slate-200 text-xs truncate">{cert.title}</p>
-                    <p className="text-slate-400 text-[10px] mt-0.5 truncate">{cert.issuer}</p>
-                    <div className="flex items-center justify-between mt-1 gap-2">
-                      <p className="text-slate-500 text-[9px]">{cert.year}</p>
-                      <span
-                        className={`shrink-0 text-[8px] font-mono px-1.5 py-px rounded-full border ${isBadge
-                          ? "text-violet-400 bg-violet-500/10 border-violet-500/20"
-                          : "text-cyan-400 bg-cyan-500/10 border-cyan-500/20"
-                          }`}
-                      >
-                        {isBadge ? "Badge" : "Cert"}
-                      </span>
+                {/* Pagination controls — only when multiple pages */}
+                {totalPages > 1 && (
+                  <div className="flex items-center justify-between mt-6">
+                    {/* Prev */}
+                    <button
+                      onClick={() => setCertPage((p) => Math.max(p - 1, 0))}
+                      disabled={certPage === 0}
+                      className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 bg-white/[0.03] text-slate-400 hover:text-white hover:border-cyan-500/40 hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all text-xs font-mono"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                      Prev
+                    </button>
+
+                    {/* Page dots */}
+                    <div className="flex items-center gap-2">
+                      {Array.from({ length: totalPages }).map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCertPage(idx)}
+                          className={`rounded-full transition-all duration-300 ${idx === certPage
+                            ? "w-6 h-2 bg-cyan-400"
+                            : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                            }`}
+                        />
+                      ))}
                     </div>
+
+                    {/* Next */}
+                    <button
+                      onClick={() => setCertPage((p) => Math.min(p + 1, totalPages - 1))}
+                      disabled={certPage === totalPages - 1}
+                      className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 bg-white/[0.03] text-slate-400 hover:text-white hover:border-cyan-500/40 hover:bg-white/[0.06] disabled:opacity-30 disabled:cursor-not-allowed transition-all text-xs font-mono"
+                    >
+                      Next
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                    </button>
                   </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                )}
+              </div>
+            );
+          })()}
 
           {/* ── Certification Modal ─────────────────────────── */}
           <AnimatePresence>
