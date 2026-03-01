@@ -520,22 +520,128 @@ export default function Portfolio() {
             <h3 className="text-3xl font-bold text-slate-100 whitespace-nowrap">About Me</h3>
             <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-grow" />
           </motion.div>
-          <div className="max-w-2xl">
-            <motion.div variants={fadeUp} className="text-slate-400 space-y-4 leading-relaxed text-base">
-              <p>
-                Hello! I am Kean a.k.a Kenji. I enjoy creating things that live on the intersection of data and software engineering.
-                My interest in AI started back when I was exploring data visualization and quickly evolved
-                into building complex neural networks.
-              </p>
-              <p>
-                Fast-forward to today, I&apos;ve had the privilege of working on various machine learning
-                projects, from natural language processing to computer vision.
-              </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Description card */}
+            <motion.div
+              variants={fadeUp}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-lg shadow-cyan-500/5 relative overflow-hidden"
+            >
+              {/* Accent bar */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-violet-500 rounded-l-2xl" />
+
+              <div className="text-slate-400 space-y-4 leading-relaxed text-base pl-4">
+                <p>
+                  As a student at the Laguna State Polytechnic University, 3rd Year in BS Computer Science, I have a lot of experiences with coding, designing, and editing. My passion for technology goes beyond the classroom as I continuously explore new programming languages and design techniques. I am particularly drawn to creating intuitive user interfaces that enhance the user experience. When I'm not coding, I enjoy watching UI designs to take inspiration. I believe in balancing technical skills with creative pursuits to maintain a well-rounded perspective. I'm always eager to collaborate on innovative projects and learn from new challenges.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Personal Info card */}
+            <motion.div
+              variants={fadeUp}
+              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-lg shadow-cyan-500/5 relative overflow-hidden"
+            >
+              {/* Accent bar */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-cyan-400 rounded-l-2xl" />
+
+              <div className="pl-4 space-y-4">
+                <h4 className="text-lg font-semibold text-slate-200 mb-4">Personal Info</h4>
+                <div className="space-y-3">
+                  {[
+                    { label: "Birthday", value: "February 25, 2005", icon: "🎂" },
+                    { label: "Age", value: "21", icon: "📅" },
+                    { label: "Phone", value: "+63 920 581 5366", icon: "📱" },
+                    { label: "Email", value: "keangabriel101@email.com", icon: "✉️" },
+                    { label: "City", value: "Laguna, Philippines", icon: "📍" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
+                      <span className="text-base">{item.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[11px] font-mono text-slate-500 uppercase tracking-wider">{item.label}</p>
+                        <p className="text-sm text-slate-300 truncate">{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </div>
         </motion.section>
 
-        {/* ── TECH STACK ───────────────────────────────────────────── */}
+        {/* ── MY EXPERTISE ─────────────────────────────────────────── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="scroll-mt-28"
+        >
+          <motion.div variants={fadeUp} className="flex items-center gap-4 mb-10">
+            <h3 className="text-3xl font-bold text-slate-100 whitespace-nowrap">My Expertise</h3>
+            <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-grow" />
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="grid md:grid-cols-2 gap-6">
+            {/* Left — Core Skills */}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-violet-500 rounded-l-2xl" />
+              <h4 className="text-lg font-semibold text-slate-200 mb-5 pl-4">Core Skills</h4>
+              <div className="space-y-5 pl-4">
+                {[
+                  {
+                    title: "Generative AI",
+                    icon: <Brain size={20} />,
+                    desc: "Developing advanced RAG pipelines, fine-tuning LLMs, and building creative AI applications.",
+                    color: "text-cyan-400 bg-cyan-500/10",
+                  },
+                  {
+                    title: "Machine Learning",
+                    icon: <Cpu size={20} />,
+                    desc: "Building predictive models and intelligent agents using Deep Learning and Reinforcement Learning techniques.",
+                    color: "text-violet-400 bg-violet-500/10",
+                  },
+                  {
+                    title: "Data Science",
+                    icon: <Terminal size={20} />,
+                    desc: "Extracting actionable insights from complex datasets through cleaning, visualization, and statistical analysis.",
+                    color: "text-blue-400 bg-blue-500/10",
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-3 items-start">
+                    <div className={`p-2 rounded-lg ${item.color} shrink-0 mt-0.5`}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-semibold" style={{ color: 'var(--text-base)' }}>{item.title}</h5>
+                      <p className="text-xs leading-relaxed mt-1" style={{ color: 'var(--text-muted)' }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — Soft Skills */}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-cyan-400 rounded-l-2xl" />
+              <h4 className="text-lg font-semibold text-slate-200 mb-5 pl-4">Soft Skills</h4>
+              <div className="flex flex-wrap gap-2.5 pl-4">
+                {[
+                  "Leadership", "Critical Thinking", "Problem Solving",
+                  "Creativity", "Communication", "Adaptability",
+                  "Continuous Learning", "Time Management", "Teamwork",
+                ].map((skill) => (
+                  <span
+                    key={skill}
+                    className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-slate-300 text-xs font-medium hover:border-cyan-500/30 hover:bg-cyan-500/5 hover:text-cyan-400 transition-all duration-200 cursor-default"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </motion.section>
+
         <motion.section
           id="techstack"
           initial="hidden"
@@ -1212,7 +1318,7 @@ export default function Portfolio() {
         >
 
           <motion.p variants={fadeIn} className="text-xs font-mono text-slate-600">
-            Built with Next.js, Tailwind &amp; Framer Motion
+            @ 2026 Kean Gabriel Salvahan. All rights reserved.
           </motion.p>
         </motion.div>
       </footer>
