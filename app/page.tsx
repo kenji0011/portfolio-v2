@@ -502,13 +502,13 @@ export default function Portfolio() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="absolute inset-0"
+                    className="absolute -inset-1"
                   >
                     <Image
                       src={isDark ? "/images/pogiko.jpg" : "/images/pogiko2.jpg"}
                       alt="Kean Salvahan"
                       fill
-                      className="object-cover"
+                      className="object-cover scale-105"
                     />
                   </motion.div>
                 </AnimatePresence>
