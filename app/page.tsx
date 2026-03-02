@@ -230,12 +230,12 @@ const certifications: Certification[] = [
   },
   // ── Placeholder cards (remove/replace when you have more certs) ──
   {
-    title: "Placeholder Certificate A",
-    issuer: "Issuer Name",
+    title: "Agile Project Management",
+    issuer: "HP LIFE",
     icon: <BadgeCheck size={28} />,
     year: "2026",
-    description: "Placeholder description.",
-    image: null,
+    description: "HP LIFE Online Course on Agile Project Management to make better decisions.",
+    image: "/images/cert8.jpg",
     credential: "#",
     category: "Certification",
   },
@@ -495,13 +495,23 @@ export default function Portfolio() {
               <div className="animate-spin-slow absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 via-violet-500 to-transparent p-[2px] blur-sm scale-105" />
               {/* Profile photo — CSS-only float for GPU-compositor efficiency */}
               <div className="animate-float relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl shadow-cyan-500/20">
-                {/* Photo placeholder — replace src with your actual image path when ready */}
-                <div className="w-full h-full flex flex-col items-center justify-center text-slate-500 gap-2">
-                  <User size={64} className="opacity-30" />
-                  <span className="text-xs font-mono opacity-50">photo coming soon</span>
-                </div>
-                {/* Once you have the photo: uncomment below and remove the div above */}
-                {<Image src="/images/pogiko.jpg" alt="Kean Salvahan" fill className="object-cover" />}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={isDark ? "dark-photo" : "light-photo"}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="absolute inset-0"
+                  >
+                    <Image
+                      src={isDark ? "/images/pogiko.jpg" : "/images/pogiko2.jpg"}
+                      alt="Kean Salvahan"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </motion.div>
           </div>
