@@ -123,6 +123,20 @@ const projects: Project[] = [
     live: "#",
     date: "2025",
   },
+  {
+    title: "Rockies Fitness Tracker App",
+    description:
+      "A fitness tracker app that helps users track their workouts and fitness goals.",
+    longDescription:
+      "Rockies is a fitness tracker app that helps users track their workouts and fitness goals. It features a clean and modern UI, with a focus on user experience and ease of use. The app allows users to track their workouts, set fitness goals, and monitor their progress over time.",
+    tags: ["Mobile", "UI/UX"],
+    icon: <Terminal size={24} />,
+    image: null,
+    gallery: [],
+    github: "https://github.com/kenji0011/Fitness-Tracker-app.git",
+    live: "#",
+    date: "2025",
+  },
 ];
 
 type Certification = {
