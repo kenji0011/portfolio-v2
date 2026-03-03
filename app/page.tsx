@@ -118,7 +118,7 @@ const projects: Project[] = [
     tags: ["Chatbot", "Machine Learning", "UI/UX"],
     icon: <Terminal size={24} />,
     image: "/images/chatbot.png",
-    gallery: [],
+    gallery: ["/images/chatbot.png"],
     github: "https://github.com/kenji0011/Chefbot_KasangKap-Hunt.git",
     live: "#",
     date: "2025",
