@@ -132,7 +132,7 @@ const projects: Project[] = [
     tags: ["Mobile", "UI/UX"],
     icon: <Terminal size={24} />,
     image: null,
-    gallery: [],
+    gallery: ["/images/rockies.jpg"],
     github: "https://github.com/kenji0011/Fitness-Tracker-app.git",
     live: "#",
     date: "2025",
