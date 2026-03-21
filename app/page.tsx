@@ -20,8 +20,15 @@ import {
   Cpu,
   Sun,
   Moon,
+  Download,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
+  { ssr: false }
+);
 
 // ── Animation variants ──────────────────────────────────────────────────
 const fadeUp: Variants = {
@@ -64,75 +71,71 @@ type Project = {
   github: string;
   live: string;
   date?: string;
+  techIcons?: string[];
 };
 
 const projects: Project[] = [
   {
     title: "Shuey's Kamote Chips",
-    description:
-      "My 1st project in my college years. I used C# and Windows Forms to create a simple inventory management system for a small business. The system allows the user to add, edit, delete, and search for products in the inventory. ",
-    longDescription:
-      "This was my very first software project during college. Built with C# and Windows Forms, it served as a practical introduction to desktop application development. The system provided full CRUD functionality — allowing the business owner to manage product listings, track stock levels, and search the inventory quickly. It laid the foundation for my understanding of data persistence, UI layout, and event-driven programming.",
+    description: "My 1st project in my college years. I used C# and Windows Forms to create a simple inventory management system for a small business. The system allows the user to add, edit, delete, and search for products in the inventory. ",
+    longDescription: "This was my very first software project during college. Built with C# and Windows Forms, it served as a practical introduction to desktop application development. The system provided full CRUD functionality — allowing the business owner to manage product listings, track stock levels, and search the inventory quickly. It laid the foundation for my understanding of data persistence, UI layout, and event-driven programming.",
     tags: ["C#", "Windows Forms", "Inventory Management"],
+    techIcons: ["csharp"],
     icon: <Cpu size={24} />,
     image: "/images/shueyschips.jpg",
-    gallery: ["/images/shueyschips.jpg"],
+    gallery: ["/images/shueyschips.jpg", "/images/previews/dashboardshuey.png", "/images/previews/kamote.png"],
     github: "#",
     live: "#",
     date: "2023",
   },
   {
     title: "GetGoods — E-Commerce App",
-    description:
-      "GetGoods is a full-featured e-commerce website application that allows users to browse, add to cart, and purchase goods.",
-    longDescription:
-      "GetGoods is a full-featured e-commerce web application designed to simulate a real-world online shopping experience. Users can browse a product catalog, add items to their cart, and go through a checkout flow. The project emphasized clean UI/UX, state management for the cart, and responsive layout design across device sizes.",
+    description: "GetGoods is a full-featured e-commerce website application that allows users to browse, add to cart, and purchase goods.",
+    longDescription: "GetGoods is a full-featured e-commerce web application designed to simulate a real-world online shopping experience. Users can browse a product catalog, add items to their cart, and go through a checkout flow. The project emphasized clean UI/UX, state management for the cart, and responsive layout design across device sizes.",
     tags: ["Web Application", "E-Commerce", "UI/UX"],
+    techIcons: ["javascript", "html5", "css3"],
     icon: <Brain size={24} />,
     image: "/images/getgoodsapp.jpg",
-    gallery: ["/images/getgoodsapp.jpg"],
+    gallery: ["/images/getgoodsapp.jpg", "/images/previews/ggdashboard.png", "/images/previews/ggorders.png", "/images/previews/ggproducts.png", "/images/previews/ggsales.png", "/images/previews/ggusers.png"],
     github: "https://github.com/kenji0011/Projects.git",
     live: "#",
     date: "2024",
   },
   {
     title: "GetGoods — Mobile Shopping App",
-    description:
-      "An alternate design variant of the GetGoods application featuring a refined purple/dark theme with updated UI components and improved user experience flow.",
-    longDescription:
-      "A mobile-focused redesign of the GetGoods platform, featuring a dark purple aesthetic and revised UI components tailored for smaller screens. This variant explored mobile-first design principles, touch-friendly interactions, and a refined visual hierarchy to improve the overall shopping experience on handheld devices.",
+    description: "An alternate design variant of the GetGoods application featuring a refined purple/dark theme with updated UI components and improved user experience flow.",
+    longDescription: "A mobile-focused redesign of the GetGoods platform, featuring a dark purple aesthetic and revised UI components tailored for smaller screens. This variant explored mobile-first design principles, touch-friendly interactions, and a refined visual hierarchy to improve the overall shopping experience on handheld devices.",
     tags: ["Mobile", "E-Commerce", "UI/UX"],
+    techIcons: ["flutter", "javascript"],
     icon: <Terminal size={24} />,
     image: "/images/getgoodsapp.jpg",
-    gallery: ["/images/getgoodsapp.jpg"],
+    gallery: ["/images/getgoodsapp.jpg", "/images/previews/ggmdash.jpg", "/images/previews/ggmcategories.jpg", "/images/previews/ggmcart.jpg",  "/images/previews/ggmorder.jpg", "/images/previews/ggmproducts.jpg", "/images/previews/ggmbusiness.jpg", "/images/previews/ggmseller.jpg", "/images/previews/ggmsellerprod.jpg"],
     github: "#",
     live: "#",
     date: "2024",
   },
   {
     title: "Kasangkap-Hunt Chefbot",
-    description:
-      "A chatbot that helps users find Philippine recipes and ingredients for their meals.",
-    longDescription:
-      "Kasangkap-Hunt is an AI-powered recipe chatbot focused on Filipino cuisine. Users can type natural language queries like 'What can I cook with pork and ginger?' and the bot responds with matching recipes and required ingredients. The project introduced me to NLP pipelines, intent classification, and conversational UI design.",
+    description: "A chatbot that helps users find Philippine recipes and ingredients for their meals.",
+    longDescription: "Kasangkap-Hunt is an AI-powered recipe chatbot focused on Filipino cuisine. Users can type natural language queries like 'What can I cook with pork and ginger?' and the bot responds with matching recipes and required ingredients. The project introduced me to NLP pipelines, intent classification, and conversational UI design.",
     tags: ["Chatbot", "Machine Learning", "UI/UX"],
+    techIcons: ["python", "tensorflow", "pandas", "kaggle"],
     icon: <Terminal size={24} />,
     image: "/images/chatbot.png",
-    gallery: ["/images/chatbot.png"],
+    gallery: ["/images/chatbot.png", "/images/previews/chefbotui.png"],
     github: "https://github.com/kenji0011/Chefbot_KasangKap-Hunt.git",
     live: "#",
     date: "2025",
   },
   {
     title: "Rockies Fitness Tracker App",
-    description:
-      "A fitness tracker app that helps users track their workouts and fitness goals.",
-    longDescription:
-      "Rockies is a fitness tracker app that helps users track their workouts and fitness goals. It features a clean and modern UI, with a focus on user experience and ease of use. The app allows users to track their workouts, set fitness goals, and monitor their progress over time.",
+    description: "A fitness tracker app that helps users track their workouts and fitness goals.",
+    longDescription: "Rockies is a fitness tracker app that helps users track their workouts and fitness goals. It features a clean and modern UI, with a focus on user experience and ease of use. The app allows users to track their workouts, set fitness goals, and monitor their progress over time.",
     tags: ["Mobile", "UI/UX"],
+    techIcons: ["flutter", "javascript", "firebase"],
     icon: <Terminal size={24} />,
     image: "/images/rockies.jpg",
-    gallery: ["/images/rockies.jpg"],
+    gallery: ["/images/rockies.jpg", "/images/previews/rockiesload.jpg", "/images/previews/rockiessign.jpg", "/images/previews/rockiesdash.jpg", "/images/previews/rockiesprof.jpg"],
     github: "https://github.com/kenji0011/Fitness-Tracker-app.git",
     live: "#",
     date: "2025",
@@ -294,6 +297,209 @@ const certifications: Certification[] = [
   },
 ];
 
+function AiInteractiveDemo() {
+  const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, [messages, isTyping]);
+
+  const handleInputSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!inputValue.trim() || isTyping) return;
+    const query = inputValue.trim();
+    setInputValue("");
+    triggerAI(query);
+  };
+
+  const handlePromptClick = (query: string) => {
+    if (isTyping) return;
+    triggerAI(query);
+  };
+
+  const triggerAI = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+    let answer = "That's an interesting question! While I'm just a simulated AI, you can find most details about Kean by exploring this portfolio, or by sending him a direct message in the contact section!";
+    
+    if (/(project|work|built|experience|portfolio)/.test(lowerQuery)) {
+      answer = "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), and a Fitness Tracker (Rockies). You can check them out in the Featured Projects section below!";
+    } else if (/(skill|tech|stack|expertise|language|framework)/.test(lowerQuery)) {
+      answer = "His core skills revolve around Generative AI, Machine Learning, and Data Science. He primarily works with Python, React, Next.js, and frameworks like TensorFlow and PyTorch.";
+    } else if (/(education|school|study|university|college|degree)/.test(lowerQuery)) {
+      answer = "He is currently a 3rd Year BS Computer Science student at Laguna State Polytechnic University.";
+    } else if (/(contact|email|phone|hire|reach)/.test(lowerQuery)) {
+      answer = "You can reach Kean via email at keangabriel101@email.com or use the contact form at the bottom of the page. He is currently open to new opportunities!";
+    } else if (/(about|who|background|age|birthday)/.test(lowerQuery)) {
+      answer = "Kean is a 21-year-old AI/ML Engineer based in Laguna, Philippines. He's passionate about building intelligent systems and intuitive UI designs.";
+    }
+
+    setMessages(prev => [...prev, { role: 'user', text: query }]);
+    setIsTyping(true);
+    setTimeout(() => {
+      setMessages(prev => [...prev, { role: 'ai', text: answer }]);
+      setIsTyping(false);
+    }, 1200);
+  };
+
+  const prompts = [
+    "Who are you?",
+    "What are your skills?",
+    "Tell me about your projects",
+    "How can I contact you?"
+  ];
+
+  return (
+    <div className="w-full flex flex-col items-center justify-center min-h-[60vh] py-10 relative z-10 max-w-3xl mx-auto px-4 md:px-0">
+      <motion.div 
+        layout
+        className="w-full bg-slate-950/60 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl shadow-cyan-500/10 overflow-hidden flex flex-col transition-all duration-500"
+        style={{ minHeight: messages.length === 0 ? "auto" : "500px", maxHeight: "75vh" }}
+      >
+        {/* Top Header/Status Bar */}
+        <div className="flex items-center justify-between px-4 py-3 bg-white/[0.03] border-b border-white/5">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-rose-500/80 border border-black/20" />
+            <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-black/20" />
+            <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-black/20" />
+          </div>
+          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400 ml-4 pointer-events-none">
+            <Terminal size={12} className="text-cyan-400" /> kean_agent.sh
+          </div>
+          <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500">
+            {messages.length > 0 && <span className="animate-pulse text-cyan-400">●</span>}
+            {messages.length > 0 ? "ACTIVE" : "IDLE"}
+          </div>
+        </div>
+
+        {/* Dynamic Content Area */}
+        <div className="flex flex-col flex-1 overflow-hidden relative">
+          <AnimatePresence mode="wait">
+            {messages.length === 0 ? (
+              <motion.div 
+                key="empty"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col px-6 py-10 md:px-10 md:py-14"
+              >
+                <div className="flex flex-col items-start w-full">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/30 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(34,211,238,0.15)]">
+                    <Brain size={24} className="text-cyan-400" />
+                  </div>
+                  <h1 className="text-3xl md:text-5xl font-bold text-slate-100 tracking-tight mb-3">
+                    Agent Initialize.
+                  </h1>
+                  <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-10 max-w-xl">
+                    I am an interactive AI replica of Kean. You can run commands or ask questions 
+                    regarding his background, tech stack, and portfolio projects.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                    {prompts.map((p, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handlePromptClick(p)}
+                        className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.06] hover:border-cyan-500/30 text-left transition-all group"
+                      >
+                        <div className="p-2 rounded-lg bg-white/5 text-slate-500 group-hover:text-cyan-400 font-mono transition-colors">
+                          <MessageSquare size={16} />
+                        </div>
+                        <span className="text-sm text-slate-300 font-medium">{p}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="chat"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="flex-1 overflow-y-auto no-scrollbar p-6"
+              >
+                <div ref={scrollRef} className="space-y-6">
+                  {messages.map((m, i) => (
+                    <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                      {m.role === 'ai' && (
+                        <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                          <Brain size={14} className="text-white" />
+                        </div>
+                      )}
+                      <div className={`px-5 py-3.5 rounded-2xl max-w-[85%] text-sm leading-relaxed ${
+                        m.role === 'user' 
+                          ? 'bg-white/10 text-slate-100 rounded-tr-sm' 
+                          : 'bg-transparent text-slate-300 border border-white/5'
+                        }`}>
+                        {m.text}
+                      </div>
+                    </div>
+                  ))}
+                  {isTyping && (
+                    <div className="flex justify-start">
+                      <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                        <Brain size={14} className="text-white" />
+                      </div>
+                      <div className="px-5 py-4 rounded-2xl bg-transparent text-slate-400 flex items-center gap-1.5 h-10 border border-white/5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Sticky Input Bar */}
+        <div className="p-3 md:p-4 bg-slate-950/80 border-t border-white/10 backdrop-blur-md z-20">
+          <form onSubmit={handleInputSubmit} className="relative flex items-center bg-white/[0.03] border border-white/5 rounded-xl transition-all focus-within:border-cyan-500/40 focus-within:bg-white/[0.05]">
+            <span className="pl-4 text-cyan-400 font-bold font-mono text-sm">{">"}</span>
+            <input 
+              type="text" 
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={isTyping}
+              placeholder="Enter a command..." 
+              className="w-full bg-transparent border-none focus:ring-0 text-slate-200 placeholder-slate-600 text-sm outline-none pl-3 pr-24 py-3.5 font-mono"
+            />
+            <div className="absolute right-2 flex items-center gap-2">
+              {messages.length > 0 && (
+                <button 
+                  type="button" 
+                  onClick={() => setMessages([])} 
+                  className="px-2 py-1 rounded hover:bg-white/10 text-[10px] text-slate-500 hover:text-red-400 transition-colors tracking-widest font-mono uppercase"
+                >
+                  Clear
+                </button>
+              )}
+              <button 
+                type="submit" 
+                disabled={!inputValue.trim() || isTyping} 
+                className="p-1.5 rounded-md bg-white/5 text-slate-400 hover:text-cyan-400 disabled:opacity-30 disabled:hover:text-slate-500 transition-colors"
+                aria-label="Send"
+              >
+                <Send size={14} />
+              </button>
+            </div>
+          </form>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 // ── Main Component ──────────────────────────────────────────────────────
 export default function Portfolio() {
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
@@ -304,6 +510,7 @@ export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [certPage, setCertPage] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
   const CERTS_PER_PAGE = 12;
   const [isDark, setIsDark] = useState(true);
 
@@ -312,6 +519,16 @@ export default function Portfolio() {
     const saved = localStorage.getItem("portfolio-theme");
     if (saved) setIsDark(saved === "dark");
   }, []);
+
+  // Auto-scroll active thumbnail into view
+  useEffect(() => {
+    if (selectedProject?.gallery) {
+      const activeThumb = document.getElementById(`thumbnail-${galleryIndex}`);
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    }
+  }, [galleryIndex, selectedProject]);
 
   const toggleTheme = () => {
     setIsDark((prev) => {
@@ -370,13 +587,17 @@ export default function Portfolio() {
         <Orb className="w-[500px] h-[500px] bg-violet-600 top-[40%] right-[-10%]" delay={3} />
         <Orb className="w-[400px] h-[400px] bg-blue-600 bottom-[-5%] left-[30%]" delay={6} />
         {/* Noise texture overlay */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
+        <div className="absolute inset-0 opacity-[0.03] hidden md:block bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
       </div>
 
       {/* ── Navigation ──────────────────────────────────────────────── */}
       <nav
         style={{ background: "var(--bg-nav)" }}
-        className="fixed top-0 w-full z-50 border-b border-white/5 backdrop-blur-xl"
+        className={`fixed top-0 w-full z-50 border-b backdrop-blur-xl transition-shadow duration-300 ${
+          isDark 
+            ? "border-white/5 shadow-none" 
+            : "border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)]"
+        }`}
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <motion.span
@@ -441,35 +662,40 @@ export default function Portfolio() {
 
       <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-40">
 
-        {/* ── HERO ─────────────────────────────────────────────────── */}
-        <section className="min-h-[80vh] flex flex-col justify-center pt-10">
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+        {/* ── AI SEARCH HERO (NEW) ─────────────────────────────────── */}
+        <section className="min-h-[70vh] flex flex-col justify-center pt-4 md:pt-10">
+          <AiInteractiveDemo />
+        </section>
+
+        {/* ── PERSONAL DETAILS (OLD HERO) ──────────────────────────── */}
+        <section id="about" className="scroll-mt-28 flex flex-col md:flex-row items-center gap-12 md:gap-20">
             {/* Text side */}
             <motion.div
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
               variants={staggerContainer}
               className="flex-1 space-y-6"
             >
               <motion.p variants={fadeUp} className="text-cyan-400 font-mono text-lg">
                 Hi, my name is
               </motion.p>
-              <motion.h1
-                variants={fadeUp}
-                className="text-5xl md:text-7xl font-bold text-slate-100 tracking-tight leading-none"
-              >
-                Kean Salvahan.
-              </motion.h1>
               <motion.h2
                 variants={fadeUp}
-                className="text-3xl md:text-5xl font-bold text-slate-500"
+                className="text-5xl md:text-6xl font-bold text-slate-100 tracking-tight leading-none"
+              >
+                Kean Salvahan.
+              </motion.h2>
+              <motion.h3
+                variants={fadeUp}
+                className="text-3xl md:text-4xl font-bold text-slate-500"
               >
                 I build{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
                   AI/ML
                 </span>{" "}
                 solutions.
-              </motion.h2>
+              </motion.h3>
               <motion.p
                 variants={fadeUp}
                 className="max-w-xl text-lg text-slate-400 leading-relaxed"
@@ -494,20 +720,31 @@ export default function Portfolio() {
                 >
                   Contact Me
                 </motion.a>
+                <motion.a
+                  href="/resume.pdf"
+                  download
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-6 py-3 flex items-center gap-2 border border-slate-700 bg-white/5 hover:bg-white/10 hover:border-violet-400 hover:text-violet-400 rounded-lg transition-all"
+                >
+                  <Download size={18} />
+                  Download CV
+                </motion.a>
               </motion.div>
             </motion.div>
 
             {/* Photo side */}
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
               className="flex-shrink-0 relative"
             >
               {/* Glow ring — CSS-only spin for GPU-compositor efficiency */}
               <div className="animate-spin-slow absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 via-violet-500 to-transparent p-[2px] blur-sm scale-105" />
               {/* Profile photo — CSS-only float for GPU-compositor efficiency */}
-              <div className="animate-float relative w-72 h-72 md:w-96 md:h-96 rounded-full overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl shadow-cyan-500/20">
+              <div className="animate-float relative w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl shadow-cyan-500/20">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={isDark ? "dark-photo" : "light-photo"}
@@ -527,69 +764,9 @@ export default function Portfolio() {
                 </AnimatePresence>
               </div>
             </motion.div>
-          </div>
         </section>
 
-        {/* ── ABOUT & SKILLS ───────────────────────────────────────── */}
-        <motion.section
-          id="about"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="scroll-mt-28"
-        >
-          <motion.div variants={fadeUp} className="flex items-center gap-4 mb-10">
-            <h3 className="text-3xl font-bold text-slate-100 whitespace-nowrap">About Me</h3>
-            <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-grow" />
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Description card */}
-            <motion.div
-              variants={fadeUp}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-lg shadow-cyan-500/5 relative overflow-hidden"
-            >
-              {/* Accent bar */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-violet-500 rounded-l-2xl" />
 
-              <div className="text-slate-400 space-y-4 leading-relaxed text-base pl-4">
-                <p>
-                  As a student at the Laguna State Polytechnic University, 3rd Year in BS Computer Science, I have a lot of experiences with coding, designing, and editing. My passion for technology goes beyond the classroom as I continuously explore new programming languages and design techniques. I am particularly drawn to creating intuitive user interfaces that enhance the user experience. When I'm not coding, I enjoy watching UI designs to take inspiration. I believe in balancing technical skills with creative pursuits to maintain a well-rounded perspective. I'm always eager to collaborate on innovative projects and learn from new challenges.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Personal Info card */}
-            <motion.div
-              variants={fadeUp}
-              className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-lg shadow-cyan-500/5 relative overflow-hidden"
-            >
-              {/* Accent bar */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-cyan-400 rounded-l-2xl" />
-
-              <div className="pl-4 space-y-4">
-                <h4 className="text-lg font-semibold text-slate-200 mb-4">Personal Info</h4>
-                <div className="space-y-3">
-                  {[
-                    { label: "Birthday", value: "February 25, 2005", icon: "🎂" },
-                    { label: "Age", value: "21", icon: "📅" },
-                    { label: "Phone", value: "+63 920 581 5366", icon: "📱" },
-                    { label: "Email", value: "keangabriel101@email.com", icon: "✉️" },
-                    { label: "City", value: "Laguna, Philippines", icon: "📍" },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
-                      <span className="text-base">{item.icon}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[11px] font-mono text-slate-500 uppercase tracking-wider">{item.label}</p>
-                        <p className="text-sm text-slate-300 truncate">{item.value}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
 
         {/* ── MY EXPERTISE ─────────────────────────────────────────── */}
         <motion.section
@@ -697,6 +874,7 @@ export default function Portfolio() {
                 { name: "Next.js", icon: "nextjs" },
                 { name: "Tailwind", icon: "tailwindcss" },
                 { name: "FastAPI", icon: "fastapi" },
+                { name: "Flutter", icon: "flutter" },
               ],
             },
             {
@@ -716,6 +894,7 @@ export default function Portfolio() {
                 { name: "Firebase", icon: "firebase" },
                 { name: "PostgreSQL", icon: "postgresql" },
                 { name: "Figma", icon: "figma" },
+                { name: "Kaggle", icon: "kaggle" },
               ],
             },
           ].map((row) => (
@@ -760,6 +939,33 @@ export default function Portfolio() {
           ))}
         </motion.section>
 
+        <motion.section
+          id="github-stats"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+          className="scroll-mt-28"
+        >
+          <motion.div variants={fadeUp} className="flex items-center gap-4 mb-10">
+            <h3 className="text-3xl font-bold text-slate-100 whitespace-nowrap">GitHub Activity</h3>
+            <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-grow" />
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 lg:p-8 flex items-center justify-center overflow-x-auto no-scrollbar shadow-lg shadow-cyan-500/5 min-h-[170px]">
+            <GitHubCalendar 
+              username="kenji0011" 
+              colorScheme={isDark ? "dark" : "light"}
+              theme={{
+                light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+              }}
+              style={{ color: "var(--text-base)", fontFamily: "inherit" }}
+              blockSize={13}
+            />
+          </motion.div>
+        </motion.section>
+
         {/* ── FEATURED PROJECTS ────────────────────────────────────── */}
         <section id="projects" className="scroll-mt-28">
           <motion.div
@@ -783,9 +989,10 @@ export default function Portfolio() {
             {projects.map((project) => (
               <motion.div
                 key={project.title}
+                onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
                 variants={fadeUp}
                 whileHover={cardHover}
-                className="group flex flex-col bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/40 hover:bg-white/[0.07] transition-colors"
+                className="group flex flex-col bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/40 hover:bg-white/[0.07] transition-colors cursor-pointer"
               >
                 {/* Project image banner */}
                 {project.image ? (
@@ -807,25 +1014,35 @@ export default function Portfolio() {
                       {project.title}
                     </h4>
                     <div className="flex gap-2 text-slate-500 ml-2 shrink-0">
-                      <motion.a href={project.github} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.2, color: "#22d3ee" }} className="transition-colors">
+                      <motion.a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} whileHover={{ scale: 1.2, color: "#22d3ee" }} className="transition-colors">
                         <Github size={17} />
                       </motion.a>
-                      <motion.button
-                        onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
-                        whileHover={{ scale: 1.2, color: "#22d3ee" }}
-                        className="transition-colors"
-                        aria-label="View project details"
-                      >
-                        <ExternalLink size={17} />
-                      </motion.button>
                     </div>
                   </div>
                   <p className="text-slate-400 text-sm mb-4 leading-relaxed flex-1">{project.description}</p>
+                  
+                  {/* Tech stack badges */}
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    {project.techIcons && project.techIcons.map((tech) => (
+                      <div key={tech} className="p-1.5 rounded-md bg-white/5 border border-white/10" title={tech}>
+                        <img
+                          src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-original.svg`}
+                          alt={tech}
+                          width={14}
+                          height={14}
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-plain.svg`;
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-0.5 bg-cyan-500/10 text-cyan-400 text-xs font-mono rounded-full border border-cyan-500/20"
+                        className="px-2.5 py-0.5 bg-cyan-500/10 text-cyan-400 text-[10px] font-mono rounded-full border border-cyan-500/20"
                       >
                         {tag}
                       </span>
@@ -888,10 +1105,12 @@ export default function Portfolio() {
                                 src={selectedProject.gallery[galleryIndex]}
                                 alt={`${selectedProject.title} screenshot ${galleryIndex + 1}`}
                                 fill
-                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="object-contain p-2 cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+                                onClick={() => setIsZoomed(true)}
                               />
                               {/* Subtle gradient overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#0a0f1e]/60" />
+                              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#0a0f1e]/60 pointer-events-none" />
                             </motion.div>
                           </AnimatePresence>
                         ) : (
@@ -921,19 +1140,32 @@ export default function Portfolio() {
                         )}
                       </div>
 
-                      {/* Dot indicators */}
-                      {selectedProject.gallery && selectedProject.gallery.length > 0 && (
-                        <div className="flex justify-center gap-2 py-4 bg-slate-950/80 border-t border-white/5">
-                          {selectedProject.gallery.map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => setGalleryIndex(idx)}
-                              className={`rounded-full transition-all duration-300 ${idx === galleryIndex
-                                ? "w-6 h-2 bg-cyan-400"
-                                : "w-2 h-2 bg-white/25 hover:bg-white/50"
+                      {/* Image previews / Thumbnails */}
+                      {selectedProject.gallery && selectedProject.gallery.length > 1 && (
+                        <div className="flex p-2 md:p-3 gap-2 md:gap-3 bg-slate-950/90 border-t border-white/5 overflow-x-auto no-scrollbar snap-x snap-mandatory">
+                          {/* Inner container to center on desktop if few images */}
+                          <div className="flex gap-2 md:gap-3 mx-auto px-2 md:px-0">
+                            {selectedProject.gallery.map((imgSrc, idx) => (
+                              <button
+                                key={idx}
+                                id={`thumbnail-${idx}`}
+                                onClick={() => setGalleryIndex(idx)}
+                                className={`relative shrink-0 w-14 h-10 md:w-16 md:h-12 rounded-md overflow-hidden outline outline-1 md:outline-2 outline-offset-1 md:outline-offset-2 transition-all duration-300 snap-center ${
+                                  idx === galleryIndex 
+                                    ? "outline-cyan-500 opacity-100" 
+                                    : "outline-transparent opacity-50 hover:opacity-100"
                                 }`}
-                            />
-                          ))}
+                              >
+                                <Image 
+                                  src={imgSrc} 
+                                  alt={`Thumbnail ${idx + 1}`} 
+                                  fill
+                                  sizes="80px"
+                                  className="object-cover" 
+                                />
+                              </button>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -1009,6 +1241,42 @@ export default function Portfolio() {
                     </div>
                   </div>
                 </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* ── Fullscreen Image Zoom Overlay ── */}
+          <AnimatePresence>
+            {isZoomed && selectedProject && selectedProject.gallery && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsZoomed(false)}
+                className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-10 bg-black/95 backdrop-blur-xl cursor-zoom-out"
+              >
+                <motion.div 
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.95, opacity: 0 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                  className="relative w-full h-full max-w-[95vw] max-h-[95vh]"
+                >
+                  <Image
+                    src={selectedProject.gallery[galleryIndex]}
+                    alt="Zoomed screenshot"
+                    fill
+                    sizes="100vw"
+                    className="object-contain"
+                  />
+                </motion.div>
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsZoomed(false)}
+                  className="absolute top-5 right-5 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -1228,12 +1496,13 @@ export default function Portfolio() {
                 </p>
               </div>
 
-              {/* Social links */}
-              <div className="relative z-10 flex gap-5 mb-8">
+              <div className="relative z-10 flex flex-wrap gap-5 mb-8">
                 {[
-                  { icon: <Github size={22} />, href: "https://github.com/kenji0011", label: "GitHub" },
-                  { icon: <Linkedin size={22} />, href: "https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b", label: "LinkedIn" },
-                  { icon: <Mail size={22} />, href: "mailto:[EMAIL_ADDRESS]", label: "Email" },
+                  { icon: <Github size={20} />, href: "https://github.com/kenji0011", label: "GitHub" },
+                  { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b", label: "LinkedIn" },
+                  { icon: <Mail size={20} />, href: "mailto:keangabriel101@email.com", label: "keangabriel101@email.com" },
+                  { icon: <span className="font-bold text-lg leading-none">📱</span>, href: "tel:+639205815366", label: "+63 920 581 5366" },
+                  { icon: <span className="font-bold text-lg leading-none">📍</span>, href: "#", label: "Laguna, Philippines" },
                 ].map((item) => (
                   <motion.a
                     key={item.label}
@@ -1241,10 +1510,10 @@ export default function Portfolio() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.label}
-                    whileHover={{ scale: 1.2, y: -3, color: "#22d3ee" }}
-                    className="text-slate-500 transition-colors"
+                    whileHover={{ scale: 1.05, y: -2, color: "#22d3ee" }}
+                    className="flex items-center gap-2 text-sm text-slate-400 hover:text-cyan-400 transition-colors bg-white/5 border border-white/10 px-3.5 py-2 rounded-full"
                   >
-                    {item.icon}
+                    {item.icon} <span className="hidden sm:inline-block">{item.label}</span>
                   </motion.a>
                 ))}
               </div>
