@@ -297,7 +297,7 @@ const certifications: Certification[] = [
   },
 ];
 
-function AiInteractiveDemo() {
+function AiInteractiveDemo({ isDark }: { isDark: boolean }) {
   const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -329,15 +329,23 @@ function AiInteractiveDemo() {
     const lowerQuery = query.toLowerCase();
     let answer = "That's an interesting question! While I'm just a simulated AI, you can find most details about Kean by exploring this portfolio, or by sending him a direct message in the contact section!";
     
-    if (/(project|work|built|experience|portfolio)/.test(lowerQuery)) {
+    if (/(project|work|built|experience|portfolio|made|did he do)/.test(lowerQuery)) {
       answer = "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), and a Fitness Tracker (Rockies). You can check them out in the Featured Projects section below!";
-    } else if (/(skill|tech|stack|expertise|language|framework)/.test(lowerQuery)) {
+    } else if (/(skill|tech|stack|expertise|language|framework|code|know)/.test(lowerQuery)) {
       answer = "His core skills revolve around Generative AI, Machine Learning, and Data Science. He primarily works with Python, React, Next.js, and frameworks like TensorFlow and PyTorch.";
-    } else if (/(education|school|study|university|college|degree)/.test(lowerQuery)) {
+    } else if (/(education|school|study|university|college|degree|student)/.test(lowerQuery)) {
       answer = "He is currently a 3rd Year BS Computer Science student at Laguna State Polytechnic University.";
-    } else if (/(contact|email|phone|hire|reach)/.test(lowerQuery)) {
+    } else if (/(contact|email|phone|hire|reach|message)/.test(lowerQuery)) {
       answer = "You can reach Kean via email at keangabriel101@email.com or use the contact form at the bottom of the page. He is currently open to new opportunities!";
-    } else if (/(about|who|background|age|birthday)/.test(lowerQuery)) {
+    } else if (/(name|call him)/.test(lowerQuery)) {
+      answer = "His full name is Kean Gabriel Salvahan. But you can just call him Kean!";
+    } else if (/(where|location|from|live|based)/.test(lowerQuery)) {
+      answer = "Kean is based in Laguna, Philippines.";
+    } else if (/(hi|hello|hey|yo|greetings)/.test(lowerQuery)) {
+      answer = "Hello there! I'm an AI simulation of Kean. You can ask me about his skills, projects, education, or how to contact him!";
+    } else if (/(help|command|what can you do)/.test(lowerQuery)) {
+      answer = "You can ask me questions like 'What are your skills?', 'Where did you go to school?', 'What is your name?' or 'What projects have you built?'";
+    } else if (/(about|who|background|age|birthday|old)/.test(lowerQuery)) {
       answer = "Kean is a 21-year-old AI/ML Engineer based in Laguna, Philippines. He's passionate about building intelligent systems and intuitive UI designs.";
     }
 
@@ -360,20 +368,30 @@ function AiInteractiveDemo() {
     <div className="w-full flex flex-col items-center justify-center min-h-[60vh] py-10 relative z-10 max-w-3xl mx-auto px-4 md:px-0">
       <motion.div 
         layout
-        className="w-full bg-slate-950/60 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl shadow-cyan-500/10 overflow-hidden flex flex-col transition-all duration-500"
+        className={`w-full backdrop-blur-2xl border rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-500 ${
+          isDark 
+            ? "bg-slate-950/60 border-white/10 shadow-cyan-500/10" 
+            : "bg-white/80 border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)]"
+        }`}
         style={{ minHeight: messages.length === 0 ? "auto" : "500px", maxHeight: "75vh" }}
       >
         {/* Top Header/Status Bar */}
-        <div className="flex items-center justify-between px-4 py-3 bg-white/[0.03] border-b border-white/5">
+        <div className={`flex items-center justify-between px-4 py-3 border-b ${
+          isDark ? "bg-white/[0.03] border-white/5" : "bg-slate-50/60 border-slate-200 shadow-sm"
+        }`}>
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-rose-500/80 border border-black/20" />
             <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-black/20" />
             <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-black/20" />
           </div>
-          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400 ml-4 pointer-events-none">
+          <div className={`flex items-center gap-2 text-[11px] font-mono ml-4 pointer-events-none ${
+            isDark ? "text-slate-400" : "text-slate-500"
+          }`}>
             <Terminal size={12} className="text-cyan-400" /> kean_agent.sh
           </div>
-          <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500">
+          <div className={`flex items-center gap-2 text-[10px] font-mono ${
+            isDark ? "text-slate-500" : "text-slate-400"
+          }`}>
             {messages.length > 0 && <span className="animate-pulse text-cyan-400">●</span>}
             {messages.length > 0 ? "ACTIVE" : "IDLE"}
           </div>
@@ -392,13 +410,21 @@ function AiInteractiveDemo() {
                 className="flex flex-col px-6 py-10 md:px-10 md:py-14"
               >
                 <div className="flex flex-col items-start w-full">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/30 flex items-center justify-center mb-6 shadow-[0_0_15px_rgba(34,211,238,0.15)]">
-                    <Brain size={24} className="text-cyan-400" />
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg ${
+                    isDark 
+                      ? "bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.15)]" 
+                      : "bg-gradient-to-br from-cyan-50 to-violet-50 border border-cyan-200/50 shadow-cyan-500/10"
+                  }`}>
+                    <Brain size={24} className={isDark ? "text-cyan-400" : "text-cyan-500"} />
                   </div>
-                  <h1 className="text-3xl md:text-5xl font-bold text-slate-100 tracking-tight mb-3">
+                  <h1 className={`text-3xl md:text-5xl font-bold tracking-tight mb-3 ${
+                    isDark ? "text-slate-100" : "text-slate-800"
+                  }`}>
                     Agent Initialize.
                   </h1>
-                  <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-10 max-w-xl">
+                  <p className={`text-sm md:text-base leading-relaxed mb-10 max-w-xl ${
+                    isDark ? "text-slate-400" : "text-slate-600"
+                  }`}>
                     I am an interactive AI replica of Kean. You can run commands or ask questions 
                     regarding his background, tech stack, and portfolio projects.
                   </p>
@@ -408,12 +434,20 @@ function AiInteractiveDemo() {
                       <button
                         key={i}
                         onClick={() => handlePromptClick(p)}
-                        className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.06] hover:border-cyan-500/30 text-left transition-all group"
+                        className={`flex items-center gap-4 p-4 rounded-xl border text-left transition-all group ${
+                          isDark 
+                            ? "bg-white/[0.02] border-white/5 hover:bg-white/[0.06] hover:border-cyan-500/30" 
+                            : "bg-white border-slate-200/80 hover:bg-slate-50 hover:border-cyan-400/40 shadow-sm"
+                        }`}
                       >
-                        <div className="p-2 rounded-lg bg-white/5 text-slate-500 group-hover:text-cyan-400 font-mono transition-colors">
+                        <div className={`p-2 rounded-lg font-mono transition-colors group-hover:text-cyan-400 ${
+                          isDark ? "bg-white/5 text-slate-500" : "bg-slate-100 text-slate-400"
+                        }`}>
                           <MessageSquare size={16} />
                         </div>
-                        <span className="text-sm text-slate-300 font-medium">{p}</span>
+                        <span className={`text-sm font-medium ${
+                          isDark ? "text-slate-300" : "text-slate-700"
+                        }`}>{p}</span>
                       </button>
                     ))}
                   </div>
@@ -429,16 +463,16 @@ function AiInteractiveDemo() {
               >
                 <div ref={scrollRef} className="space-y-6">
                   {messages.map((m, i) => (
-                    <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                     <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       {m.role === 'ai' && (
-                        <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                        <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-md shadow-cyan-500/20">
                           <Brain size={14} className="text-white" />
                         </div>
                       )}
                       <div className={`px-5 py-3.5 rounded-2xl max-w-[85%] text-sm leading-relaxed ${
                         m.role === 'user' 
-                          ? 'bg-white/10 text-slate-100 rounded-tr-sm' 
-                          : 'bg-transparent text-slate-300 border border-white/5'
+                          ? (isDark ? 'bg-white/10 text-slate-100 rounded-tr-sm' : 'bg-[#1e293b] text-white rounded-tr-sm shadow-sm')
+                          : (isDark ? 'bg-transparent text-slate-300 border border-white/5' : 'bg-white text-slate-700 border border-slate-200 shadow-sm')
                         }`}>
                         {m.text}
                       </div>
@@ -446,13 +480,15 @@ function AiInteractiveDemo() {
                   ))}
                   {isTyping && (
                     <div className="flex justify-start">
-                      <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                      <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-md shadow-cyan-500/20">
                         <Brain size={14} className="text-white" />
                       </div>
-                      <div className="px-5 py-4 rounded-2xl bg-transparent text-slate-400 flex items-center gap-1.5 h-10 border border-white/5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <div className={`px-5 py-4 rounded-2xl flex items-center gap-1.5 h-10 border ${
+                        isDark ? "bg-transparent border-white/5" : "bg-white border-slate-200 shadow-sm"
+                      }`}>
+                        <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`} style={{ animationDelay: '0ms' }} />
+                        <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`} style={{ animationDelay: '150ms' }} />
+                        <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`} style={{ animationDelay: '300ms' }} />
                       </div>
                     </div>
                   )}
@@ -463,8 +499,12 @@ function AiInteractiveDemo() {
         </div>
 
         {/* Sticky Input Bar */}
-        <div className="p-3 md:p-4 bg-slate-950/80 border-t border-white/10 backdrop-blur-md z-20">
-          <form onSubmit={handleInputSubmit} className="relative flex items-center bg-white/[0.03] border border-white/5 rounded-xl transition-all focus-within:border-cyan-500/40 focus-within:bg-white/[0.05]">
+        <div className={`p-3 md:p-4 border-t backdrop-blur-md z-20 ${
+          isDark ? "bg-slate-950/80 border-white/10" : "bg-slate-50/90 border-slate-200"
+        }`}>
+          <form onSubmit={handleInputSubmit} className={`relative flex items-center border rounded-xl transition-all focus-within:border-cyan-500/40 ${
+            isDark ? "bg-white/[0.03] border-white/5 focus-within:bg-white/[0.05]" : "bg-white border-slate-200 shadow-sm focus-within:shadow-md"
+          }`}>
             <span className="pl-4 text-cyan-400 font-bold font-mono text-sm">{">"}</span>
             <input 
               type="text" 
@@ -472,14 +512,18 @@ function AiInteractiveDemo() {
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isTyping}
               placeholder="Enter a command..." 
-              className="w-full bg-transparent border-none focus:ring-0 text-slate-200 placeholder-slate-600 text-sm outline-none pl-3 pr-24 py-3.5 font-mono"
+              className={`w-full !bg-transparent !border-none focus:ring-0 text-sm outline-none pl-3 pr-24 py-3.5 font-mono ${
+                isDark ? "text-slate-200 placeholder-slate-600" : "text-slate-800 placeholder-slate-400"
+              }`}
             />
             <div className="absolute right-2 flex items-center gap-2">
               {messages.length > 0 && (
                 <button 
                   type="button" 
                   onClick={() => setMessages([])} 
-                  className="px-2 py-1 rounded hover:bg-white/10 text-[10px] text-slate-500 hover:text-red-400 transition-colors tracking-widest font-mono uppercase"
+                  className={`px-2 py-1 rounded text-[10px] transition-colors tracking-widest font-mono uppercase ${
+                    isDark ? "hover:bg-white/10 text-slate-500 hover:text-red-400" : "hover:bg-slate-100 text-slate-400 hover:text-red-500"
+                  }`}
                 >
                   Clear
                 </button>
@@ -487,7 +531,11 @@ function AiInteractiveDemo() {
               <button 
                 type="submit" 
                 disabled={!inputValue.trim() || isTyping} 
-                className="p-1.5 rounded-md bg-white/5 text-slate-400 hover:text-cyan-400 disabled:opacity-30 disabled:hover:text-slate-500 transition-colors"
+                className={`p-1.5 rounded-md disabled:opacity-30 transition-colors ${
+                  isDark 
+                    ? "bg-white/5 text-slate-400 hover:text-cyan-400 disabled:hover:text-slate-500" 
+                    : "bg-slate-100 text-slate-500 hover:text-cyan-600 disabled:hover:text-slate-400"
+                }`}
                 aria-label="Send"
               >
                 <Send size={14} />
@@ -664,7 +712,7 @@ export default function Portfolio() {
 
         {/* ── AI SEARCH HERO (NEW) ─────────────────────────────────── */}
         <section className="min-h-[70vh] flex flex-col justify-center pt-4 md:pt-10">
-          <AiInteractiveDemo />
+          <AiInteractiveDemo isDark={isDark} />
         </section>
 
         {/* ── PERSONAL DETAILS (OLD HERO) ──────────────────────────── */}
