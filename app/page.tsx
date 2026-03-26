@@ -1549,8 +1549,8 @@ export default function Portfolio() {
                   { icon: <Github size={20} />, href: "https://github.com/kenji0011", label: "GitHub" },
                   { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b", label: "LinkedIn" },
                   { icon: <Mail size={20} />, href: "mailto:keangabriel101@email.com", label: "keangabriel101@email.com" },
-                  { icon: <span className="font-bold text-lg leading-none">📱</span>, href: "tel:+639205815366", label: "+63 920 581 5366" },
-                  { icon: <span className="font-bold text-lg leading-none">📍</span>, href: "#", label: "Laguna, Philippines" },
+                  { icon: <span className="font-bold text-lg leading-none"></span>, href: "tel:+639205815366", label: "+63 920 581 5366" },
+                  { icon: <span className="font-bold text-lg leading-none"></span>, href: "#", label: "Laguna, Philippines" },
                 ].map((item) => (
                   <motion.a
                     key={item.label}
