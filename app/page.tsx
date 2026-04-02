@@ -21,6 +21,8 @@ import {
   Sun,
   Moon,
   Download,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
@@ -140,6 +142,22 @@ const projects: Project[] = [
     live: "#",
     date: "2025",
   },
+  {
+  title: "Medical Center Bank",
+  description: "Monte Carlo Analysis for Inventory Optimization",
+  longDescription: "This project is a simulation of a medical center's inventory management system. It uses Monte Carlo Analysis to determine the optimal reorder point for each product in the inventory. The system also includes a dashboard to visualize the inventory levels and reorder points.",
+  tags: ["Website", "Inventory Management", "Monte Carlo Analysis"], // e.g., ["Web Application", "React", "Mobile"]
+  techIcons: ["nextjs", "typescript", "tailwindcss"], // Must match any expected string mapping in your Tech stack handler if you have one
+  icon: <Terminal size={24} />, // You can import other icons from "lucide-react" like <Brain />, <Cpu />, <Terminal />
+  image: "/images/mcbmain.jpg", // The image file needs to be in your public/images folder
+  gallery: [
+    "/images/medicalbank.jpg",
+  ],
+  github: "https://github.com/kenji0011/Inventory-System-Project.git", // Use "#" if the code isn't public
+  live: "#", // Use "#" if there's no live demo
+  date: "2026",
+}
+
 ];
 
 type Certification = {
@@ -548,6 +566,70 @@ function AiInteractiveDemo({ isDark }: { isDark: boolean }) {
   );
 }
 
+const ProjectCardItem = ({ project, cardHover, className, onClick }: any) => (
+  <motion.div
+    onClick={onClick}
+    whileHover={cardHover}
+    className={`group flex flex-col shrink-0 bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/40 hover:bg-white/[0.07] transition-colors cursor-pointer shadow-lg shadow-black/20 ${className}`}
+  >
+    {/* Project image banner */}
+    {project.image ? (
+      <div className="relative w-full h-40 overflow-hidden bg-slate-800 shrink-0">
+        <Image src={project.image} alt={project.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
+    ) : (
+      <div className="w-full h-36 shrink-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center border-b border-white/5">
+        <div className="p-4 bg-cyan-500/10 rounded-2xl text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity">
+          {project.icon}
+        </div>
+      </div>
+    )}
+
+    <div className="flex flex-col flex-1 p-5">
+      <div className="flex justify-between items-start mb-3">
+        <h4 className="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+          {project.title}
+        </h4>
+        <div className="flex gap-2 text-slate-500 ml-2 shrink-0">
+          <motion.a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} whileHover={{ scale: 1.2, color: "#22d3ee" }} className="transition-colors">
+            <Github size={17} />
+          </motion.a>
+        </div>
+      </div>
+      <p className="text-slate-400 text-sm mb-4 leading-relaxed flex-1">{project.description}</p>
+      
+      {/* Tech stack badges */}
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        {project.techIcons && project.techIcons.map((tech: string) => (
+          <div key={tech} className="p-1.5 rounded-md bg-white/5 border border-white/10" title={tech}>
+            <img
+              src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-original.svg`}
+              alt={tech}
+              width={14}
+              height={14}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-plain.svg`;
+              }}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {project.tags.map((tag: string) => (
+          <span
+            key={tag}
+            className="px-2.5 py-0.5 bg-cyan-500/10 text-cyan-400 text-[10px] font-mono rounded-full border border-cyan-500/20"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </div>
+  </motion.div>
+);
+
 // ── Main Component ──────────────────────────────────────────────────────
 export default function Portfolio() {
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
@@ -561,6 +643,9 @@ export default function Portfolio() {
   const [isZoomed, setIsZoomed] = useState(false);
   const CERTS_PER_PAGE = 12;
   const [isDark, setIsDark] = useState(true);
+
+  // Projects view toggle state
+  const [showAllProjects, setShowAllProjects] = useState(false);
 
   // Persist theme preference
   useEffect(() => {
@@ -1021,85 +1106,79 @@ export default function Portfolio() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={fadeUp}
-            className="flex items-center gap-4 mb-12"
+            className="flex items-center justify-between gap-4 mb-12"
           >
-            <h3 className="text-3xl font-bold text-slate-100 whitespace-nowrap">Featured Projects</h3>
-            <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-grow" />
+            <div className="flex items-center gap-4 flex-grow">
+              <h3 className="text-3xl font-bold text-slate-100 whitespace-nowrap">Featured Projects</h3>
+              <div className="h-px bg-gradient-to-r from-slate-700 to-transparent flex-grow" />
+            </div>
+            
+            <button
+              onClick={() => setShowAllProjects(!showAllProjects)}
+              className="group flex items-center shrink-0 gap-2 px-4 py-2 text-sm font-medium text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 hover:bg-cyan-500/20 hover:border-cyan-500/40 rounded-xl transition-all whitespace-nowrap"
+            >
+              {showAllProjects ? "Show Marquee" : "All Projects"}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${!showAllProjects ? 'group-hover:translate-x-1' : ''}`}>
+                {showAllProjects ? <path d="M3 12h18M3 6h18M3 18h18" /> : <polyline points="9 18 15 12 9 6"></polyline>}
+              </svg>
+            </button>
           </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={staggerContainer}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {projects.map((project) => (
+          <AnimatePresence mode="wait">
+            {showAllProjects ? (
               <motion.div
-                key={project.title}
-                onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
-                variants={fadeUp}
-                whileHover={cardHover}
-                className="group flex flex-col bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/40 hover:bg-white/[0.07] transition-colors cursor-pointer"
+                key="grid-view"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
               >
-                {/* Project image banner */}
-                {project.image ? (
-                  <div className="relative w-full h-40 overflow-hidden bg-slate-800">
-                    <Image src={project.image} alt={project.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                  </div>
-                ) : (
-                  <div className="w-full h-36 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center border-b border-white/5">
-                    <div className="p-4 bg-cyan-500/10 rounded-2xl text-cyan-400 opacity-60 group-hover:opacity-100 transition-opacity">
-                      {project.icon}
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex flex-col flex-1 p-5">
-                  <div className="flex justify-between items-start mb-3">
-                    <h4 className="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
-                      {project.title}
-                    </h4>
-                    <div className="flex gap-2 text-slate-500 ml-2 shrink-0">
-                      <motion.a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} whileHover={{ scale: 1.2, color: "#22d3ee" }} className="transition-colors">
-                        <Github size={17} />
-                      </motion.a>
-                    </div>
-                  </div>
-                  <p className="text-slate-400 text-sm mb-4 leading-relaxed flex-1">{project.description}</p>
-                  
-                  {/* Tech stack badges */}
-                  <div className="flex flex-wrap items-center gap-2 mb-4">
-                    {project.techIcons && project.techIcons.map((tech) => (
-                      <div key={tech} className="p-1.5 rounded-md bg-white/5 border border-white/10" title={tech}>
-                        <img
-                          src={`https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-original.svg`}
-                          alt={tech}
-                          width={14}
-                          height={14}
-                          onError={(e) => {
-                            (e.currentTarget as HTMLImageElement).src = `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${tech}/${tech}-plain.svg`;
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-0.5 bg-cyan-500/10 text-cyan-400 text-[10px] font-mono rounded-full border border-cyan-500/20"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                {projects.map((project, idx) => (
+                  <ProjectCardItem
+                    key={`grid-${idx}`}
+                    project={project}
+                    cardHover={cardHover}
+                    className="w-full"
+                    onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
+                  />
+                ))}
               </motion.div>
-            ))}
-          </motion.div>
+            ) : (
+              <motion.div
+                key="marquee-view"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="relative overflow-hidden w-full"
+                style={{
+                  maskImage: "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%)",
+                }}
+              >
+                <motion.div
+                  className="flex w-max pt-4 pb-12"
+                  animate={{ x: ["0%", "-50%"] }}
+                  transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                >
+                  {[0, 1].map((copyIdx) => (
+                    <div key={copyIdx} className="flex gap-6 pr-6 shrink-0">
+                      {projects.map((project, idx) => (
+                        <ProjectCardItem
+                          key={`${project.title}-${copyIdx}-${idx}`}
+                          project={project}
+                          cardHover={cardHover}
+                          className="w-[85vw] max-w-[350px]"
+                          onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* ── Project Detail Modal ─────────────────────────────── */}
           <AnimatePresence>
@@ -1118,7 +1197,7 @@ export default function Portfolio() {
                   transition={{ type: "spring", stiffness: 280, damping: 30 }}
                   onClick={(e) => e.stopPropagation()}
                   style={{ background: "var(--bg-modal)" }}
-                  className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto overflow-x-hidden no-scrollbar rounded-3xl border border-white/10 shadow-2xl shadow-cyan-500/10"
+                  className="relative w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-cyan-500/10"
                 >
                   {/* Ambient glows */}
                   <div className="absolute -top-32 -right-32 w-80 h-80 bg-violet-600/20 rounded-full blur-3xl pointer-events-none" />
@@ -1127,13 +1206,14 @@ export default function Portfolio() {
                   {/* Close button */}
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="absolute top-5 right-5 z-20 p-2 rounded-full bg-white/8 hover:bg-white/15 border border-white/10 text-slate-400 hover:text-white transition-all"
+                    className="absolute top-5 right-5 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                   </button>
 
-                  {/* ── Two-column body ── */}
-                  <div className="grid lg:grid-cols-2 gap-0">
+                  <div className="max-h-[90vh] overflow-y-auto overflow-x-hidden no-scrollbar">
+                    {/* ── Two-column body ── */}
+                    <div className="grid lg:grid-cols-2 gap-0 min-h-full">
 
                     {/* ── LEFT: Image gallery ── */}
                     <div className="relative flex flex-col bg-slate-950/60 rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none overflow-hidden">
@@ -1287,6 +1367,7 @@ export default function Portfolio() {
                         )}
                       </div>
                     </div>
+                  </div>
                   </div>
                 </motion.div>
               </motion.div>
