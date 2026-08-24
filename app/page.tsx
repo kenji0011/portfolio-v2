@@ -1306,16 +1306,16 @@ export default function Portfolio() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedProject(null)}
-                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+                className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md"
               >
                 <motion.div
-                  initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: 50, scale: 0.95 }}
+                  exit={{ opacity: 0, y: 30, scale: 0.96 }}
                   transition={{ type: "spring", stiffness: 280, damping: 30 }}
                   onClick={(e) => e.stopPropagation()}
                   style={{ background: "var(--bg-modal)" }}
-                  className="relative w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-cyan-500/10"
+                  className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] flex flex-col rounded-2xl sm:rounded-3xl border border-white/10 shadow-2xl shadow-cyan-500/10 overflow-hidden"
                 >
                   {/* Ambient glows */}
                   <div className="absolute -top-32 -right-32 w-80 h-80 bg-violet-600/20 rounded-full blur-3xl pointer-events-none" />
@@ -1324,43 +1324,43 @@ export default function Portfolio() {
                   {/* Close button */}
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="absolute top-5 right-5 z-20 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer"
+                    aria-label="Close project modal"
+                    className="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 p-2 sm:p-2.5 rounded-full bg-slate-900/90 hover:bg-slate-800 border border-white/20 text-white transition-all hover:scale-105 shadow-lg cursor-pointer"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                   </button>
 
-                  <div className="max-h-[90vh] overflow-y-auto overflow-x-hidden no-scrollbar">
+                  <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar">
                     {/* ── Two-column body ── */}
-                    <div className="grid lg:grid-cols-2 gap-0 min-h-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-full">
 
                     {/* ── LEFT: Image gallery ── */}
-                    <div className="relative flex flex-col bg-slate-950/60 rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none overflow-hidden">
+                    <div className="relative flex flex-col bg-slate-950/70 border-b lg:border-b-0 lg:border-r border-white/5 overflow-hidden">
                       {/* Main image */}
-                      <div className="relative flex-1" style={{ minHeight: "320px" }}>
+                      <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[420px] bg-slate-950 flex items-center justify-center">
                         {selectedProject.gallery && selectedProject.gallery.length > 0 ? (
                           <AnimatePresence mode="wait">
                             <motion.div
                               key={galleryIndex}
-                              initial={{ opacity: 0, x: 30 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              exit={{ opacity: 0, x: -30 }}
-                              transition={{ duration: 0.3, ease: "easeOut" }}
-                              className="absolute inset-0"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ duration: 0.25, ease: "easeOut" }}
+                              className="relative w-full h-full p-3 sm:p-4 flex items-center justify-center"
                             >
                               <Image
                                 src={selectedProject.gallery[galleryIndex]}
                                 alt={`${selectedProject.title} screenshot ${galleryIndex + 1}`}
                                 fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-contain p-2 cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+                                sizes="(max-width: 1024px) 100vw, 50vw"
+                                className="object-contain cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
                                 onClick={() => setIsZoomed(true)}
+                                priority
                               />
-                              {/* Subtle gradient overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[#0a0f1e]/60 pointer-events-none" />
                             </motion.div>
                           </AnimatePresence>
                         ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
+                          <div className="w-full h-full flex items-center justify-center p-8 bg-gradient-to-br from-slate-900 to-slate-950">
                             <div className="p-8 rounded-3xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
                               {selectedProject.icon}
                             </div>
@@ -1372,13 +1372,15 @@ export default function Portfolio() {
                           <>
                             <button
                               onClick={() => setGalleryIndex((i) => (i - 1 + selectedProject.gallery!.length) % selectedProject.gallery!.length)}
-                              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/50 hover:bg-black/80 border border-white/10 text-white transition-all hover:scale-110"
+                              aria-label="Previous image"
+                              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-full bg-black/60 hover:bg-black/90 border border-white/15 text-white transition-all hover:scale-110 shadow-md"
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
                             </button>
                             <button
                               onClick={() => setGalleryIndex((i) => (i + 1) % selectedProject.gallery!.length)}
-                              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2.5 rounded-full bg-black/50 hover:bg-black/80 border border-white/10 text-white transition-all hover:scale-110"
+                              aria-label="Next image"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-full bg-black/60 hover:bg-black/90 border border-white/15 text-white transition-all hover:scale-110 shadow-md"
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
                             </button>
@@ -1388,17 +1390,16 @@ export default function Portfolio() {
 
                       {/* Image previews / Thumbnails */}
                       {selectedProject.gallery && selectedProject.gallery.length > 1 && (
-                        <div className="flex p-2 md:p-3 gap-2 md:gap-3 bg-slate-950/90 border-t border-white/5 overflow-x-auto no-scrollbar snap-x snap-mandatory">
-                          {/* Inner container to center on desktop if few images */}
-                          <div className="flex gap-2 md:gap-3 mx-auto px-2 md:px-0">
+                        <div className="flex p-2.5 sm:p-3 gap-2 bg-slate-950/95 border-t border-white/5 overflow-x-auto no-scrollbar">
+                          <div className="flex gap-2 mx-auto px-1">
                             {selectedProject.gallery.map((imgSrc, idx) => (
                               <button
                                 key={idx}
                                 id={`thumbnail-${idx}`}
                                 onClick={() => setGalleryIndex(idx)}
-                                className={`relative shrink-0 w-14 h-10 md:w-16 md:h-12 rounded-md overflow-hidden outline outline-1 md:outline-2 outline-offset-1 md:outline-offset-2 transition-all duration-300 snap-center ${
+                                className={`relative shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-lg overflow-hidden outline outline-1 sm:outline-2 outline-offset-1 sm:outline-offset-2 transition-all duration-300 ${
                                   idx === galleryIndex 
-                                    ? "outline-cyan-500 opacity-100" 
+                                    ? "outline-cyan-500 opacity-100 scale-105" 
                                     : "outline-transparent opacity-50 hover:opacity-100"
                                 }`}
                               >
@@ -1406,7 +1407,7 @@ export default function Portfolio() {
                                   src={imgSrc} 
                                   alt={`Thumbnail ${idx + 1}`} 
                                   fill
-                                  sizes="80px"
+                                  sizes="70px"
                                   className="object-cover" 
                                 />
                               </button>
@@ -1417,39 +1418,44 @@ export default function Portfolio() {
                     </div>
 
                     {/* ── RIGHT: Info + description ── */}
-                    <div className="flex flex-col gap-5 p-7 lg:p-9">
+                    <div className="flex flex-col gap-4 sm:gap-5 p-5 sm:p-7 lg:p-9">
 
                       {/* Project Info card */}
-                      <div className="rounded-2xl border border-white/8 bg-white/[0.04] backdrop-blur-sm divide-y divide-white/8 overflow-hidden">
-                        <div className="px-5 py-3.5">
-                          <p className="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-0.5">Project information</p>
+                      <div className="rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm divide-y divide-white/10 overflow-hidden text-xs">
+                        <div className="px-4 py-2.5 sm:px-5 sm:py-3.5 bg-white/[0.02]">
+                          <p className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">Project information</p>
                         </div>
-                        <div className="px-5 py-3 flex items-center justify-between">
-                          <span className="text-xs text-slate-500 font-mono">Category</span>
-                          <span className="text-xs font-semibold text-cyan-400 font-mono">{selectedProject.tags[0]}</span>
+                        <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between">
+                          <span className="text-slate-400 font-mono">Category</span>
+                          <span className="font-semibold text-cyan-400 font-mono">{selectedProject.tags[0]}</span>
                         </div>
-                        <div className="px-5 py-3 flex items-center justify-between">
-                          <span className="text-xs text-slate-500 font-mono">Project date</span>
-                          <span className="text-xs font-semibold text-slate-300 font-mono">{selectedProject.date ?? "—"}</span>
+                        <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between">
+                          <span className="text-slate-400 font-mono">Project date</span>
+                          <span className="font-semibold text-slate-300 font-mono">{selectedProject.date ?? "—"}</span>
                         </div>
-                        <div className="px-5 py-3 flex items-center justify-between gap-4">
-                          <span className="text-xs text-slate-500 font-mono shrink-0">Project URL</span>
+                        <div className="px-4 py-2.5 sm:px-5 sm:py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+                          <span className="text-slate-400 font-mono shrink-0">Project URL</span>
                           {selectedProject.live !== "#" ? (
-                            <a href={selectedProject.live} target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-400 hover:text-cyan-300 truncate transition-colors font-mono underline underline-offset-2">
+                            <a
+                              href={selectedProject.live}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-cyan-400 hover:text-cyan-300 truncate transition-colors font-mono underline underline-offset-2 break-all"
+                            >
                               {selectedProject.live}
                             </a>
                           ) : (
-                            <span className="text-xs text-slate-600 font-mono">—</span>
+                            <span className="text-slate-600 font-mono">—</span>
                           )}
                         </div>
                       </div>
 
                       {/* Title + tags */}
                       <div>
-                        <h4 className="text-2xl font-bold text-slate-100 leading-tight mb-3">{selectedProject.title}</h4>
-                        <div className="flex flex-wrap gap-2">
+                        <h4 className="text-xl sm:text-2xl font-bold text-slate-100 leading-tight mb-2 sm:mb-3">{selectedProject.title}</h4>
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
                           {selectedProject.tags.map((tag) => (
-                            <span key={tag} className="px-2.5 py-0.5 bg-cyan-500/10 text-cyan-400 text-[11px] font-mono rounded-full border border-cyan-500/20">
+                            <span key={tag} className="px-2.5 py-0.5 bg-cyan-500/10 text-cyan-400 text-[10px] sm:text-[11px] font-mono rounded-full border border-cyan-500/20">
                               {tag}
                             </span>
                           ))}
@@ -1457,32 +1463,36 @@ export default function Portfolio() {
                       </div>
 
                       {/* Description */}
-                      <p className="text-slate-400 text-sm leading-relaxed flex-1">
+                      <p className="text-slate-300 sm:text-slate-400 text-xs sm:text-sm leading-relaxed flex-1">
                         {selectedProject.longDescription || selectedProject.description}
                       </p>
 
                       {/* Action buttons */}
-                      <div className="flex gap-3 pt-1">
-                        {selectedProject.github !== "#" && (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        {selectedProject.github !== "#" ? (
                           <a
                             href={selectedProject.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/40 text-slate-300 hover:text-cyan-400 text-sm font-medium rounded-xl transition-all"
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/40 text-slate-200 hover:text-cyan-400 text-xs sm:text-sm font-medium rounded-xl transition-all"
                           >
                             <Github size={15} /> GitHub
                           </a>
+                        ) : (
+                          <span className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white/[0.02] border border-white/5 text-slate-600 text-xs sm:text-sm font-medium rounded-xl cursor-not-allowed">
+                            <Github size={15} /> Private Code
+                          </span>
                         )}
-                        {selectedProject.live !== "#" && (
+                        {selectedProject.live !== "#" ? (
                           <a
                             href={selectedProject.live}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-cyan-500/20 to-violet-500/10 hover:from-cyan-500/30 hover:to-violet-500/20 border border-cyan-500/30 hover:border-cyan-400/60 text-cyan-300 text-sm font-medium rounded-xl transition-all"
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-cyan-500/20 to-violet-500/10 hover:from-cyan-500/30 hover:to-violet-500/20 border border-cyan-500/30 hover:border-cyan-400/60 text-cyan-300 text-xs sm:text-sm font-medium rounded-xl transition-all shadow-sm"
                           >
                             <ExternalLink size={15} /> Live Demo
                           </a>
-                        )}
+                        ) : null}
                       </div>
                     </div>
                   </div>
@@ -1848,7 +1858,7 @@ export default function Portfolio() {
 
       {/* ── Floating Back to Top Button ─────────────────────────────── */}
       <AnimatePresence>
-        {showBackToTop && (
+        {showBackToTop && !selectedProject && !selectedCert && !isZoomed && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
