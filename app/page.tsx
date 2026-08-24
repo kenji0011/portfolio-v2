@@ -23,6 +23,7 @@ import {
   Download,
   ChevronLeft,
   ChevronRight,
+  GraduationCap,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
@@ -143,21 +144,33 @@ const projects: Project[] = [
     date: "2025",
   },
   {
-  title: "Medical Center Bank",
-  description: "Monte Carlo Analysis for Inventory Optimization",
-  longDescription: "This project is a simulation of a medical center's inventory management system. It uses Monte Carlo Analysis to determine the optimal reorder point for each product in the inventory. The system also includes a dashboard to visualize the inventory levels and reorder points.",
-  tags: ["Website", "Inventory Management", "Monte Carlo Analysis"], // e.g., ["Web Application", "React", "Mobile"]
-  techIcons: ["nextjs", "typescript", "tailwindcss"], // Must match any expected string mapping in your Tech stack handler if you have one
-  icon: <Terminal size={24} />, // You can import other icons from "lucide-react" like <Brain />, <Cpu />, <Terminal />
-  image: "/images/mcbmain.jpg", // The image file needs to be in your public/images folder
-  gallery: [
-    "/images/medicalbank.jpg",
-  ],
-  github: "https://github.com/kenji0011/Inventory-System-Project.git", // Use "#" if the code isn't public
-  live: "#", // Use "#" if there's no live demo
-  date: "2026",
-}
-
+    title: "Medical Center Bank",
+    description: "Monte Carlo Analysis for Inventory Optimization",
+    longDescription: "This project is a simulation of a medical center's inventory management system. It uses Monte Carlo Analysis to determine the optimal reorder point for each product in the inventory. The system also includes a dashboard to visualize the inventory levels and reorder points.",
+    tags: ["Website", "Inventory Management", "Monte Carlo Analysis"],
+    techIcons: ["nextjs", "typescript", "tailwindcss"],
+    icon: <Terminal size={24} />,
+    image: "/images/mcbmain.jpg",
+    gallery: [
+      "/images/medicalbank.jpg",
+    ],
+    github: "https://github.com/kenji0011/Inventory-System-Project.git",
+    live: "#",
+    date: "2026",
+  },
+  {
+    title: "Berong E-Learning",
+    description: "An interactive e-learning platform designed to enhance online education, student engagement, and digital course access.",
+    longDescription: "Berong E-Learning is a modern web-based educational platform designed to streamline online learning. It features interactive learning modules, student progress tracking, course management, and an intuitive user interface tailored for engaging and accessible digital education.",
+    tags: ["Web Application", "E-Learning", "Education", "UI/UX"],
+    techIcons: ["react", "nextjs", "typescript", "tailwindcss", "laravel"],
+    icon: <GraduationCap size={24} />,
+    image: "/images/berong-official-logo.webp",
+    gallery: ["/images/berong-official-logo.webp"],
+    github: "https://github.com/kenji0011/berong-safescape-laravel.git",
+    live: "https://drive.google.com/file/d/1fRfpIFKOTnwRhg74Kml0vfaRoxkuubNZ/view?usp=sharing",
+    date: "2026",
+  },
 ];
 
 type Certification = {
@@ -348,7 +361,7 @@ function AiInteractiveDemo({ isDark }: { isDark: boolean }) {
     let answer = "That's an interesting question! While I'm just a simulated AI, you can find most details about Kean by exploring this portfolio, or by sending him a direct message in the contact section!";
     
     if (/(project|work|built|experience|portfolio|made|did he do)/.test(lowerQuery)) {
-      answer = "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), and a Fitness Tracker (Rockies). You can check them out in the Featured Projects section below!";
+      answer = "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), a Fitness Tracker (Rockies), and the Berong E-Learning platform. You can check them out in the Featured Projects section below!";
     } else if (/(skill|tech|stack|expertise|language|framework|code|know)/.test(lowerQuery)) {
       answer = "His core skills revolve around Generative AI, Machine Learning, and Data Science. He primarily works with Python, React, Next.js, and frameworks like TensorFlow and PyTorch.";
     } else if (/(education|school|study|university|college|degree|student)/.test(lowerQuery)) {
