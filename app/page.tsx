@@ -163,7 +163,7 @@ const projects: Project[] = [
     description: "An interactive e-learning platform designed to enhance online education, student engagement, and digital course access.",
     longDescription: "Berong E-Learning is a modern web-based educational platform designed to streamline online learning. It features interactive learning modules, student progress tracking, course management, and an intuitive user interface tailored for engaging and accessible digital education.",
     tags: ["Web Application", "E-Learning", "Education", "UI/UX"],
-    techIcons: ["laravel", "blade", "tailwindcss", "postgresql"],
+    techIcons: ["laravel", "php", "tailwindcss", "postgresql"],
     icon: <GraduationCap size={24} />,
     image: "/images/berong-official-logo.webp",
     gallery: ["/images/berong-official-logo.webp", "images/berong-login.jpg", "/images/berong-dash.jpg", "/images/berong-kids.jpg", "/images/berong-kids-2.jpg", "/images/berong-adult.jpg", "/images/berong-prof.jpg"],
