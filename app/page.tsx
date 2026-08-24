@@ -24,6 +24,11 @@ import {
   ChevronLeft,
   ChevronRight,
   GraduationCap,
+  Phone,
+  MapPin,
+  Menu,
+  X,
+  ChevronUp,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
@@ -85,8 +90,12 @@ const projects: Project[] = [
     tags: ["C#", "Windows Forms", "Inventory Management"],
     techIcons: ["csharp"],
     icon: <Cpu size={24} />,
-    image: "/images/shueyschips.jpg",
-    gallery: ["/images/shueyschips.jpg", "/images/previews/dashboardshuey.png", "/images/previews/kamote.png"],
+    image: "/images/projects/shueys-chips/shueyschips.jpg",
+    gallery: [
+      "/images/projects/shueys-chips/shueyschips.jpg",
+      "/images/projects/shueys-chips/dashboardshuey.png",
+      "/images/projects/shueys-chips/kamote.png"
+    ],
     github: "#",
     live: "#",
     date: "2023",
@@ -98,8 +107,15 @@ const projects: Project[] = [
     tags: ["Web Application", "E-Commerce", "UI/UX"],
     techIcons: ["javascript", "html5", "css3"],
     icon: <Brain size={24} />,
-    image: "/images/getgoodsapp.jpg",
-    gallery: ["/images/getgoodsapp.jpg", "/images/previews/ggdashboard.png", "/images/previews/ggorders.png", "/images/previews/ggproducts.png", "/images/previews/ggsales.png", "/images/previews/ggusers.png"],
+    image: "/images/projects/getgoods-web/getgoodsapp.jpg",
+    gallery: [
+      "/images/projects/getgoods-web/getgoodsapp.jpg",
+      "/images/projects/getgoods-web/ggdashboard.png",
+      "/images/projects/getgoods-web/ggorders.png",
+      "/images/projects/getgoods-web/ggproducts.png",
+      "/images/projects/getgoods-web/ggsales.png",
+      "/images/projects/getgoods-web/ggusers.png"
+    ],
     github: "https://github.com/kenji0011/Projects.git",
     live: "#",
     date: "2024",
@@ -111,8 +127,18 @@ const projects: Project[] = [
     tags: ["Mobile", "E-Commerce", "UI/UX"],
     techIcons: ["flutter", "javascript"],
     icon: <Terminal size={24} />,
-    image: "/images/getgoodsapp.jpg",
-    gallery: ["/images/getgoodsapp.jpg", "/images/previews/ggmdash.jpg", "/images/previews/ggmcategories.jpg", "/images/previews/ggmcart.jpg",  "/images/previews/ggmorder.jpg", "/images/previews/ggmproducts.jpg", "/images/previews/ggmbusiness.jpg", "/images/previews/ggmseller.jpg", "/images/previews/ggmsellerprod.jpg"],
+    image: "/images/projects/getgoods-mobile/getgoodsapp.jpg",
+    gallery: [
+      "/images/projects/getgoods-mobile/getgoodsapp.jpg",
+      "/images/projects/getgoods-mobile/ggmdash.jpg",
+      "/images/projects/getgoods-mobile/ggmcategories.jpg",
+      "/images/projects/getgoods-mobile/ggmcart.jpg",
+      "/images/projects/getgoods-mobile/ggmorder.jpg",
+      "/images/projects/getgoods-mobile/ggmproducts.jpg",
+      "/images/projects/getgoods-mobile/ggmbusiness.jpg",
+      "/images/projects/getgoods-mobile/ggmseller.jpg",
+      "/images/projects/getgoods-mobile/ggmsellerprod.jpg"
+    ],
     github: "#",
     live: "#",
     date: "2024",
@@ -124,8 +150,11 @@ const projects: Project[] = [
     tags: ["Chatbot", "Machine Learning", "UI/UX"],
     techIcons: ["python", "tensorflow", "pandas", "kaggle"],
     icon: <Terminal size={24} />,
-    image: "/images/chatbot.png",
-    gallery: ["/images/chatbot.png", "/images/previews/chefbotui.png"],
+    image: "/images/projects/chefbot/chatbot.png",
+    gallery: [
+      "/images/projects/chefbot/chatbot.png",
+      "/images/projects/chefbot/chefbotui.png"
+    ],
     github: "https://github.com/kenji0011/Chefbot_KasangKap-Hunt.git",
     live: "#",
     date: "2025",
@@ -137,8 +166,15 @@ const projects: Project[] = [
     tags: ["Mobile", "UI/UX"],
     techIcons: ["flutter", "javascript", "firebase"],
     icon: <Terminal size={24} />,
-    image: "/images/rockies.jpg",
-    gallery: ["/images/rockies.jpg", "/images/previews/rockiesload.jpg", "/images/previews/rockiessign.jpg", "/images/previews/rockiesdash.jpg", "/images/previews/rockiesprof.jpg"],
+    image: "/images/projects/rockies/rockies.jpg",
+    gallery: [
+      "/images/projects/rockies/rockies.jpg",
+      "/images/projects/rockies/rockiesload.jpg",
+      "/images/projects/rockies/rockiessign.jpg",
+      "/images/projects/rockies/rockiesdash.jpg",
+      "/images/projects/rockies/rockiesprof.jpg",
+      "/images/projects/rockies/rockiesreg.jpg"
+    ],
     github: "https://github.com/kenji0011/Fitness-Tracker-app.git",
     live: "#",
     date: "2025",
@@ -150,9 +186,10 @@ const projects: Project[] = [
     tags: ["Website", "Inventory Management", "Monte Carlo Analysis"],
     techIcons: ["nextjs", "typescript", "tailwindcss"],
     icon: <Terminal size={24} />,
-    image: "/images/mcbmain.jpg",
+    image: "/images/projects/medical-center-bank/mcbmain.jpg",
     gallery: [
-      "/images/medicalbank.jpg",
+      "/images/projects/medical-center-bank/mcbmain.jpg",
+      "/images/projects/medical-center-bank/medicalbank.jpg"
     ],
     github: "https://github.com/kenji0011/Inventory-System-Project.git",
     live: "#",
@@ -165,8 +202,16 @@ const projects: Project[] = [
     tags: ["Web Application", "E-Learning", "Education", "UI/UX"],
     techIcons: ["laravel", "php", "tailwindcss", "postgresql"],
     icon: <GraduationCap size={24} />,
-    image: "/images/berong-official-logo.webp",
-    gallery: ["/images/berong-official-logo.webp", "images/berong-login.jpg", "/images/berong-dash.jpg", "/images/berong-kids.jpg", "/images/berong-kids-2.jpg", "/images/berong-adult.jpg", "/images/berong-prof.jpg"],
+    image: "/images/projects/berong-elearning/berong-official-logo.webp",
+    gallery: [
+      "/images/projects/berong-elearning/berong-official-logo.webp",
+      "/images/projects/berong-elearning/berong-login.jpg",
+      "/images/projects/berong-elearning/berong-dash.jpg",
+      "/images/projects/berong-elearning/berong-kids.jpg",
+      "/images/projects/berong-elearning/berong-kids-2.jpg",
+      "/images/projects/berong-elearning/berong-adult.jpg",
+      "/images/projects/berong-elearning/berong-prof.jpg"
+    ],
     github: "https://github.com/kenji0011/berong-safescape-laravel.git",
     live: "https://drive.google.com/file/d/1fRfpIFKOTnwRhg74Kml0vfaRoxkuubNZ/view?usp=sharing",
     date: "2026",
@@ -659,11 +704,22 @@ export default function Portfolio() {
 
   // Projects view toggle state
   const [showAllProjects, setShowAllProjects] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Persist theme preference
   useEffect(() => {
     const saved = localStorage.getItem("portfolio-theme");
     if (saved) setIsDark(saved === "dark");
+  }, []);
+
+  // Back to top scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Auto-scroll active thumbnail into view
@@ -683,6 +739,14 @@ export default function Portfolio() {
       return next;
     });
   };
+
+  const navLinks = [
+    { name: "About", href: "#about" },
+    { name: "Tech Stack", href: "#techstack" },
+    { name: "Projects", href: "#projects" },
+    { name: "Certifications", href: "#certifications" },
+    { name: "Contact", href: "#contact" },
+  ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -746,28 +810,34 @@ export default function Portfolio() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <motion.span
+          <motion.a
+            href="#"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-xl font-bold tracking-tighter bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent"
+            className="text-xl font-bold tracking-tighter bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent cursor-pointer"
           >
             KS.
-          </motion.span>
+          </motion.a>
+
+          {/* Desktop Navigation Links */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-6 text-sm font-medium text-slate-400"
           >
-            {["about", "projects", "certifications", "contact"].map((link) => (
-              <motion.a
-                key={link}
-                href={`#${link}`}
-                className="capitalize hover:text-cyan-400 transition-colors hidden sm:block"
-                whileHover={{ y: -2 }}
-              >
-                {link}
-              </motion.a>
-            ))}
+            <div className="hidden sm:flex items-center gap-6">
+              {navLinks.map((link) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  className="hover:text-cyan-400 transition-colors"
+                  whileHover={{ y: -2 }}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </div>
+
             {/* Theme toggle */}
             <motion.button
               onClick={toggleTheme}
@@ -802,8 +872,43 @@ export default function Portfolio() {
                 )}
               </AnimatePresence>
             </motion.button>
+
+            {/* Mobile menu toggle */}
+            <motion.button
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Toggle navigation menu"
+              className="p-2 rounded-xl border border-white/10 hover:border-cyan-400/40 text-slate-400 hover:text-cyan-400 transition-colors sm:hidden"
+            >
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            </motion.button>
           </motion.div>
         </div>
+
+        {/* Mobile menu dropdown */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25 }}
+              className="sm:hidden border-t border-white/10 px-6 py-4 flex flex-col gap-2 bg-[var(--bg-nav)] backdrop-blur-xl"
+            >
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 transition-colors"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-40">
@@ -1640,11 +1745,11 @@ export default function Portfolio() {
 
               <div className="relative z-10 flex flex-wrap gap-5 mb-8">
                 {[
-                  { icon: <Github size={20} />, href: "https://github.com/kenji0011", label: "GitHub" },
-                  { icon: <Linkedin size={20} />, href: "https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b", label: "LinkedIn" },
-                  { icon: <Mail size={20} />, href: "mailto:keangabriel101@email.com", label: "keangabriel101@email.com" },
-                  { icon: <span className="font-bold text-lg leading-none"></span>, href: "tel:+639205815366", label: "+63 920 581 5366" },
-                  { icon: <span className="font-bold text-lg leading-none"></span>, href: "#", label: "Laguna, Philippines" },
+                  { icon: <Github size={18} />, href: "https://github.com/kenji0011", label: "GitHub" },
+                  { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b", label: "LinkedIn" },
+                  { icon: <Mail size={18} />, href: "mailto:keangabriel101@email.com", label: "keangabriel101@email.com" },
+                  { icon: <Phone size={18} />, href: "tel:+639205815366", label: "+63 920 581 5366" },
+                  { icon: <MapPin size={18} />, href: "#", label: "Laguna, Philippines" },
                 ].map((item) => (
                   <motion.a
                     key={item.label}
@@ -1740,6 +1845,24 @@ export default function Portfolio() {
         </section>
 
       </main>
+
+      {/* ── Floating Back to Top Button ─────────────────────────────── */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            aria-label="Scroll to top"
+            className="fixed bottom-6 right-6 z-40 p-3 rounded-full border border-white/10 bg-slate-900/80 backdrop-blur-md text-cyan-400 hover:text-cyan-300 hover:border-cyan-400/40 shadow-lg shadow-black/40 transition-all cursor-pointer"
+          >
+            <ChevronUp size={20} />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* ── FOOTER ──────────────────────────────────────────────────── */}
       <footer className="relative z-10 py-10 text-center border-t border-white/5">
