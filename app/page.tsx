@@ -351,42 +351,69 @@ const certifications: Certification[] = [
     credential: "#",
     category: "Certification",
   },
+  // ── New Certificate & Badge Slots (Fill in details below) ──
   {
-    title: "Placeholder Certificate D",
-    issuer: "Issuer Name",
-    icon: <ShieldCheck size={28} />,
+    title: "IITP (TOPCIT)",
+    issuer: "IITP",
+    icon: <BadgeCheck size={28} />,
     year: "2026",
-    description: "Placeholder description.",
+    description: "IT Professional Competency Test (TOPCIT) is a Korean IT certification program. ",
+    image: "/images/cert10.jpg",
+    credential: "#", // Add credential or verification link
+    category: "Certification", // "Certification" or "Badge"
+  },
+  {
+    title: "Data Analytics 101",
+    issuer: "Simplilearn",
+    icon: <Award size={28} />,
+    year: "2026",
+    description: "This course provide fundamentals about Excel, functions, vlookups, data sorting, pivot tables, and data analysis.",
+   
     image: null,
-    credential: "#",
+    credential: "https://lms.simplilearn.com/courses/5990/Data%20Analyst%20101/certificate/download-skillup",
     category: "Certification",
   },
   {
-    title: "Placeholder Badge E",
-    issuer: "Issuer Name",
-    icon: <Cpu size={28} />,
+    title: "Microsoft AI Course: Azure AI Fundamentals",
+    issuer: "TESDA ONLINE PROGRAM",
+    icon: <ShieldCheck size={28} />,
     year: "2026",
-    description: "Placeholder description.",
-    image: null,
+    description: "This course provide fundamentals about Microsoft Azure AI.",
+    image: "/images/cert11.jpg",
     credential: "#",
-    category: "Badge",
+    category: "Certification",
   },
+  
 ];
 
-function AiInteractiveDemo({ isDark }: { isDark: boolean }) {
-  const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([]);
+function FloatingAiCopilot({
+  isDark,
+  isOpen,
+  setIsOpen,
+}: {
+  isDark: boolean;
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+}) {
+  const [messages, setMessages] = useState<{ role: "ai" | "user"; text: string }[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [showTeaser, setShowTeaser] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({
         top: scrollRef.current.scrollHeight,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   }, [messages, isTyping]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowTeaser(false), 9000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleInputSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -403,224 +430,292 @@ function AiInteractiveDemo({ isDark }: { isDark: boolean }) {
 
   const triggerAI = (query: string) => {
     const lowerQuery = query.toLowerCase();
-    let answer = "That's an interesting question! While I'm just a simulated AI, you can find most details about Kean by exploring this portfolio, or by sending him a direct message in the contact section!";
-    
+    let answer =
+      "That's an interesting question! While I'm just a simulated AI, you can find most details about Kean by exploring this portfolio, or by sending him a direct message in the contact section!";
+
     if (/(project|work|built|experience|portfolio|made|did he do)/.test(lowerQuery)) {
-      answer = "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), a Fitness Tracker (Rockies), and the Berong E-Learning platform. You can check them out in the Featured Projects section below!";
+      answer =
+        "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), a Fitness Tracker (Rockies), and the Berong E-Learning platform. Check them out in the Featured Projects section!";
     } else if (/(skill|tech|stack|expertise|language|framework|code|know)/.test(lowerQuery)) {
-      answer = "His core skills revolve around Generative AI, Machine Learning, and Data Science. He primarily works with Python, React, Next.js, and frameworks like TensorFlow and PyTorch.";
+      answer =
+        "His core skills revolve around Generative AI, Machine Learning, and Data Science. He primarily works with Python, React, Next.js, and frameworks like TensorFlow and PyTorch.";
     } else if (/(education|school|study|university|college|degree|student)/.test(lowerQuery)) {
-      answer = "He is currently a 3rd Year BS Computer Science student at Laguna State Polytechnic University.";
+      answer =
+        "He is currently a 3rd Year BS Computer Science student at Laguna State Polytechnic University.";
     } else if (/(contact|email|phone|hire|reach|message)/.test(lowerQuery)) {
-      answer = "You can reach Kean via email at keangabriel101@email.com or use the contact form at the bottom of the page. He is currently open to new opportunities!";
+      answer =
+        "You can reach Kean via email at keangabriel101@gmail.com or use the contact form at the bottom of the page. He is currently open to new opportunities!";
     } else if (/(name|call him)/.test(lowerQuery)) {
       answer = "His full name is Kean Gabriel Salvahan. But you can just call him Kean!";
     } else if (/(where|location|from|live|based)/.test(lowerQuery)) {
       answer = "Kean is based in Laguna, Philippines.";
     } else if (/(hi|hello|hey|yo|greetings)/.test(lowerQuery)) {
-      answer = "Hello there! I'm an AI simulation of Kean. You can ask me about his skills, projects, education, or how to contact him!";
+      answer =
+        "Hello there! I'm an AI simulation of Kean. You can ask me about his skills, projects, education, or how to contact him!";
     } else if (/(help|command|what can you do)/.test(lowerQuery)) {
-      answer = "You can ask me questions like 'What are your skills?', 'Where did you go to school?', 'What is your name?' or 'What projects have you built?'";
+      answer =
+        "You can ask me questions like 'What are your skills?', 'Where did you go to school?', 'What is your name?' or 'What projects have you built?'";
     } else if (/(about|who|background|age|birthday|old)/.test(lowerQuery)) {
-      answer = "Kean is a 21-year-old AI/ML Engineer based in Laguna, Philippines. He's passionate about building intelligent systems and intuitive UI designs.";
+      answer =
+        "Kean is a 21-year-old AI/ML Engineer based in Laguna, Philippines. He's passionate about building intelligent systems and intuitive UI designs.";
     }
 
-    setMessages(prev => [...prev, { role: 'user', text: query }]);
+    setMessages((prev) => [...prev, { role: "user", text: query }]);
     setIsTyping(true);
     setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'ai', text: answer }]);
+      setMessages((prev) => [...prev, { role: "ai", text: answer }]);
       setIsTyping(false);
-    }, 1200);
+    }, 1100);
   };
 
   const prompts = [
     "Who are you?",
     "What are your skills?",
     "Tell me about your projects",
-    "How can I contact you?"
+    "How can I contact you?",
   ];
 
   return (
-    <div className="w-full flex flex-col items-center justify-center min-h-[60vh] py-10 relative z-10 max-w-3xl mx-auto px-4 md:px-0">
-      <motion.div 
-        layout
-        className={`w-full backdrop-blur-2xl border rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-all duration-500 ${
-          isDark 
-            ? "bg-slate-950/60 border-white/10 shadow-cyan-500/10" 
-            : "bg-white/80 border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)]"
-        }`}
-        style={{ minHeight: messages.length === 0 ? "auto" : "500px", maxHeight: "75vh" }}
-      >
-        {/* Top Header/Status Bar */}
-        <div className={`flex items-center justify-between px-4 py-3 border-b ${
-          isDark ? "bg-white/[0.03] border-white/5" : "bg-slate-50/60 border-slate-200 shadow-sm"
-        }`}>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-rose-500/80 border border-black/20" />
-            <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-black/20" />
-            <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-black/20" />
-          </div>
-          <div className={`flex items-center gap-2 text-[11px] font-mono ml-4 pointer-events-none ${
-            isDark ? "text-slate-400" : "text-slate-500"
-          }`}>
-            <Terminal size={12} className="text-cyan-400" /> kean_agent.sh
-          </div>
-          <div className={`flex items-center gap-2 text-[10px] font-mono ${
-            isDark ? "text-slate-500" : "text-slate-400"
-          }`}>
-            {messages.length > 0 && <span className="animate-pulse text-cyan-400">●</span>}
-            {messages.length > 0 ? "ACTIVE" : "IDLE"}
-          </div>
-        </div>
-
-        {/* Dynamic Content Area */}
-        <div className="flex flex-col flex-1 overflow-hidden relative">
-          <AnimatePresence mode="wait">
-            {messages.length === 0 ? (
-              <motion.div 
-                key="empty"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col px-6 py-10 md:px-10 md:py-14"
+    <>
+      {/* Floating Trigger Pill */}
+      <AnimatePresence>
+        {!isOpen && (
+          <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+            {showTeaser && (
+              <motion.div
+                initial={{ opacity: 0, x: 20, scale: 0.9 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-slate-900/90 backdrop-blur-md text-xs text-slate-300 shadow-xl"
               >
-                <div className="flex flex-col items-start w-full">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-lg ${
-                    isDark 
-                      ? "bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.15)]" 
-                      : "bg-gradient-to-br from-cyan-50 to-violet-50 border border-cyan-200/50 shadow-cyan-500/10"
-                  }`}>
-                    <Brain size={24} className={isDark ? "text-cyan-400" : "text-cyan-500"} />
-                  </div>
-                  <h1 className={`text-3xl md:text-5xl font-bold tracking-tight mb-3 ${
-                    isDark ? "text-slate-100" : "text-slate-800"
-                  }`}>
-                    Agent Initialize.
-                  </h1>
-                  <p className={`text-sm md:text-base leading-relaxed mb-10 max-w-xl ${
-                    isDark ? "text-slate-400" : "text-slate-600"
-                  }`}>
-                    I am an interactive AI replica of Kean. You can run commands or ask questions 
-                    regarding his background, tech stack, and portfolio projects.
-                  </p>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
-                    {prompts.map((p, i) => (
-                      <button
-                        key={i}
-                        onClick={() => handlePromptClick(p)}
-                        className={`flex items-center gap-4 p-4 rounded-xl border text-left transition-all group ${
-                          isDark 
-                            ? "bg-white/[0.02] border-white/5 hover:bg-white/[0.06] hover:border-cyan-500/30" 
-                            : "bg-white border-slate-200/80 hover:bg-slate-50 hover:border-cyan-400/40 shadow-sm"
-                        }`}
-                      >
-                        <div className={`p-2 rounded-lg font-mono transition-colors group-hover:text-cyan-400 ${
-                          isDark ? "bg-white/5 text-slate-500" : "bg-slate-100 text-slate-400"
-                        }`}>
-                          <MessageSquare size={16} />
-                        </div>
-                        <span className={`text-sm font-medium ${
-                          isDark ? "text-slate-300" : "text-slate-700"
-                        }`}>{p}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key="chat"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="flex-1 overflow-y-auto no-scrollbar p-6"
-              >
-                <div ref={scrollRef} className="space-y-6">
-                  {messages.map((m, i) => (
-                     <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      {m.role === 'ai' && (
-                        <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-md shadow-cyan-500/20">
-                          <Brain size={14} className="text-white" />
-                        </div>
-                      )}
-                      <div className={`px-5 py-3.5 rounded-2xl max-w-[85%] text-sm leading-relaxed ${
-                        m.role === 'user' 
-                          ? (isDark ? 'bg-white/10 text-slate-100 rounded-tr-sm' : 'bg-[#1e293b] text-white rounded-tr-sm shadow-sm')
-                          : (isDark ? 'bg-transparent text-slate-300 border border-white/5' : 'bg-white text-slate-700 border border-slate-200 shadow-sm')
-                        }`}>
-                        {m.text}
-                      </div>
-                    </div>
-                  ))}
-                  {isTyping && (
-                    <div className="flex justify-start">
-                      <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-3 mt-1 shadow-md shadow-cyan-500/20">
-                        <Brain size={14} className="text-white" />
-                      </div>
-                      <div className={`px-5 py-4 rounded-2xl flex items-center gap-1.5 h-10 border ${
-                        isDark ? "bg-transparent border-white/5" : "bg-white border-slate-200 shadow-sm"
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`} style={{ animationDelay: '0ms' }} />
-                        <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`} style={{ animationDelay: '150ms' }} />
-                        <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-slate-500' : 'bg-slate-400'}`} style={{ animationDelay: '300ms' }} />
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <span>Ask Kean&apos;s AI replica</span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowTeaser(false);
+                  }}
+                  className="text-slate-500 hover:text-white ml-1"
+                >
+                  <X size={12} />
+                </button>
               </motion.div>
             )}
-          </AnimatePresence>
-        </div>
 
-        {/* Sticky Input Bar */}
-        <div className={`p-3 md:p-4 border-t backdrop-blur-md z-20 ${
-          isDark ? "bg-slate-950/80 border-white/10" : "bg-slate-50/90 border-slate-200"
-        }`}>
-          <form onSubmit={handleInputSubmit} className={`relative flex items-center border rounded-xl transition-all focus-within:border-cyan-500/40 ${
-            isDark ? "bg-white/[0.03] border-white/5 focus-within:bg-white/[0.05]" : "bg-white border-slate-200 shadow-sm focus-within:shadow-md"
-          }`}>
-            <span className="pl-4 text-cyan-400 font-bold font-mono text-sm">{">"}</span>
-            <input 
-              type="text" 
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              disabled={isTyping}
-              placeholder="Enter a command..." 
-              className={`w-full !bg-transparent !border-none focus:ring-0 text-sm outline-none pl-3 pr-24 py-3.5 font-mono ${
-                isDark ? "text-slate-200 placeholder-slate-600" : "text-slate-800 placeholder-slate-400"
+            <motion.button
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setIsOpen(true);
+                setShowTeaser(false);
+              }}
+              className="flex items-center gap-3 px-4 py-3 rounded-full border border-cyan-400/40 bg-slate-900/95 hover:bg-slate-850 backdrop-blur-xl text-white shadow-[0_0_25px_rgba(34,211,238,0.25)] hover:shadow-[0_0_35px_rgba(34,211,238,0.45)] transition-all cursor-pointer group"
+              aria-label="Open Kean AI Assistant"
+            >
+              <div className="relative w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center shadow-inner">
+                <Brain size={16} className="text-white" />
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-900 animate-pulse" />
+              </div>
+              <div className="flex flex-col items-start pr-1 text-left">
+                <span className="text-xs font-bold tracking-wide text-slate-100 flex items-center gap-1.5">
+                  Ask AI Kean
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                    BOT
+                  </span>
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono">Online</span>
+              </div>
+            </motion.button>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Chat Modal */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            transition={{ type: "spring", stiffness: 320, damping: 30 }}
+            className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] w-[calc(100vw-2rem)] sm:w-[430px] h-[580px] max-h-[85vh] rounded-3xl border shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden ${
+              isDark
+                ? "bg-slate-950/95 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(34,211,238,0.15)]"
+                : "bg-white/95 border-slate-200 shadow-[0_20px_50px_rgba(0,0,0,0.2)]"
+            }`}
+          >
+            {/* Header */}
+            <div
+              className={`flex items-center justify-between px-4 py-3 border-b select-none ${
+                isDark ? "bg-white/[0.04] border-white/5" : "bg-slate-50 border-slate-200"
               }`}
-            />
-            <div className="absolute right-2 flex items-center gap-2">
-              {messages.length > 0 && (
-                <button 
-                  type="button" 
-                  onClick={() => setMessages([])} 
-                  className={`px-2 py-1 rounded text-[10px] transition-colors tracking-widest font-mono uppercase ${
-                    isDark ? "hover:bg-white/10 text-slate-500 hover:text-red-400" : "hover:bg-slate-100 text-slate-400 hover:text-red-500"
-                  }`}
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-full bg-rose-500/80 border border-black/20" />
+                <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-black/20" />
+                <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-black/20" />
+                <span className="text-[11px] font-mono text-slate-400 ml-2 flex items-center gap-1.5">
+                  <Terminal size={12} className="text-cyan-400" /> kean_agent.sh
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  ACTIVE
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                  aria-label="Close AI Chat"
                 >
-                  Clear
+                  <X size={16} />
                 </button>
-              )}
-              <button 
-                type="submit" 
-                disabled={!inputValue.trim() || isTyping} 
-                className={`p-1.5 rounded-md disabled:opacity-30 transition-colors ${
-                  isDark 
-                    ? "bg-white/5 text-slate-400 hover:text-cyan-400 disabled:hover:text-slate-500" 
-                    : "bg-slate-100 text-slate-500 hover:text-cyan-600 disabled:hover:text-slate-400"
-                }`}
-                aria-label="Send"
-              >
-                <Send size={14} />
-              </button>
+              </div>
             </div>
-          </form>
-        </div>
-      </motion.div>
-    </div>
+
+            {/* Content Area */}
+            <div className="flex flex-col flex-1 overflow-hidden relative">
+              <AnimatePresence mode="wait">
+                {messages.length === 0 ? (
+                  <motion.div
+                    key="empty"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="flex flex-col p-6 overflow-y-auto no-scrollbar"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/30 flex items-center justify-center shadow-lg shadow-cyan-500/10">
+                        <Brain size={22} className="text-cyan-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-bold text-slate-100">Kean&apos;s AI Replica</h4>
+                        <p className="text-xs text-slate-400 font-mono">Ask anything about Kean</p>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-slate-400 leading-relaxed mb-6">
+                      I&apos;m programmed with details about Kean&apos;s background, tech stack, machine learning projects, and education. Try one of the prompts below!
+                    </p>
+
+                    <div className="flex flex-col gap-2 w-full">
+                      {prompts.map((p, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handlePromptClick(p)}
+                          className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all group ${
+                            isDark
+                              ? "bg-white/[0.02] border-white/5 hover:bg-white/[0.06] hover:border-cyan-500/30"
+                              : "bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-cyan-400/40"
+                          }`}
+                        >
+                          <div className="p-1.5 rounded-lg bg-white/5 text-slate-400 group-hover:text-cyan-400 transition-colors">
+                            <MessageSquare size={13} />
+                          </div>
+                          <span className="text-xs font-medium text-slate-300 group-hover:text-cyan-300 transition-colors">
+                            {p}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar">
+                    {messages.map((m, i) => (
+                      <div
+                        key={i}
+                        className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
+                      >
+                        {m.role === "ai" && (
+                          <div className="shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-2 mt-1 shadow-md shadow-cyan-500/20">
+                            <Brain size={12} className="text-white" />
+                          </div>
+                        )}
+                        <div
+                          className={`px-4 py-3 rounded-2xl max-w-[85%] text-xs leading-relaxed ${
+                            m.role === "user"
+                              ? isDark
+                                ? "bg-gradient-to-r from-cyan-500/20 to-violet-500/20 text-slate-100 border border-cyan-500/30 rounded-tr-sm"
+                                : "bg-slate-800 text-white rounded-tr-sm"
+                              : isDark
+                                ? "bg-white/[0.04] text-slate-300 border border-white/5 rounded-tl-sm"
+                                : "bg-slate-100 text-slate-700 border border-slate-200 rounded-tl-sm"
+                          }`}
+                        >
+                          {m.text}
+                        </div>
+                      </div>
+                    ))}
+                    {isTyping && (
+                      <div className="flex justify-start">
+                        <div className="shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 flex items-center justify-center mr-2 mt-1">
+                          <Brain size={12} className="text-white" />
+                        </div>
+                        <div className="px-4 py-3 rounded-2xl flex items-center gap-1.5 border border-white/5 bg-white/[0.03]">
+                          <span className="w-1.5 h-1.5 rounded-full animate-bounce bg-cyan-400" style={{ animationDelay: "0ms" }} />
+                          <span className="w-1.5 h-1.5 rounded-full animate-bounce bg-cyan-400" style={{ animationDelay: "150ms" }} />
+                          <span className="w-1.5 h-1.5 rounded-full animate-bounce bg-cyan-400" style={{ animationDelay: "300ms" }} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Input Bar */}
+            <div
+              className={`p-3 border-t backdrop-blur-md ${
+                isDark ? "bg-slate-950/80 border-white/5" : "bg-slate-50 border-slate-200"
+              }`}
+            >
+              <form
+                onSubmit={handleInputSubmit}
+                className={`relative flex items-center border rounded-xl transition-all focus-within:border-cyan-500/40 ${
+                  isDark
+                    ? "bg-white/[0.03] border-white/5 focus-within:bg-white/[0.06]"
+                    : "bg-white border-slate-200"
+                }`}
+              >
+                <span className="pl-3 text-cyan-400 font-bold font-mono text-xs">{">"}</span>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  disabled={isTyping}
+                  placeholder="Ask a question or enter a command..."
+                  className={`w-full !bg-transparent !border-none focus:ring-0 text-xs outline-none pl-2.5 pr-20 py-2.5 font-mono ${
+                    isDark ? "text-slate-200 placeholder-slate-500" : "text-slate-800 placeholder-slate-400"
+                  }`}
+                />
+                <div className="absolute right-2 flex items-center gap-1.5">
+                  {messages.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setMessages([])}
+                      className="px-1.5 py-0.5 rounded text-[9px] transition-colors font-mono uppercase text-slate-500 hover:text-rose-400"
+                    >
+                      Clear
+                    </button>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={!inputValue.trim() || isTyping}
+                    className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 disabled:opacity-30 transition-colors"
+                    aria-label="Send"
+                  >
+                    <Send size={12} />
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -706,6 +801,7 @@ export default function Portfolio() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [aiChatOpen, setAiChatOpen] = useState(false);
 
   // Persist theme preference
   useEffect(() => {
@@ -911,110 +1007,195 @@ export default function Portfolio() {
         </AnimatePresence>
       </nav>
 
-      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-32 pb-24 space-y-40">
+      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-24 space-y-36">
 
-        {/* ── AI SEARCH HERO (NEW) ─────────────────────────────────── */}
-        <section className="min-h-[70vh] flex flex-col justify-center pt-4 md:pt-10">
-          <AiInteractiveDemo isDark={isDark} />
-        </section>
-
-        {/* ── PERSONAL DETAILS (OLD HERO) ──────────────────────────── */}
-        <section id="about" className="scroll-mt-28 flex flex-col md:flex-row items-center gap-12 md:gap-20">
-            {/* Text side */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="flex-1 space-y-6"
-            >
-              <motion.p variants={fadeUp} className="text-cyan-400 font-mono text-lg">
-                Hi, my name is
-              </motion.p>
-              <motion.h2
-                variants={fadeUp}
-                className="text-5xl md:text-6xl font-bold text-slate-100 tracking-tight leading-none"
-              >
-                Kean Salvahan.
-              </motion.h2>
-              <motion.h3
-                variants={fadeUp}
-                className="text-3xl md:text-4xl font-bold text-slate-500"
-              >
-                I build{" "}
-                <span className="bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
-                  AI/ML
-                </span>{" "}
-                solutions.
-              </motion.h3>
-              <motion.p
-                variants={fadeUp}
-                className="max-w-xl text-lg text-slate-400 leading-relaxed"
-              >
-                I&apos;m an AI/ML Engineer specializing in building intelligent systems,
-                optimizing machine learning models, and turning complex data into scalable applications.
-              </motion.p>
-              <motion.div variants={fadeUp} className="pt-4 flex gap-4 flex-wrap">
-                <motion.a
-                  href="#projects"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white font-semibold rounded-lg transition-all shadow-lg shadow-cyan-500/20"
-                >
-                  View My Work
-                </motion.a>
-                <motion.a
-                  href="#contact"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-6 py-3 border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 rounded-lg transition-all"
-                >
-                  Contact Me
-                </motion.a>
-                <motion.a
-                  href="/resume.pdf"
-                  download
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="px-6 py-3 flex items-center gap-2 border border-slate-700 bg-white/5 hover:bg-white/10 hover:border-violet-400 hover:text-violet-400 rounded-lg transition-all"
-                >
-                  <Download size={18} />
-                  Download CV
-                </motion.a>
-              </motion.div>
-            </motion.div>
-
-            {/* Photo side */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-              className="flex-shrink-0 relative"
-            >
-              {/* Glow ring — CSS-only spin for GPU-compositor efficiency */}
-              <div className="animate-spin-slow absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-500 via-violet-500 to-transparent p-[2px] blur-sm scale-105" />
-              {/* Profile photo — CSS-only float for GPU-compositor efficiency */}
-              <div className="animate-float relative w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-2 border-white/10 bg-slate-800 shadow-2xl shadow-cyan-500/20">
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={isDark ? "dark-photo" : "light-photo"}
-                    initial={{ opacity: 0, scale: 1.05 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="absolute -inset-1"
-                  >
-                    <Image
-                      src={isDark ? "/images/pogiko.jpg" : "/images/pogiko2.jpg"}
-                      alt="Kean Salvahan"
-                      fill
-                      className="object-cover scale-105"
-                    />
-                  </motion.div>
-                </AnimatePresence>
+        {/* ── HERO / ABOUT SECTION ─────────────────────────────────── */}
+        <section
+          id="about"
+          className="min-h-[80vh] flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 pt-4 pb-8"
+        >
+          {/* Text side */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="flex-1 space-y-6 max-w-2xl"
+          >
+            {/* Status & Location badges */}
+            <motion.div variants={fadeUp} className="flex items-center gap-3 flex-wrap">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-mono font-medium backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Available for AI & Software Projects
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-slate-400 text-xs font-mono">
+                <MapPin size={12} className="text-cyan-400" /> Laguna, Philippines
               </div>
             </motion.div>
+
+            {/* Main Greeting & Headings */}
+            <div className="space-y-3">
+              <motion.p variants={fadeUp} className="text-cyan-400 font-mono text-base md:text-lg tracking-wide">
+                Hi, my name is
+              </motion.p>
+              <motion.h1
+                variants={fadeUp}
+                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-100 tracking-tight leading-[1.08]"
+              >
+                Kean Salvahan.
+              </motion.h1>
+              <motion.h2
+                variants={fadeUp}
+                className="text-2xl sm:text-4xl font-bold text-slate-400"
+              >
+                I build{" "}
+                <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-violet-400 bg-clip-text text-transparent">
+                  AI/ML
+                </span>{" "}
+                solutions & intelligent web apps.
+              </motion.h2>
+            </div>
+
+            {/* Bio Paragraph */}
+            <motion.p
+              variants={fadeUp}
+              className="text-base sm:text-lg text-slate-400 leading-relaxed font-normal"
+            >
+              I&apos;m an AI/ML Engineer and 3rd Year BS Computer Science student at Laguna State Polytechnic University. Passionate about designing neural models, agentic workflows, and turning complex ideas into performant applications.
+            </motion.p>
+
+            {/* Key Highlight Pills */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5 pt-1">
+              <span className="px-3 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
+                🎓 BS Computer Science
+              </span>
+              <span className="px-3 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
+                🚀 4+ Featured Projects
+              </span>
+              <span className="px-3 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
+                📜 12+ Certifications
+              </span>
+            </motion.div>
+
+            {/* Action Buttons */}
+            <motion.div variants={fadeUp} className="pt-3 flex gap-3 flex-wrap items-center">
+              <motion.a
+                href="#projects"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 hover:from-cyan-400 hover:to-violet-400 text-white font-semibold rounded-xl transition-all shadow-lg shadow-cyan-500/20 text-sm"
+              >
+                View My Work
+              </motion.a>
+              <motion.a
+                href="#contact"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-6 py-3 border border-slate-700 hover:border-cyan-400 hover:text-cyan-400 rounded-xl transition-all font-medium text-slate-300 text-sm"
+              >
+                Contact Me
+              </motion.a>
+              <motion.a
+                href="/resume.pdf"
+                download
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-5 py-3 flex items-center gap-2 border border-slate-700 bg-white/5 hover:bg-white/10 hover:border-violet-400 hover:text-violet-400 rounded-xl transition-all font-medium text-slate-300 text-sm"
+              >
+                <Download size={16} />
+                Download CV
+              </motion.a>
+              <motion.button
+                onClick={() => setAiChatOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-4 py-3 flex items-center gap-2 border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 rounded-xl transition-all text-sm font-medium"
+              >
+                <Brain size={16} />
+                Ask AI Agent
+              </motion.button>
+            </motion.div>
+
+            {/* Social Links Row */}
+            <motion.div variants={fadeUp} className="flex items-center gap-3 pt-2 text-slate-400">
+              <a
+                href="https://github.com/kenji0011"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-xl border border-white/10 hover:border-cyan-400/50 hover:text-cyan-400 hover:bg-white/5 transition-all"
+                aria-label="GitHub Profile"
+              >
+                <Github size={18} />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-xl border border-white/10 hover:border-cyan-400/50 hover:text-cyan-400 hover:bg-white/5 transition-all"
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin size={18} />
+              </a>
+              <a
+                href="mailto:keangabriel101@gmail.com"
+                className="p-2.5 rounded-xl border border-white/10 hover:border-cyan-400/50 hover:text-cyan-400 hover:bg-white/5 transition-all"
+                aria-label="Email Kean"
+              >
+                <Mail size={18} />
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* Photo side */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="flex-shrink-0 relative my-6 lg:my-0"
+          >
+            {/* Ambient background glow */}
+            <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-cyan-500/20 via-violet-500/20 to-transparent blur-2xl -z-10" />
+
+            {/* Glow ring — CSS-only spin */}
+            <div className="animate-spin-slow absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-violet-500 to-transparent p-[3px] blur-sm scale-105" />
+
+            {/* Profile photo container */}
+            <div className="animate-float relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-2 border-white/20 bg-slate-900 shadow-2xl shadow-cyan-500/20">
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={isDark ? "dark-photo" : "light-photo"}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="absolute -inset-1"
+                >
+                  <Image
+                    src={isDark ? "/images/pogiko.jpg" : "/images/pogiko2.jpg"}
+                    alt="Kean Salvahan"
+                    fill
+                    priority
+                    className="object-cover scale-105"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Floating Experience / Role Chip */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="absolute -bottom-3 -left-3 sm:bottom-2 sm:left-0 px-4 py-2 rounded-2xl border border-white/10 bg-slate-900/90 backdrop-blur-xl shadow-xl flex items-center gap-2.5 text-xs text-slate-200"
+            >
+              <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400">
+                <Brain size={16} />
+              </div>
+              <div>
+                <p className="font-semibold leading-tight">AI & ML Engineer</p>
+                <p className="text-[10px] text-slate-400 font-mono">LSPU CS Student</p>
+              </div>
+            </motion.div>
+          </motion.div>
         </section>
 
 
@@ -1858,7 +2039,7 @@ export default function Portfolio() {
 
       {/* ── Floating Back to Top Button ─────────────────────────────── */}
       <AnimatePresence>
-        {showBackToTop && !selectedProject && !selectedCert && !isZoomed && (
+        {showBackToTop && !selectedProject && !selectedCert && !isZoomed && !aiChatOpen && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -1867,12 +2048,19 @@ export default function Portfolio() {
             whileTap={{ scale: 0.9 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             aria-label="Scroll to top"
-            className="fixed bottom-6 right-6 z-40 p-3 rounded-full border border-white/10 bg-slate-900/80 backdrop-blur-md text-cyan-400 hover:text-cyan-300 hover:border-cyan-400/40 shadow-lg shadow-black/40 transition-all cursor-pointer"
+            className="fixed bottom-24 right-6 z-40 p-3 rounded-full border border-white/10 bg-slate-900/80 backdrop-blur-md text-cyan-400 hover:text-cyan-300 hover:border-cyan-400/40 shadow-lg shadow-black/40 transition-all cursor-pointer"
           >
             <ChevronUp size={20} />
           </motion.button>
         )}
       </AnimatePresence>
+
+      {/* ── Floating AI Copilot ─────────────────────────────────────── */}
+      <FloatingAiCopilot
+        isDark={isDark}
+        isOpen={aiChatOpen}
+        setIsOpen={setAiChatOpen}
+      />
 
       {/* ── FOOTER ──────────────────────────────────────────────────── */}
       <footer className="relative z-10 py-10 text-center border-t border-white/5">
