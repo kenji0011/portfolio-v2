@@ -565,7 +565,11 @@ function FloatingAiCopilot({
 
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1 border-2 border-current hover:bg-current hover:text-white dark:hover:text-black transition-colors"
+                className={`p-1 border-2 transition-colors cursor-pointer ${
+                  isDark
+                    ? "bg-black text-white border-white hover:bg-white hover:text-black"
+                    : "bg-white text-black border-black hover:bg-black hover:text-white"
+                }`}
                 aria-label="Close AI Chat"
               >
                 <X size={15} />
@@ -680,7 +684,11 @@ function FloatingAiCopilot({
                   <button
                     type="submit"
                     disabled={!inputValue.trim() || isTyping}
-                    className="p-1.5 border border-current hover:bg-current hover:text-white dark:hover:text-black disabled:opacity-30 transition-colors"
+                    className={`p-1.5 border transition-colors ${
+                      isDark
+                        ? "border-white bg-black text-white hover:bg-white hover:text-black"
+                        : "border-black bg-white text-black hover:bg-black hover:text-white"
+                    } disabled:opacity-30 cursor-pointer`}
                     aria-label="Send"
                   >
                     <Send size={11} />
@@ -726,8 +734,11 @@ const ProjectCardItem = ({ project, cardHover, className, onClick, isDark }: any
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            aria-label={`GitHub repo for ${project.title}`}
-            className="p-1 border border-current text-current hover:bg-current hover:text-white dark:hover:text-black transition-colors"
+            className={`p-1.5 border-2 rounded-md transition-colors ${
+              isDark
+                ? "bg-[#141414] text-white border-white hover:bg-white hover:text-black"
+                : "bg-white text-black border-black hover:bg-black hover:text-white"
+            }`}
           >
             <Github size={15} />
           </a>
@@ -762,7 +773,6 @@ export default function Portfolio() {
   const [certPage, setCertPage] = useState(0);
   const [certDirection, setCertDirection] = useState(1);
   const githubScrollRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(1);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const [isMobile, setIsMobile] = useState(() => {
@@ -834,7 +844,6 @@ export default function Portfolio() {
     const scrollToRecent = () => {
       if (el && el.scrollWidth > el.clientWidth) {
         el.scrollLeft = el.scrollWidth - el.clientWidth;
-        setScrollProgress(1);
       }
     };
 
@@ -856,25 +865,6 @@ export default function Portfolio() {
       observer.disconnect();
     };
   }, []);
-
-  const handleGithubScroll = () => {
-    const el = githubScrollRef.current;
-    if (!el) return;
-    const maxScroll = el.scrollWidth - el.clientWidth;
-    if (maxScroll > 0) {
-      setScrollProgress(Math.min(1, Math.max(0, el.scrollLeft / maxScroll)));
-    }
-  };
-
-  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
-    setScrollProgress(val);
-    const el = githubScrollRef.current;
-    if (el) {
-      const maxScroll = el.scrollWidth - el.clientWidth;
-      el.scrollLeft = val * maxScroll;
-    }
-  };
 
   const navLinks = [
     { name: "About", href: "#about" },
@@ -1082,7 +1072,11 @@ export default function Portfolio() {
                 href="https://github.com/kenji0011"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 border-2 border-current shadow-[2px_2px_0px_currentColor] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
+                className={`p-2.5 border-2 rounded-lg transition-all ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                }`}
                 aria-label="GitHub Profile"
               >
                 <Github size={17} />
@@ -1091,14 +1085,22 @@ export default function Portfolio() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 border-2 border-current shadow-[2px_2px_0px_currentColor] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
+                className={`p-2.5 border-2 rounded-lg transition-all ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                }`}
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={17} />
               </a>
               <a
                 href="mailto:keangabriel101@gmail.com"
-                className="p-2.5 border-2 border-current shadow-[2px_2px_0px_currentColor] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform"
+                className={`p-2.5 border-2 rounded-lg transition-all ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                }`}
                 aria-label="Email Kean"
               >
                 <Mail size={17} />
@@ -1222,12 +1224,18 @@ export default function Portfolio() {
                   "Creativity", "Communication", "Adaptability",
                   "Continuous Learning", "Time Management", "Teamwork",
                 ].map((skill) => (
-                  <span
+                  <motion.span
                     key={skill}
-                    className="px-3.5 py-1.5 rounded-lg border-2 border-current bg-black/5 dark:bg-white/5 text-current text-xs font-mono font-bold uppercase tracking-wider hover:bg-current hover:text-white dark:hover:text-black hover:shadow-[3px_3px_0px_currentColor] hover:-translate-y-0.5 transition-all duration-150 cursor-default"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`px-3.5 py-1.5 rounded-lg border-2 text-xs font-mono font-bold uppercase tracking-wider transition-all duration-150 cursor-pointer ${
+                      isDark
+                        ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                        : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                    }`}
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
               </div>
             </div>
@@ -1366,7 +1374,6 @@ export default function Portfolio() {
             {/* Scrollable calendar view */}
             <div
               ref={githubScrollRef}
-              onScroll={handleGithubScroll}
               className="w-full overflow-x-auto no-scrollbar py-1"
             >
               <div className="w-max min-w-full flex justify-center px-1">
@@ -1383,61 +1390,41 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Mobile Slide Bar Controller */}
-            <div className="mt-3 pt-3 border-t-2 border-current/15 flex flex-col gap-2 sm:hidden">
-              <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase text-current/75">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (githubScrollRef.current) {
-                      githubScrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
-                    }
-                  }}
-                  className="flex items-center gap-1 hover:text-current active:scale-95 transition-transform cursor-pointer"
-                >
-                  <span>◂ 1 Year Ago</span>
-                </button>
-                <span className="font-black px-2 py-0.5 border border-current rounded text-[9px] bg-black/5 dark:bg-white/10 tracking-wider">
-                  SLIDE TO EXPLORE
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (githubScrollRef.current) {
-                      githubScrollRef.current.scrollTo({
-                        left: githubScrollRef.current.scrollWidth,
-                        behavior: "smooth",
-                      });
-                    }
-                  }}
-                  className="flex items-center gap-1 hover:text-current active:scale-95 transition-transform font-black cursor-pointer"
-                >
-                  <span>Recent (Now) ▸</span>
-                </button>
-              </div>
-
-              {/* Tactile Comic Slider Track with Draggable Thumb */}
-              <div className="relative w-full h-4 rounded-full border-2 border-current bg-black/5 dark:bg-white/5 p-[2px] flex items-center shadow-[1px_1px_0px_currentColor]">
-                {/* Visual Track Progress Bar */}
-                <div
-                  className="h-full rounded-full border border-current bg-black text-white dark:bg-white dark:text-black transition-all duration-75"
-                  style={{
-                    width: `${Math.max(18, Math.min(100, scrollProgress * 100))}%`,
-                  }}
-                />
-
-                {/* Range Input Overlay for Drag / Touch scrub */}
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.005}
-                  value={scrollProgress}
-                  onChange={handleSliderChange}
-                  aria-label="Slide GitHub Activity timeline"
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                />
-              </div>
+            {/* Mobile Navigation Controls */}
+            <div className="mt-3 pt-3 border-t-2 border-current/15 flex items-center justify-between text-[11px] font-mono font-bold uppercase sm:hidden">
+              <button
+                type="button"
+                onClick={() => {
+                  if (githubScrollRef.current) {
+                    githubScrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+                  }
+                }}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 transition-all cursor-pointer ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[3px_3px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[3px_3px_0px_#111111]"
+                }`}
+              >
+                <span>◂ 1 Year Ago</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (githubScrollRef.current) {
+                    githubScrollRef.current.scrollTo({
+                      left: githubScrollRef.current.scrollWidth,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 transition-all cursor-pointer font-black ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[3px_3px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[3px_3px_0px_#111111]"
+                }`}
+              >
+                <span>Recent (Now) ▸</span>
+              </button>
             </div>
           </motion.div>
         </motion.section>
@@ -2224,8 +2211,11 @@ export default function Portfolio() {
                     rel="noopener noreferrer"
                     aria-label={item.label}
                     whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-current bg-black/5 dark:bg-white/5 border-2 border-current px-3 py-2 rounded-lg shadow-[2px_2px_0px_currentColor] hover:bg-current hover:text-white dark:hover:text-black transition-all"
+                    className={`flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider border-2 px-3 py-2 rounded-lg transition-all cursor-pointer ${
+                      isDark
+                        ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                        : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                    }`}
                   >
                     {item.icon} <span className="hidden sm:inline-block">{item.label}</span>
                   </motion.a>
@@ -2319,11 +2309,19 @@ export default function Portfolio() {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.08, x: -2, y: -2 }}
+            whileTap={{ scale: 0.95, x: 2, y: 2 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             aria-label="Scroll to top"
-            className="comic-btn-secondary fixed bottom-24 right-6 z-40 p-3 rounded-xl border-2 border-current shadow-[4px_4px_0px_currentColor] cursor-pointer"
+            style={{
+              background: isDark ? "#000000" : "#ffffff",
+              color: isDark ? "#ffffff" : "#111111",
+              borderColor: isDark ? "#ffffff" : "#111111",
+              boxShadow: isDark ? "4px 4px 0px #ffffff" : "4px 4px 0px #111111",
+            }}
+            className="fixed bottom-24 right-6 z-40 p-3 rounded-xl border-[2.5px] cursor-pointer transition-shadow"
           >
-            <ChevronUp size={20} />
+            <ChevronUp size={20} strokeWidth={2.5} />
           </motion.button>
         )}
       </AnimatePresence>
