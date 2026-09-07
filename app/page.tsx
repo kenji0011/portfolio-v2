@@ -369,7 +369,7 @@ const certifications: Certification[] = [
     year: "2026",
     description: "This course provide fundamentals about Excel, functions, vlookups, data sorting, pivot tables, and data analysis.",
    
-    image: null,
+    image: "/images/cert12.jpg",
     credential: "https://lms.simplilearn.com/courses/5990/Data%20Analyst%20101/certificate/download-skillup",
     category: "Certification",
   },
@@ -477,56 +477,26 @@ function FloatingAiCopilot({
 
   return (
     <>
-      {/* Floating Trigger Pill */}
+      {/* Floating Trigger Button */}
       <AnimatePresence>
         {!isOpen && (
-          <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-            {showTeaser && (
-              <motion.div
-                initial={{ opacity: 0, x: 20, scale: 0.9 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full border border-cyan-500/30 bg-slate-900/90 backdrop-blur-md text-xs text-slate-300 shadow-xl"
-              >
-                <span>Ask Kean&apos;s AI replica</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowTeaser(false);
-                  }}
-                  className="text-slate-500 hover:text-white ml-1"
-                >
-                  <X size={12} />
-                </button>
-              </motion.div>
-            )}
-
+          <div className="fixed bottom-6 right-6 z-50">
             <motion.button
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                setIsOpen(true);
-                setShowTeaser(false);
-              }}
-              className="flex items-center gap-3 px-4 py-3 rounded-full border border-cyan-400/40 bg-slate-900/95 hover:bg-slate-850 backdrop-blur-xl text-white shadow-[0_0_25px_rgba(34,211,238,0.25)] hover:shadow-[0_0_35px_rgba(34,211,238,0.45)] transition-all cursor-pointer group"
-              aria-label="Open Kean AI Assistant"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setIsOpen(true)}
+              className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-white/10 hover:border-cyan-500/40 bg-slate-900/90 hover:bg-slate-800 backdrop-blur-xl text-slate-200 hover:text-white shadow-xl shadow-black/40 transition-all cursor-pointer"
+              aria-label="Ask KenjiAI"
             >
-              <div className="relative w-7 h-7 rounded-full bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center shadow-inner">
-                <Brain size={16} className="text-white" />
-                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-900 animate-pulse" />
+              <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-cyan-500 to-violet-600 flex items-center justify-center shrink-0">
+                <Brain size={13} className="text-white" />
               </div>
-              <div className="flex flex-col items-start pr-1 text-left">
-                <span className="text-xs font-bold tracking-wide text-slate-100 flex items-center gap-1.5">
-                  Ask AI Kean
-                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                    BOT
-                  </span>
-                </span>
-                <span className="text-[10px] text-slate-400 font-mono">Online</span>
-              </div>
+              <span className="text-xs font-medium tracking-wide">
+                Need help? Ask KenjiAI
+              </span>
             </motion.button>
           </div>
         )}
@@ -557,23 +527,17 @@ function FloatingAiCopilot({
                 <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-black/20" />
                 <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-black/20" />
                 <span className="text-[11px] font-mono text-slate-400 ml-2 flex items-center gap-1.5">
-                  <Terminal size={12} className="text-cyan-400" /> kean_agent.sh
+                  <Terminal size={12} className="text-cyan-400" /> KenjiAI Assistant
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  ACTIVE
-                </div>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-                  aria-label="Close AI Chat"
-                >
-                  <X size={16} />
-                </button>
-              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                aria-label="Close AI Chat"
+              >
+                <X size={16} />
+              </button>
             </div>
 
             {/* Content Area */}
@@ -1021,17 +985,6 @@ export default function Portfolio() {
             variants={staggerContainer}
             className="flex-1 space-y-6 max-w-2xl"
           >
-            {/* Status & Location badges */}
-            <motion.div variants={fadeUp} className="flex items-center gap-3 flex-wrap">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-mono font-medium backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Available for AI & Software Projects
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-slate-400 text-xs font-mono">
-                <MapPin size={12} className="text-cyan-400" /> Laguna, Philippines
-              </div>
-            </motion.div>
-
             {/* Main Greeting & Headings */}
             <div className="space-y-3">
               <motion.p variants={fadeUp} className="text-cyan-400 font-mono text-base md:text-lg tracking-wide">
@@ -1063,19 +1016,6 @@ export default function Portfolio() {
               I&apos;m an AI/ML Engineer and 3rd Year BS Computer Science student at Laguna State Polytechnic University. Passionate about designing neural models, agentic workflows, and turning complex ideas into performant applications.
             </motion.p>
 
-            {/* Key Highlight Pills */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5 pt-1">
-              <span className="px-3 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
-                🎓 BS Computer Science
-              </span>
-              <span className="px-3 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
-                🚀 4+ Featured Projects
-              </span>
-              <span className="px-3 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-slate-300 text-xs font-mono">
-                📜 12+ Certifications
-              </span>
-            </motion.div>
-
             {/* Action Buttons */}
             <motion.div variants={fadeUp} className="pt-3 flex gap-3 flex-wrap items-center">
               <motion.a
@@ -1104,15 +1044,6 @@ export default function Portfolio() {
                 <Download size={16} />
                 Download CV
               </motion.a>
-              <motion.button
-                onClick={() => setAiChatOpen(true)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-                className="px-4 py-3 flex items-center gap-2 border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 rounded-xl transition-all text-sm font-medium"
-              >
-                <Brain size={16} />
-                Ask AI Agent
-              </motion.button>
             </motion.div>
 
             {/* Social Links Row */}
@@ -1159,7 +1090,7 @@ export default function Portfolio() {
             <div className="animate-spin-slow absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-violet-500 to-transparent p-[3px] blur-sm scale-105" />
 
             {/* Profile photo container */}
-            <div className="animate-float relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-2 border-white/20 bg-slate-900 shadow-2xl shadow-cyan-500/20">
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-2 border-white/20 bg-slate-900 shadow-2xl shadow-cyan-500/20">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={isDark ? "dark-photo" : "light-photo"}
@@ -1179,22 +1110,6 @@ export default function Portfolio() {
                 </motion.div>
               </AnimatePresence>
             </div>
-
-            {/* Floating Experience / Role Chip */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="absolute -bottom-3 -left-3 sm:bottom-2 sm:left-0 px-4 py-2 rounded-2xl border border-white/10 bg-slate-900/90 backdrop-blur-xl shadow-xl flex items-center gap-2.5 text-xs text-slate-200"
-            >
-              <div className="p-1.5 rounded-lg bg-cyan-500/20 text-cyan-400">
-                <Brain size={16} />
-              </div>
-              <div>
-                <p className="font-semibold leading-tight">AI & ML Engineer</p>
-                <p className="text-[10px] text-slate-400 font-mono">LSPU CS Student</p>
-              </div>
-            </motion.div>
           </motion.div>
         </section>
 
