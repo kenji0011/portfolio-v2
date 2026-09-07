@@ -56,6 +56,41 @@ const staggerContainer: Variants = {
 
 const cardHover = { y: -8, scale: 1.02 };
 
+const certSlideVariants: Variants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 90 : -90,
+    opacity: 0,
+    scale: 0.98,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    scale: 1,
+    transition: {
+      x: { type: "spring", stiffness: 350, damping: 28 },
+      opacity: { duration: 0.22 },
+      scale: { duration: 0.22 },
+      staggerChildren: 0.03,
+    },
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -90 : 90,
+    opacity: 0,
+    scale: 0.98,
+    transition: {
+      x: { type: "spring", stiffness: 350, damping: 28 },
+      opacity: { duration: 0.18 },
+      scale: { duration: 0.18 },
+    },
+  }),
+};
+
+const certCardItemVariants: Variants = {
+  enter: { opacity: 0, y: 10 },
+  center: { opacity: 1, y: 0, transition: { duration: 0.2, ease: "easeOut" } },
+  exit: { opacity: 0, transition: { duration: 0.1 } },
+};
+
 // ── Floating orb component ──────────────────────────────────────────────
 function Orb({ className }: { className: string; delay?: number }) {
   // Disabled Framer Motion infinite animation for performance.
@@ -725,6 +760,9 @@ export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [certPage, setCertPage] = useState(0);
+  const [certDirection, setCertDirection] = useState(1);
+  const githubScrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(1);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isDark, setIsDark] = useState(true);
   const [isMobile, setIsMobile] = useState(() => {
@@ -781,6 +819,61 @@ export default function Portfolio() {
       localStorage.setItem("portfolio-theme", next ? "dark" : "light");
       return next;
     });
+  };
+
+  const goToCertPage = (newPage: number) => {
+    setCertDirection(newPage >= certPage ? 1 : -1);
+    setCertPage(newPage);
+  };
+
+  // Auto-scroll GitHub calendar to latest activity on initial render & load
+  useEffect(() => {
+    const el = githubScrollRef.current;
+    if (!el) return;
+
+    const scrollToRecent = () => {
+      if (el && el.scrollWidth > el.clientWidth) {
+        el.scrollLeft = el.scrollWidth - el.clientWidth;
+        setScrollProgress(1);
+      }
+    };
+
+    const t1 = setTimeout(scrollToRecent, 200);
+    const t2 = setTimeout(scrollToRecent, 600);
+    const t3 = setTimeout(scrollToRecent, 1200);
+    const t4 = setTimeout(scrollToRecent, 2500);
+
+    const observer = new MutationObserver(() => {
+      scrollToRecent();
+    });
+    observer.observe(el, { childList: true, subtree: true });
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
+      observer.disconnect();
+    };
+  }, []);
+
+  const handleGithubScroll = () => {
+    const el = githubScrollRef.current;
+    if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    if (maxScroll > 0) {
+      setScrollProgress(Math.min(1, Math.max(0, el.scrollLeft / maxScroll)));
+    }
+  };
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = parseFloat(e.target.value);
+    setScrollProgress(val);
+    const el = githubScrollRef.current;
+    if (el) {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      el.scrollLeft = val * maxScroll;
+    }
   };
 
   const navLinks = [
@@ -948,7 +1041,7 @@ export default function Portfolio() {
               variants={fadeUp}
               className="text-base sm:text-lg leading-relaxed font-medium opacity-85"
             >
-              I&apos;m Intelligent systems specialist with a background in developing machine learning models, computer vision systems, and data management pipelines. Experienced in building full-stack AI solutions and using cloud platforms to deploy and scale data-driven projects that solve real-world problems.
+              I&apos;m an Intelligent systems specialist with a background in developing machine learning models, computer vision systems, and data management pipelines. Experienced in building full-stack AI solutions and using cloud platforms to deploy and scale data-driven projects that solve real-world problems.
             </motion.p>
 
             {/* Action Buttons */}
@@ -1265,17 +1358,87 @@ export default function Portfolio() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} style={{ background: "var(--bg-card)", color: "var(--text-base)" }} className="rounded-xl border-[2.5px] border-current p-6 lg:p-8 flex items-center justify-center overflow-x-auto no-scrollbar shadow-[6px_6px_0px_currentColor] min-h-[170px]">
-            <GitHubCalendar 
-              username="kenji0011" 
-              colorScheme={isDark ? "dark" : "light"}
-              theme={{
-                light: ['#ebebeb', '#c6c6c6', '#8e8e8e', '#4f4f4f', '#111111'],
-                dark: ['#181818', '#383838', '#6a6a6a', '#b5b5b5', '#ffffff'],
-              }}
-              style={{ color: "currentColor", fontFamily: "inherit" }}
-              blockSize={13}
-            />
+          <motion.div
+            variants={fadeUp}
+            style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
+            className="rounded-xl border-[2.5px] border-current p-4 sm:p-6 lg:p-8 shadow-[6px_6px_0px_currentColor] flex flex-col"
+          >
+            {/* Scrollable calendar view */}
+            <div
+              ref={githubScrollRef}
+              onScroll={handleGithubScroll}
+              className="w-full overflow-x-auto no-scrollbar py-1"
+            >
+              <div className="w-max min-w-full flex justify-center px-1">
+                <GitHubCalendar 
+                  username="kenji0011" 
+                  colorScheme={isDark ? "dark" : "light"}
+                  theme={{
+                    light: ['#ebebeb', '#c6c6c6', '#8e8e8e', '#4f4f4f', '#111111'],
+                    dark: ['#181818', '#383838', '#6a6a6a', '#b5b5b5', '#ffffff'],
+                  }}
+                  style={{ color: "currentColor", fontFamily: "inherit" }}
+                  blockSize={13}
+                />
+              </div>
+            </div>
+
+            {/* Mobile Slide Bar Controller */}
+            <div className="mt-3 pt-3 border-t-2 border-current/15 flex flex-col gap-2 sm:hidden">
+              <div className="flex items-center justify-between text-[10px] font-mono font-bold uppercase text-current/75">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (githubScrollRef.current) {
+                      githubScrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+                    }
+                  }}
+                  className="flex items-center gap-1 hover:text-current active:scale-95 transition-transform cursor-pointer"
+                >
+                  <span>◂ 1 Year Ago</span>
+                </button>
+                <span className="font-black px-2 py-0.5 border border-current rounded text-[9px] bg-black/5 dark:bg-white/10 tracking-wider">
+                  SLIDE TO EXPLORE
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (githubScrollRef.current) {
+                      githubScrollRef.current.scrollTo({
+                        left: githubScrollRef.current.scrollWidth,
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                  className="flex items-center gap-1 hover:text-current active:scale-95 transition-transform font-black cursor-pointer"
+                >
+                  <span>Recent (Now) ▸</span>
+                </button>
+              </div>
+
+              {/* Tactile Comic Slider Track with Draggable Thumb */}
+              <div className="relative w-full h-4 rounded-full border-2 border-current bg-black/5 dark:bg-white/5 p-[2px] flex items-center shadow-[1px_1px_0px_currentColor]">
+                {/* Visual Track Progress Bar */}
+                <div
+                  className="h-full rounded-full border border-current bg-black text-white dark:bg-white dark:text-black transition-all duration-75"
+                  style={{
+                    width: `${Math.max(18, Math.min(100, scrollProgress * 100))}%`,
+                  }}
+                />
+
+                {/* Range Input Overlay for Drag / Touch scrub */}
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.005}
+                  value={scrollProgress}
+                  onChange={handleSliderChange}
+                  aria-label="Slide GitHub Activity timeline"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                />
+              </div>
+            </div>
           </motion.div>
         </motion.section>
 
@@ -1734,15 +1897,16 @@ export default function Portfolio() {
               (currentCertPage + 1) * certsPerPage
             );
             return (
-              <div className="relative">
+              <div className="relative overflow-hidden p-1 -m-1">
                 {/* Grid */}
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" custom={certDirection}>
                   <motion.div
                     key={`${isMobile ? "m" : "d"}-${currentCertPage}`}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
+                    custom={certDirection}
+                    variants={certSlideVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
                   >
                     {visible.map((cert) => {
@@ -1750,6 +1914,7 @@ export default function Portfolio() {
                       return (
                         <motion.div
                           key={cert.title}
+                          variants={certCardItemVariants}
                           whileHover={{ scale: 1.02, y: -2 }}
                           onClick={() => setSelectedCert(cert)}
                           style={{
@@ -1816,7 +1981,7 @@ export default function Portfolio() {
                   <div className="flex items-center justify-between mt-8">
                     {/* Prev */}
                     <button
-                      onClick={() => setCertPage(Math.max(currentCertPage - 1, 0))}
+                      onClick={() => goToCertPage(Math.max(currentCertPage - 1, 0))}
                       disabled={currentCertPage === 0}
                       style={{
                         background: isDark ? "#141414" : "#ffffff",
@@ -1835,7 +2000,7 @@ export default function Portfolio() {
                       {Array.from({ length: totalPages }).map((_, idx) => (
                         <button
                           key={idx}
-                          onClick={() => setCertPage(idx)}
+                          onClick={() => goToCertPage(idx)}
                           aria-label={`Go to page ${idx + 1}`}
                           style={{
                             borderColor: isDark ? "#ffffff" : "#111111",
@@ -1850,7 +2015,7 @@ export default function Portfolio() {
 
                     {/* Next */}
                     <button
-                      onClick={() => setCertPage(Math.min(currentCertPage + 1, totalPages - 1))}
+                      onClick={() => goToCertPage(Math.min(currentCertPage + 1, totalPages - 1))}
                       disabled={currentCertPage >= totalPages - 1}
                       style={{
                         background: isDark ? "#141414" : "#ffffff",
