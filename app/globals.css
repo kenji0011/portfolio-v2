@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
 :root {
   --background: #fafaf8;
   --foreground: #111111;
@@ -51,19 +53,7 @@ body {
 }
 
 /* ── Comic Neo-Brutalist Theme Tokens ───────────────────────────────── */
-[data-theme="dark"] {
-  --bg-page: #0a0a0a;
-  --bg-panel: #121212;
-  --bg-card: #181818;
-  --bg-nav: rgba(10, 10, 10, 0.95);
-  --bg-modal: #111111;
-  --text-base: #f5f5f5;
-  --text-muted: #a1a1aa;
-  --border-color: #ffffff;
-  --shadow-color: #ffffff;
-}
-
-[data-theme="light"] {
+:root, [data-theme="light"] {
   --bg-page: #fafaf8;
   --bg-panel: #ffffff;
   --bg-card: #ffffff;
@@ -73,6 +63,18 @@ body {
   --text-muted: #52525b;
   --border-color: #111111;
   --shadow-color: #111111;
+}
+
+[data-theme="dark"] {
+  --bg-page: #0a0a0a;
+  --bg-panel: #121212;
+  --bg-card: #141414;
+  --bg-nav: rgba(10, 10, 10, 0.95);
+  --bg-modal: #111111;
+  --text-base: #f5f5f5;
+  --text-muted: #a1a1aa;
+  --border-color: #ffffff;
+  --shadow-color: #ffffff;
 }
 
 /* ── Tactile Comic Buttons ─────────────────────────────────────────── */
@@ -132,29 +134,13 @@ body {
   border-top: 10px solid currentColor;
 }
 
-/* ── Element-level typography overrides for Dark / Light ─────────────── */
-[data-theme="light"] h1,
-[data-theme="light"] h2,
-[data-theme="light"] h3,
-[data-theme="light"] h4,
-[data-theme="light"] h5 {
-  color: #111111 !important;
+/* ── Element-level typography defaults ───────────────────────────────── */
+[data-theme="light"] {
+  color-scheme: light;
 }
 
-[data-theme="light"] p {
-  color: #27272a !important;
-}
-
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4,
-[data-theme="dark"] h5 {
-  color: #ffffff !important;
-}
-
-[data-theme="dark"] p {
-  color: #d4d4d8 !important;
+[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 [data-theme] {

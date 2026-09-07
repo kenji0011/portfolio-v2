@@ -664,13 +664,12 @@ const ProjectCardItem = ({ project, cardHover, className, onClick, isDark }: any
   <motion.div
     onClick={onClick}
     whileHover={{ x: -2, y: -2 }}
-    className={`group flex flex-col shrink-0 border-[2.5px] border-current rounded-2xl overflow-hidden shadow-[5px_5px_0px_currentColor] hover:shadow-[8px_8px_0px_currentColor] transition-all cursor-pointer ${
-      isDark ? "bg-[#141414]" : "bg-white"
-    } ${className}`}
+    style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
+    className={`group flex flex-col shrink-0 border-[2.5px] border-current rounded-2xl overflow-hidden shadow-[5px_5px_0px_currentColor] hover:shadow-[8px_8px_0px_currentColor] transition-all cursor-pointer ${className}`}
   >
     {/* Project image banner */}
     {project.image ? (
-      <div className="relative w-full h-44 overflow-hidden bg-black/10 shrink-0 border-b-[2.5px] border-current">
+      <div className="relative w-full h-44 overflow-hidden bg-black/10 dark:bg-white/5 shrink-0 border-b-[2.5px] border-current">
         <Image src={project.image} alt={project.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
       </div>
     ) : (
@@ -683,23 +682,30 @@ const ProjectCardItem = ({ project, cardHover, className, onClick, isDark }: any
 
     <div className="flex flex-col flex-1 p-5">
       <div className="flex justify-between items-start mb-2">
-        <h4 className="text-base font-black uppercase tracking-tight group-hover:underline underline-offset-4 decoration-2 leading-snug">
+        <h4 className="text-base font-black uppercase tracking-tight group-hover:underline underline-offset-4 decoration-2 leading-snug text-current">
           {project.title}
         </h4>
         <div className="flex gap-2 ml-2 shrink-0">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="p-1 border border-current hover:bg-current hover:text-white dark:hover:text-black transition-colors">
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            aria-label={`GitHub repo for ${project.title}`}
+            className="p-1 border border-current text-current hover:bg-current hover:text-white dark:hover:text-black transition-colors"
+          >
             <Github size={15} />
           </a>
         </div>
       </div>
-      <p className="text-xs mb-4 leading-relaxed flex-1 opacity-80">{project.description}</p>
+      <p className="text-xs mb-4 leading-relaxed flex-1 text-current/80 font-medium">{project.description}</p>
       
       {/* Tech stack badges */}
       <div className="flex flex-wrap gap-1.5 mt-auto">
         {project.tags.map((tag: string) => (
           <span
             key={tag}
-            className="px-2 py-0.5 border border-current text-[10px] font-mono font-bold uppercase"
+            className="px-2 py-0.5 border border-current text-[10px] font-mono font-bold uppercase text-current bg-black/5 dark:bg-white/10"
           >
             {tag}
           </span>
@@ -720,14 +726,29 @@ export default function Portfolio() {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const [certPage, setCertPage] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
-  const CERTS_PER_PAGE = 12;
   const [isDark, setIsDark] = useState(true);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
 
   // Projects view toggle state
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [aiChatOpen, setAiChatOpen] = useState(false);
+
+  // Responsive mobile screen check (< 768px)
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Persist theme preference
   useEffect(() => {
@@ -800,7 +821,7 @@ export default function Portfolio() {
     <div
       data-theme={isDark ? "dark" : "light"}
       style={{ background: "var(--bg-page)", color: "var(--text-base)" }}
-      className="relative min-h-screen font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black overflow-x-hidden"
+      className={`relative min-h-screen font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black overflow-x-hidden ${isDark ? "dark" : ""}`}
     >
 
       {/* ── Comic Halftone Background ────────────────────────────────── */}
@@ -927,7 +948,7 @@ export default function Portfolio() {
               variants={fadeUp}
               className="text-base sm:text-lg leading-relaxed font-medium opacity-85"
             >
-              I&apos;m an AI/ML Engineer and 4th Year BS Computer Science student Major in Intelligent Systems at Laguna State Polytechnic University. Passionate about designing neural models, agentic workflows, and turning complex ideas into performant applications.
+              I&apos;m Intelligent systems specialist with a background in developing machine learning models, computer vision systems, and data management pipelines. Experienced in building full-stack AI solutions and using cloud platforms to deploy and scale data-driven projects that solve real-world problems.
             </motion.p>
 
             {/* Action Buttons */}
@@ -1000,7 +1021,15 @@ export default function Portfolio() {
             className="flex-shrink-0 relative my-6 lg:my-0"
           >
             {/* Comic Panel Corner Stamp */}
-            <div className="absolute -top-3 -right-3 z-10 border-2 border-current bg-current text-white dark:text-black px-2.5 py-0.5 font-mono font-black text-[10px] uppercase tracking-widest shadow-[2px_2px_0px_currentColor]">
+            <div
+              style={{
+                background: isDark ? "#ffffff" : "#111111",
+                color: isDark ? "#000000" : "#ffffff",
+                borderColor: isDark ? "#ffffff" : "#111111",
+                boxShadow: isDark ? "2px 2px 0px #ffffff" : "2px 2px 0px #111111",
+              }}
+              className="absolute -top-3 -right-3 z-10 border-2 px-2.5 py-0.5 font-mono font-black text-[10px] uppercase tracking-widest"
+            >
               CREATOR // 01
             </div>
 
@@ -1052,7 +1081,7 @@ export default function Portfolio() {
 
           <motion.div variants={fadeUp} className="grid md:grid-cols-2 gap-6">
             {/* Left — Core Skills */}
-            <div className="rounded-xl border-[2.5px] border-current bg-white dark:bg-[#111111] p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative">
+            <div style={{ background: "var(--bg-card)", color: "var(--text-base)" }} className="rounded-xl border-[2.5px] border-current p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative">
               <div className="flex items-center gap-2 mb-6">
                 <span className="w-2.5 h-2.5 bg-current inline-block"></span>
                 <h4 className="text-lg font-black uppercase tracking-wider text-current">Core Skills</h4>
@@ -1089,7 +1118,7 @@ export default function Portfolio() {
             </div>
 
             {/* Right — Soft Skills */}
-            <div className="rounded-xl border-[2.5px] border-current bg-white dark:bg-[#111111] p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative">
+            <div style={{ background: "var(--bg-card)", color: "var(--text-base)" }} className="rounded-xl border-[2.5px] border-current p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative">
               <div className="flex items-center gap-2 mb-6">
                 <span className="w-2.5 h-2.5 bg-current inline-block"></span>
                 <h4 className="text-lg font-black uppercase tracking-wider text-current">Soft Skills</h4>
@@ -1192,7 +1221,8 @@ export default function Portfolio() {
                   {[...row.items, ...row.items].map((tech, i) => (
                     <div
                       key={`${tech.name}-${i}`}
-                      className="group flex flex-col items-center justify-center gap-2 cursor-default shrink-0 w-24 h-24 p-2.5 rounded-xl border-2 border-current bg-white dark:bg-[#111111] shadow-[3px_3px_0px_currentColor] hover:-translate-y-1 hover:shadow-[5px_5px_0px_currentColor] transition-all duration-200"
+                      style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
+                      className="group flex flex-col items-center justify-center gap-2 cursor-default shrink-0 w-24 h-24 p-2.5 rounded-xl border-2 border-current shadow-[3px_3px_0px_currentColor] hover:-translate-y-1 hover:shadow-[5px_5px_0px_currentColor] transition-all duration-200"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
@@ -1235,7 +1265,7 @@ export default function Portfolio() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="rounded-xl border-[2.5px] border-current bg-white dark:bg-[#111111] p-6 lg:p-8 flex items-center justify-center overflow-x-auto no-scrollbar shadow-[6px_6px_0px_currentColor] min-h-[170px]">
+          <motion.div variants={fadeUp} style={{ background: "var(--bg-card)", color: "var(--text-base)" }} className="rounded-xl border-[2.5px] border-current p-6 lg:p-8 flex items-center justify-center overflow-x-auto no-scrollbar shadow-[6px_6px_0px_currentColor] min-h-[170px]">
             <GitHubCalendar 
               username="kenji0011" 
               colorScheme={isDark ? "dark" : "light"}
@@ -1296,6 +1326,7 @@ export default function Portfolio() {
                     key={`grid-${idx}`}
                     project={project}
                     cardHover={cardHover}
+                    isDark={isDark}
                     className="w-full"
                     onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
                   />
@@ -1326,6 +1357,7 @@ export default function Portfolio() {
                           key={`${project.title}-${copyIdx}-${idx}`}
                           project={project}
                           cardHover={cardHover}
+                          isDark={isDark}
                           className="w-[85vw] max-w-[350px]"
                           onClick={() => { setSelectedProject(project); setGalleryIndex(0); }}
                         />
@@ -1343,9 +1375,10 @@ export default function Portfolio() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedProject(null)}
-                className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-sm"
+                style={{
+                  backgroundColor: isDark ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.55)",
+                }}
+                className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 backdrop-blur-sm"
               >
                 <motion.div
                   initial={{ opacity: 0, y: 30, scale: 0.96 }}
@@ -1353,15 +1386,27 @@ export default function Portfolio() {
                   exit={{ opacity: 0, y: 30, scale: 0.96 }}
                   transition={{ type: "spring", stiffness: 280, damping: 30 }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] flex flex-col rounded-2xl border-[3.5px] border-current bg-white dark:bg-[#111111] text-current shadow-[12px_12px_0px_currentColor] overflow-hidden"
+                  style={{
+                    background: isDark ? "#141414" : "#ffffff",
+                    color: isDark ? "#f5f5f5" : "#111111",
+                    borderColor: isDark ? "#ffffff" : "#111111",
+                    boxShadow: isDark ? "10px 10px 0px #ffffff" : "10px 10px 0px #111111",
+                  }}
+                  className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] flex flex-col rounded-2xl border-[3.5px] overflow-hidden"
                 >
                   {/* Close button */}
                   <button
                     onClick={() => setSelectedProject(null)}
                     aria-label="Close project modal"
-                    className="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 p-2 sm:p-2.5 rounded-lg border-2 border-current bg-white dark:bg-black text-current hover:bg-current hover:text-white dark:hover:text-black shadow-[3px_3px_0px_currentColor] active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
+                    style={{
+                      background: isDark ? "#000000" : "#ffffff",
+                      color: isDark ? "#ffffff" : "#111111",
+                      borderColor: isDark ? "#ffffff" : "#111111",
+                      boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                    }}
+                    className="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 p-2 sm:p-2.5 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    <X size={18} strokeWidth={2.5} />
                   </button>
 
                   <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar">
@@ -1369,9 +1414,15 @@ export default function Portfolio() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-full">
 
                     {/* ── LEFT: Image gallery ── */}
-                    <div className="relative flex flex-col bg-black/5 dark:bg-white/5 border-b-2 lg:border-b-0 lg:border-r-2 border-current overflow-hidden">
+                    <div
+                      style={{
+                        background: isDark ? "rgba(255,255,255,0.03)" : "#f6f6f4",
+                        borderColor: isDark ? "#ffffff" : "#111111",
+                      }}
+                      className="relative flex flex-col border-b-2 lg:border-b-0 lg:border-r-2 overflow-hidden"
+                    >
                       {/* Main image */}
-                      <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[420px] bg-black/5 dark:bg-white/5 flex items-center justify-center p-3 sm:p-4">
+                      <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[420px] flex items-center justify-center p-3 sm:p-4">
                         {selectedProject.gallery && selectedProject.gallery.length > 0 ? (
                           <AnimatePresence mode="wait">
                             <motion.div
@@ -1394,8 +1445,15 @@ export default function Portfolio() {
                             </motion.div>
                           </AnimatePresence>
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center p-8 bg-black/5 dark:bg-white/5">
-                            <div className="p-8 rounded-2xl border-2 border-current bg-black text-white dark:bg-white dark:text-black">
+                          <div className="w-full h-full flex items-center justify-center p-8">
+                            <div
+                              style={{
+                                background: isDark ? "#ffffff" : "#000000",
+                                color: isDark ? "#000000" : "#ffffff",
+                                borderColor: isDark ? "#ffffff" : "#000000",
+                              }}
+                              className="p-8 rounded-2xl border-2"
+                            >
                               {selectedProject.icon}
                             </div>
                           </div>
@@ -1407,16 +1465,28 @@ export default function Portfolio() {
                             <button
                               onClick={() => setGalleryIndex((i) => (i - 1 + selectedProject.gallery!.length) % selectedProject.gallery!.length)}
                               aria-label="Previous image"
-                              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 border-current bg-white dark:bg-black text-current shadow-[3px_3px_0px_currentColor] hover:bg-current hover:text-white dark:hover:text-black transition-all active:translate-x-[2px] active:translate-y-[2px]"
+                              style={{
+                                background: isDark ? "#000000" : "#ffffff",
+                                color: isDark ? "#ffffff" : "#111111",
+                                borderColor: isDark ? "#ffffff" : "#111111",
+                                boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                              }}
+                              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer"
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                              <ChevronLeft size={16} strokeWidth={2.5} />
                             </button>
                             <button
                               onClick={() => setGalleryIndex((i) => (i + 1) % selectedProject.gallery!.length)}
                               aria-label="Next image"
-                              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 border-current bg-white dark:bg-black text-current shadow-[3px_3px_0px_currentColor] hover:bg-current hover:text-white dark:hover:text-black transition-all active:translate-x-[2px] active:translate-y-[2px]"
+                              style={{
+                                background: isDark ? "#000000" : "#ffffff",
+                                color: isDark ? "#ffffff" : "#111111",
+                                borderColor: isDark ? "#ffffff" : "#111111",
+                                boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                              }}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer"
                             >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                              <ChevronRight size={16} strokeWidth={2.5} />
                             </button>
                           </>
                         )}
@@ -1424,14 +1494,23 @@ export default function Portfolio() {
 
                       {/* Image previews / Thumbnails */}
                       {selectedProject.gallery && selectedProject.gallery.length > 1 && (
-                        <div className="flex p-2.5 sm:p-3 gap-2 bg-black/10 dark:bg-white/10 border-t-2 border-current overflow-x-auto no-scrollbar">
+                        <div
+                          style={{
+                            background: isDark ? "rgba(255,255,255,0.06)" : "#eaeae6",
+                            borderColor: isDark ? "#ffffff" : "#111111",
+                          }}
+                          className="flex p-2.5 sm:p-3 gap-2 border-t-2 overflow-x-auto no-scrollbar"
+                        >
                           <div className="flex gap-2 mx-auto px-1">
                             {selectedProject.gallery.map((imgSrc, idx) => (
                               <button
                                 key={idx}
                                 id={`thumbnail-${idx}`}
                                 onClick={() => setGalleryIndex(idx)}
-                                className={`relative shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-md overflow-hidden border-2 border-current transition-all duration-200 ${
+                                style={{
+                                  borderColor: isDark ? "#ffffff" : "#111111",
+                                }}
+                                className={`relative shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-md overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
                                   idx === galleryIndex 
                                     ? "shadow-[3px_3px_0px_currentColor] opacity-100 scale-105" 
                                     : "opacity-60 hover:opacity-100"
@@ -1452,45 +1531,72 @@ export default function Portfolio() {
                     </div>
 
                     {/* ── RIGHT: Info + description ── */}
-                    <div className="flex flex-col gap-4 sm:gap-5 p-5 sm:p-7 lg:p-9">
+                    <div className="flex flex-col gap-4 sm:gap-5 p-5 sm:p-7 lg:p-9" style={{ background: isDark ? "#141414" : "#ffffff" }}>
 
                       {/* Project Info Dossier */}
-                      <div className="rounded-xl border-2 border-current bg-white dark:bg-black text-current divide-y-2 divide-current overflow-hidden text-xs shadow-[4px_4px_0px_currentColor]">
-                        <div className="px-4 py-2.5 bg-black text-white dark:bg-white dark:text-black flex items-center justify-between">
-                          <p className="text-[10px] font-mono font-black uppercase tracking-widest">FILE DOSSIER</p>
-                          <span className="text-[10px] font-mono font-bold">{selectedProject.date ?? "CLASSIFIED"}</span>
+                      <div
+                        style={{
+                          background: isDark ? "#181818" : "#fbfbfa",
+                          borderColor: isDark ? "#ffffff" : "#111111",
+                          boxShadow: isDark ? "4px 4px 0px #ffffff" : "4px 4px 0px #111111",
+                        }}
+                        className="rounded-xl border-2 divide-y-2 divide-current overflow-hidden text-xs"
+                      >
+                        <div
+                          style={{
+                            background: isDark ? "#ffffff" : "#111111",
+                            color: isDark ? "#000000" : "#ffffff",
+                          }}
+                          className="px-4 py-2.5 flex items-center justify-between font-mono"
+                        >
+                          <p className="text-[10px] font-black uppercase tracking-widest">FILE DOSSIER</p>
+                          <span className="text-[10px] font-bold">{selectedProject.date ?? "CLASSIFIED"}</span>
                         </div>
                         <div className="px-4 py-2.5 flex items-center justify-between">
-                          <span className="font-mono text-current/70 font-bold uppercase text-[11px]">Category</span>
-                          <span className="font-mono font-black uppercase text-[11px] text-current">{selectedProject.tags[0]}</span>
+                          <span style={{ color: isDark ? "#a1a1aa" : "#52525b" }} className="font-mono font-bold uppercase text-[11px]">Category</span>
+                          <span style={{ color: isDark ? "#ffffff" : "#111111" }} className="font-mono font-black uppercase text-[11px]">{selectedProject.tags[0]}</span>
                         </div>
                         <div className="px-4 py-2.5 flex items-center justify-between">
-                          <span className="font-mono text-current/70 font-bold uppercase text-[11px]">Project Date</span>
-                          <span className="font-mono font-bold text-current">{selectedProject.date ?? "—"}</span>
+                          <span style={{ color: isDark ? "#a1a1aa" : "#52525b" }} className="font-mono font-bold uppercase text-[11px]">Project Date</span>
+                          <span style={{ color: isDark ? "#ffffff" : "#111111" }} className="font-mono font-bold">{selectedProject.date ?? "—"}</span>
                         </div>
                         <div className="px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
-                          <span className="font-mono text-current/70 font-bold uppercase text-[11px] shrink-0">Source / Live URL</span>
+                          <span style={{ color: isDark ? "#a1a1aa" : "#52525b" }} className="font-mono font-bold uppercase text-[11px] shrink-0">Source / Live URL</span>
                           {selectedProject.live !== "#" ? (
                             <a
                               href={selectedProject.live}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="font-mono font-bold text-current underline underline-offset-2 break-all hover:opacity-75 transition-opacity"
+                              style={{ color: isDark ? "#ffffff" : "#111111" }}
+                              className="font-mono font-bold underline underline-offset-2 break-all hover:opacity-75 transition-opacity"
                             >
                               {selectedProject.live}
                             </a>
                           ) : (
-                            <span className="font-mono text-current/50">—</span>
+                            <span style={{ color: isDark ? "#71717a" : "#a1a1aa" }} className="font-mono">—</span>
                           )}
                         </div>
                       </div>
 
                       {/* Title + tags */}
                       <div>
-                        <h4 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-current leading-tight mb-3">{selectedProject.title}</h4>
+                        <h4
+                          style={{ color: isDark ? "#ffffff" : "#111111" }}
+                          className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-tight mb-3"
+                        >
+                          {selectedProject.title}
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {selectedProject.tags.map((tag) => (
-                            <span key={tag} className="px-2.5 py-0.5 border-2 border-current bg-black/5 dark:bg-white/10 text-current text-[11px] font-mono font-black uppercase tracking-wider rounded-md">
+                            <span
+                              key={tag}
+                              style={{
+                                background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)",
+                                borderColor: isDark ? "#ffffff" : "#111111",
+                                color: isDark ? "#ffffff" : "#111111",
+                              }}
+                              className="px-2.5 py-0.5 border-2 text-[11px] font-mono font-black uppercase tracking-wider rounded-md"
+                            >
                               {tag}
                             </span>
                           ))}
@@ -1498,7 +1604,10 @@ export default function Portfolio() {
                       </div>
 
                       {/* Description */}
-                      <p className="text-current/80 text-xs sm:text-sm leading-relaxed font-medium flex-1">
+                      <p
+                        style={{ color: isDark ? "#d4d4d8" : "#27272a" }}
+                        className="text-xs sm:text-sm leading-relaxed font-medium flex-1"
+                      >
                         {selectedProject.longDescription || selectedProject.description}
                       </p>
 
@@ -1509,12 +1618,24 @@ export default function Portfolio() {
                             href={selectedProject.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="comic-btn-secondary text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2"
+                            style={{
+                              background: isDark ? "#141414" : "#ffffff",
+                              color: isDark ? "#ffffff" : "#111111",
+                              borderColor: isDark ? "#ffffff" : "#111111",
+                              boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                            }}
+                            className="text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all"
                           >
                             <Github size={15} /> GitHub Repo
                           </a>
                         ) : (
-                          <span className="inline-flex items-center justify-center gap-2 px-4 py-2.5 border-2 border-current/30 text-current/40 text-xs sm:text-sm font-mono font-bold uppercase rounded-xl cursor-not-allowed">
+                          <span
+                            style={{
+                              borderColor: isDark ? "rgba(255,255,255,0.3)" : "rgba(0,0,0,0.2)",
+                              color: isDark ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
+                            }}
+                            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 border-2 text-xs sm:text-sm font-mono font-bold uppercase rounded-xl cursor-not-allowed"
+                          >
                             <Github size={15} /> Private Archive
                           </span>
                         )}
@@ -1523,7 +1644,13 @@ export default function Portfolio() {
                             href={selectedProject.live}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="comic-btn-primary text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2"
+                            style={{
+                              background: isDark ? "#ffffff" : "#111111",
+                              color: isDark ? "#000000" : "#ffffff",
+                              borderColor: isDark ? "#ffffff" : "#111111",
+                              boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                            }}
+                            className="text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all"
                           >
                             <ExternalLink size={15} /> Launch Live Demo
                           </a>
@@ -1587,7 +1714,7 @@ export default function Portfolio() {
               CHAPTER 06 // CREDENTIALS
             </div>
             <div className="flex items-center gap-4">
-              <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-current whitespace-nowrap">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-current">
                 Certifications & Badges ({certifications.length})
               </h3>
               <div className="h-[2px] bg-current opacity-30 flex-grow" />
@@ -1599,17 +1726,19 @@ export default function Portfolio() {
 
           {/* ── Paginated grid + slider arrows ─────────────────── */}
           {(() => {
-            const totalPages = Math.ceil(certifications.length / CERTS_PER_PAGE);
+            const certsPerPage = isMobile ? 5 : 12;
+            const totalPages = Math.ceil(certifications.length / certsPerPage);
+            const currentCertPage = Math.min(certPage, Math.max(0, totalPages - 1));
             const visible = certifications.slice(
-              certPage * CERTS_PER_PAGE,
-              (certPage + 1) * CERTS_PER_PAGE
+              currentCertPage * certsPerPage,
+              (currentCertPage + 1) * certsPerPage
             );
             return (
               <div className="relative">
                 {/* Grid */}
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={certPage}
+                    key={`${isMobile ? "m" : "d"}-${currentCertPage}`}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
@@ -1623,19 +1752,55 @@ export default function Portfolio() {
                           key={cert.title}
                           whileHover={{ scale: 1.02, y: -2 }}
                           onClick={() => setSelectedCert(cert)}
-                          className="group flex items-center gap-3.5 p-3.5 rounded-xl border-2 border-current bg-white dark:bg-[#111111] shadow-[4px_4px_0px_currentColor] hover:shadow-[6px_6px_0px_currentColor] active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
+                          style={{
+                            background: isDark ? "#141414" : "#ffffff",
+                            color: isDark ? "#ffffff" : "#111111",
+                            borderColor: isDark ? "#ffffff" : "#111111",
+                            boxShadow: isDark ? "4px 4px 0px #ffffff" : "4px 4px 0px #111111",
+                          }}
+                          className="group flex items-center gap-3.5 p-3.5 rounded-xl border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
                         >
                           {/* Icon Box */}
-                          <div className="shrink-0 p-2.5 rounded-lg border-2 border-current bg-black/5 dark:bg-white/5 text-current group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-colors shadow-[2px_2px_0px_currentColor]">
+                          <div
+                            style={{
+                              background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)",
+                              borderColor: isDark ? "#ffffff" : "#111111",
+                              color: isDark ? "#ffffff" : "#111111",
+                              boxShadow: isDark ? "2px 2px 0px #ffffff" : "2px 2px 0px #111111",
+                            }}
+                            className="shrink-0 p-2.5 rounded-lg border-2 text-current"
+                          >
                             <div className="scale-90">{cert.icon}</div>
                           </div>
                           {/* Content */}
                           <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-                            <p className="font-black text-current text-xs truncate uppercase tracking-tight">{cert.title}</p>
-                            <p className="text-current/70 text-[10px] font-mono mt-0.5 truncate">{cert.issuer}</p>
+                            <p
+                              style={{ color: isDark ? "#ffffff" : "#111111" }}
+                              className="font-black text-xs truncate uppercase tracking-tight"
+                            >
+                              {cert.title}
+                            </p>
+                            <p
+                              style={{ color: isDark ? "#a1a1aa" : "#52525b" }}
+                              className="text-[10px] font-mono mt-0.5 truncate font-medium"
+                            >
+                              {cert.issuer}
+                            </p>
                             <div className="flex items-center justify-between mt-1.5 gap-2">
-                              <p className="text-current/60 font-mono text-[9px] font-bold">{cert.year}</p>
-                              <span className="shrink-0 text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded-md border-2 border-current bg-black text-white dark:bg-white dark:text-black">
+                              <p
+                                style={{ color: isDark ? "#a1a1aa" : "#52525b" }}
+                                className="font-mono text-[9px] font-bold"
+                              >
+                                {cert.year}
+                              </p>
+                              <span
+                                style={{
+                                  background: isDark ? "#ffffff" : "#111111",
+                                  color: isDark ? "#000000" : "#ffffff",
+                                  borderColor: isDark ? "#ffffff" : "#111111",
+                                }}
+                                className="shrink-0 text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded-md border-2"
+                              >
                                 {isBadge ? "BADGE" : "CERT"}
                               </span>
                             </div>
@@ -1651,11 +1816,17 @@ export default function Portfolio() {
                   <div className="flex items-center justify-between mt-8">
                     {/* Prev */}
                     <button
-                      onClick={() => setCertPage((p) => Math.max(p - 1, 0))}
-                      disabled={certPage === 0}
-                      className="comic-btn-secondary flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase disabled:opacity-30 disabled:cursor-not-allowed"
+                      onClick={() => setCertPage(Math.max(currentCertPage - 1, 0))}
+                      disabled={currentCertPage === 0}
+                      style={{
+                        background: isDark ? "#141414" : "#ffffff",
+                        color: isDark ? "#ffffff" : "#111111",
+                        borderColor: isDark ? "#ffffff" : "#111111",
+                        boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase border-2 disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                      <ChevronLeft size={14} strokeWidth={2.5} />
                       Prev
                     </button>
 
@@ -1665,22 +1836,32 @@ export default function Portfolio() {
                         <button
                           key={idx}
                           onClick={() => setCertPage(idx)}
-                          className={`border-2 border-current rounded-full transition-all duration-200 ${idx === certPage
-                            ? "w-6 h-2.5 bg-current"
-                            : "w-2.5 h-2.5 bg-transparent hover:bg-current/40"
-                            }`}
+                          aria-label={`Go to page ${idx + 1}`}
+                          style={{
+                            borderColor: isDark ? "#ffffff" : "#111111",
+                            background: idx === currentCertPage ? (isDark ? "#ffffff" : "#111111") : "transparent",
+                          }}
+                          className={`border-2 rounded-full transition-all duration-200 cursor-pointer ${
+                            idx === currentCertPage ? "w-6 h-2.5" : "w-2.5 h-2.5 hover:opacity-60"
+                          }`}
                         />
                       ))}
                     </div>
 
                     {/* Next */}
                     <button
-                      onClick={() => setCertPage((p) => Math.min(p + 1, totalPages - 1))}
-                      disabled={certPage === totalPages - 1}
-                      className="comic-btn-secondary flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase disabled:opacity-30 disabled:cursor-not-allowed"
+                      onClick={() => setCertPage(Math.min(currentCertPage + 1, totalPages - 1))}
+                      disabled={currentCertPage >= totalPages - 1}
+                      style={{
+                        background: isDark ? "#141414" : "#ffffff",
+                        color: isDark ? "#ffffff" : "#111111",
+                        borderColor: isDark ? "#ffffff" : "#111111",
+                        boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                      }}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase border-2 disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
                     >
                       Next
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                      <ChevronRight size={14} strokeWidth={2.5} />
                     </button>
                   </div>
                 )}
@@ -1696,7 +1877,10 @@ export default function Portfolio() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedCert(null)}
-                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                style={{
+                  backgroundColor: isDark ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.55)",
+                }}
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm"
               >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9, y: 30 }}
@@ -1704,52 +1888,111 @@ export default function Portfolio() {
                   exit={{ opacity: 0, scale: 0.9, y: 30 }}
                   transition={{ type: "spring", stiffness: 280, damping: 28 }}
                   onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border-[3.5px] border-current bg-white dark:bg-[#111111] text-current shadow-[12px_12px_0px_currentColor]"
+                  style={{
+                    background: isDark ? "#141414" : "#ffffff",
+                    color: isDark ? "#f5f5f5" : "#111111",
+                    borderColor: isDark ? "#ffffff" : "#111111",
+                    boxShadow: isDark ? "10px 10px 0px #ffffff" : "10px 10px 0px #111111",
+                  }}
+                  className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border-[3.5px]"
                 >
                   {/* Close button */}
                   <button
                     onClick={() => setSelectedCert(null)}
                     aria-label="Close modal"
-                    className="absolute top-4 right-4 z-20 p-2 rounded-lg border-2 border-current bg-white dark:bg-black text-current hover:bg-current hover:text-white dark:hover:text-black shadow-[3px_3px_0px_currentColor] active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
+                    style={{
+                      background: isDark ? "#000000" : "#ffffff",
+                      color: isDark ? "#ffffff" : "#111111",
+                      borderColor: isDark ? "#ffffff" : "#111111",
+                      boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                    }}
+                    className="absolute top-4 right-4 z-20 p-2 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    <X size={18} strokeWidth={2.5} />
                   </button>
 
                   {/* Certificate image — full visible, no cropping */}
                   {selectedCert.image ? (
-                    <div className="relative w-full bg-black/5 dark:bg-white/5 border-b-2 border-current flex items-center justify-center p-4">
+                    <div
+                      style={{
+                        background: isDark ? "rgba(255,255,255,0.03)" : "#f6f6f4",
+                        borderBottomColor: isDark ? "#ffffff" : "#111111",
+                      }}
+                      className="relative w-full border-b-[2.5px] flex items-center justify-center p-4 sm:p-6"
+                    >
                       <Image
                         src={selectedCert.image}
                         alt={selectedCert.title}
                         width={900}
                         height={700}
-                        className="w-full h-auto object-contain rounded-lg border-2 border-current shadow-[4px_4px_0px_currentColor]"
-                        style={{ maxHeight: "55vh" }}
+                        className="w-full h-auto object-contain rounded-lg border-2"
+                        style={{
+                          maxHeight: "55vh",
+                          borderColor: isDark ? "#ffffff" : "#111111",
+                          boxShadow: isDark ? "4px 4px 0px #ffffff" : "4px 4px 0px #111111",
+                        }}
                       />
                     </div>
                   ) : (
-                    <div className="w-full h-44 bg-black/5 dark:bg-white/5 border-b-2 border-current flex items-center justify-center">
-                      <div className="p-6 rounded-2xl border-2 border-current bg-black text-white dark:bg-white dark:text-black shadow-[4px_4px_0px_currentColor]">
+                    <div
+                      style={{
+                        background: isDark ? "rgba(255,255,255,0.03)" : "#f6f6f4",
+                        borderBottomColor: isDark ? "#ffffff" : "#111111",
+                      }}
+                      className="w-full h-44 border-b-[2.5px] flex items-center justify-center"
+                    >
+                      <div
+                        style={{
+                          background: isDark ? "#ffffff" : "#000000",
+                          color: isDark ? "#000000" : "#ffffff",
+                          borderColor: isDark ? "#ffffff" : "#000000",
+                          boxShadow: isDark ? "4px 4px 0px #ffffff" : "4px 4px 0px #000000",
+                        }}
+                        className="p-6 rounded-2xl border-2"
+                      >
                         {selectedCert.icon}
                       </div>
                     </div>
                   )}
 
                   {/* Content */}
-                  <div className="p-6 space-y-4">
+                  <div className="p-6 space-y-4" style={{ background: isDark ? "#141414" : "#ffffff" }}>
                     <div>
-                      <div className="inline-flex items-center gap-2 border border-current px-2 py-0.5 text-[10px] font-mono font-black uppercase tracking-wider mb-2">
+                      <div
+                        style={{
+                          background: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
+                          borderColor: isDark ? "#ffffff" : "#111111",
+                          color: isDark ? "#ffffff" : "#111111",
+                        }}
+                        className="inline-flex items-center gap-2 border-2 px-2.5 py-1 text-[11px] font-mono font-black uppercase tracking-wider mb-2 rounded-md"
+                      >
                         {selectedCert.year} · {selectedCert.issuer}
                       </div>
-                      <h4 className="text-xl font-black uppercase tracking-tight text-current">{selectedCert.title}</h4>
+                      <h4
+                        style={{ color: isDark ? "#ffffff" : "#111111" }}
+                        className="text-xl sm:text-2xl font-black uppercase tracking-tight"
+                      >
+                        {selectedCert.title}
+                      </h4>
                     </div>
-                    <p className="text-current/80 text-xs sm:text-sm leading-relaxed font-medium">{selectedCert.description}</p>
+                    <p
+                      style={{ color: isDark ? "#d4d4d8" : "#27272a" }}
+                      className="text-xs sm:text-sm leading-relaxed font-medium"
+                    >
+                      {selectedCert.description}
+                    </p>
                     {selectedCert.credential !== "#" && selectedCert.category === "Badge" && (
                       <a
                         href={selectedCert.credential}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="comic-btn-primary inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-black uppercase tracking-wider"
+                        style={{
+                          background: isDark ? "#ffffff" : "#111111",
+                          color: isDark ? "#000000" : "#ffffff",
+                          borderColor: isDark ? "#ffffff" : "#111111",
+                          boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
+                        }}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-black uppercase tracking-wider border-2 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-transform"
                       >
                         <ExternalLink size={14} /> Verify Credential
                       </a>
@@ -1790,7 +2033,8 @@ export default function Portfolio() {
           >
             <motion.div
               variants={fadeUp}
-              className="relative rounded-2xl border-[3.5px] border-current bg-white dark:bg-[#111111] text-current p-6 sm:p-10 shadow-[10px_10px_0px_currentColor]"
+              style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
+              className="relative rounded-2xl border-[3.5px] border-current text-current p-6 sm:p-10 shadow-[10px_10px_0px_currentColor]"
             >
               <div className="space-y-2 mb-6">
                 <p className="font-mono text-xs font-black uppercase tracking-widest text-current/80">// WHAT&apos;S NEXT?</p>
