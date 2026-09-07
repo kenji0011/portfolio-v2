@@ -525,8 +525,8 @@ function FloatingAiCopilot({
               onClick={() => setIsOpen(true)}
               className={`comic-bubble-tail flex items-center gap-2.5 px-5 py-3 rounded-2xl border-[2.5px] ${
                 isDark
-                  ? "bg-black border-white text-white shadow-[4px_4px_0px_#ffffff]"
-                  : "bg-white border-black text-black shadow-[4px_4px_0px_#000000]"
+                  ? "bg-black border-white text-white shadow-[4px_4px_0px_#ffffff] hover:bg-white hover:text-black"
+                  : "bg-white border-black text-black shadow-[4px_4px_0px_#000000] hover:bg-black hover:text-white"
               } transition-all cursor-pointer font-bold tracking-tight text-xs`}
               aria-label="Ask KenjiAI"
             >
@@ -676,7 +676,11 @@ function FloatingAiCopilot({
                     <button
                       type="button"
                       onClick={() => setMessages([])}
-                      className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase opacity-60 hover:opacity-100"
+                      className={`px-1.5 py-0.5 rounded border text-[9px] font-mono font-bold uppercase transition-all cursor-pointer ${
+                        isDark
+                          ? "border-white/40 bg-black text-white hover:bg-white hover:text-black"
+                          : "border-black/40 bg-white text-black hover:bg-black hover:text-white"
+                      }`}
                     >
                       Clear
                     </button>
@@ -920,7 +924,11 @@ export default function Portfolio() {
             href="#"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="text-lg font-black tracking-widest font-mono px-2.5 py-1 border-2 border-current shadow-[2px_2px_0px_currentColor]"
+            className={`text-lg font-black tracking-widest font-mono px-2.5 py-1 border-2 transition-all cursor-pointer ${
+              isDark
+                ? "bg-black text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black"
+                : "bg-white text-black border-black shadow-[2px_2px_0px_#000000] hover:bg-black hover:text-white"
+            }`}
           >
             KS.
           </motion.a>
@@ -943,7 +951,11 @@ export default function Portfolio() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="p-2 border-2 border-current shadow-[2px_2px_0px_currentColor] hover:translate-x-[-1px] hover:translate-y-[-1px] active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
+              className={`p-2 border-2 transition-all cursor-pointer ${
+                isDark
+                  ? "bg-black text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black"
+                  : "bg-white text-black border-black shadow-[2px_2px_0px_#000000] hover:bg-black hover:text-white"
+              }`}
             >
               {isDark ? <Sun size={15} /> : <Moon size={15} />}
             </button>
@@ -952,7 +964,11 @@ export default function Portfolio() {
             <button
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle navigation menu"
-              className="p-2 border-2 border-current shadow-[2px_2px_0px_currentColor] sm:hidden cursor-pointer"
+              className={`p-2 border-2 sm:hidden transition-all cursor-pointer ${
+                isDark
+                  ? "bg-black text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black"
+                  : "bg-white text-black border-black shadow-[2px_2px_0px_#000000] hover:bg-black hover:text-white"
+              }`}
             >
               {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
@@ -1040,8 +1056,10 @@ export default function Portfolio() {
                 href="#projects"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`comic-btn-primary px-6 py-3.5 font-black text-xs uppercase tracking-widest ${
-                  isDark ? "bg-white text-black" : "bg-black text-white"
+                className={`comic-btn-primary px-6 py-3.5 font-black text-xs uppercase tracking-widest transition-all cursor-pointer ${
+                  isDark
+                    ? "bg-white text-black hover:bg-black hover:text-white"
+                    : "bg-black text-white hover:bg-white hover:text-black"
                 }`}
               >
                 View My Work
@@ -1050,7 +1068,11 @@ export default function Portfolio() {
                 href="#contact"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="comic-btn-secondary px-6 py-3.5 font-black text-xs uppercase tracking-widest bg-transparent text-current"
+                className={`comic-btn-secondary px-6 py-3.5 font-black text-xs uppercase tracking-widest transition-all cursor-pointer ${
+                  isDark
+                    ? "bg-[#141414] text-white hover:bg-white hover:text-black"
+                    : "bg-white text-black hover:bg-black hover:text-white"
+                }`}
               >
                 Contact Me
               </motion.a>
@@ -1059,7 +1081,11 @@ export default function Portfolio() {
                 download
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="comic-btn-secondary px-5 py-3.5 font-black text-xs uppercase tracking-widest flex items-center gap-2 bg-transparent text-current"
+                className={`comic-btn-secondary px-5 py-3.5 font-black text-xs uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
+                  isDark
+                    ? "bg-[#141414] text-white hover:bg-white hover:text-black"
+                    : "bg-white text-black hover:bg-black hover:text-white"
+                }`}
               >
                 <Download size={15} />
                 Download CV
@@ -1452,7 +1478,11 @@ export default function Portfolio() {
             
             <button
               onClick={() => setShowAllProjects(!showAllProjects)}
-              className="comic-btn-secondary text-xs font-mono font-black uppercase tracking-wider flex items-center gap-2 px-4 py-2.5 rounded-lg self-start sm:self-auto shrink-0"
+              className={`comic-btn-secondary text-xs font-mono font-black uppercase tracking-wider flex items-center gap-2 px-4 py-2.5 rounded-lg self-start sm:self-auto shrink-0 transition-all cursor-pointer ${
+                isDark
+                  ? "bg-[#141414] text-white hover:bg-white hover:text-black"
+                  : "bg-white text-[#111111] hover:bg-[#111111] hover:text-white"
+              }`}
             >
               {showAllProjects ? "Show Marquee" : "All Projects"}
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${!showAllProjects ? 'group-hover:translate-x-1' : ''}`}>
@@ -1548,13 +1578,11 @@ export default function Portfolio() {
                   <button
                     onClick={() => setSelectedProject(null)}
                     aria-label="Close project modal"
-                    style={{
-                      background: isDark ? "#000000" : "#ffffff",
-                      color: isDark ? "#ffffff" : "#111111",
-                      borderColor: isDark ? "#ffffff" : "#111111",
-                      boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                    }}
-                    className="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 p-2 sm:p-2.5 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
+                    className={`absolute top-3 right-3 sm:top-5 sm:right-5 z-30 p-2 sm:p-2.5 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer ${
+                      isDark
+                        ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                        : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                    }`}
                   >
                     <X size={18} strokeWidth={2.5} />
                   </button>
@@ -1615,26 +1643,22 @@ export default function Portfolio() {
                             <button
                               onClick={() => setGalleryIndex((i) => (i - 1 + selectedProject.gallery!.length) % selectedProject.gallery!.length)}
                               aria-label="Previous image"
-                              style={{
-                                background: isDark ? "#000000" : "#ffffff",
-                                color: isDark ? "#ffffff" : "#111111",
-                                borderColor: isDark ? "#ffffff" : "#111111",
-                                boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                              }}
-                              className="absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer"
+                              className={`absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer ${
+                                isDark
+                                  ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                                  : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                              }`}
                             >
                               <ChevronLeft size={16} strokeWidth={2.5} />
                             </button>
                             <button
                               onClick={() => setGalleryIndex((i) => (i + 1) % selectedProject.gallery!.length)}
                               aria-label="Next image"
-                              style={{
-                                background: isDark ? "#000000" : "#ffffff",
-                                color: isDark ? "#ffffff" : "#111111",
-                                borderColor: isDark ? "#ffffff" : "#111111",
-                                boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                              }}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer"
+                              className={`absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer ${
+                                isDark
+                                  ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                                  : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                              }`}
                             >
                               <ChevronRight size={16} strokeWidth={2.5} />
                             </button>
@@ -1768,13 +1792,11 @@ export default function Portfolio() {
                             href={selectedProject.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{
-                              background: isDark ? "#141414" : "#ffffff",
-                              color: isDark ? "#ffffff" : "#111111",
-                              borderColor: isDark ? "#ffffff" : "#111111",
-                              boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                            }}
-                            className="text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all"
+                            className={`text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 transition-all cursor-pointer ${
+                              isDark
+                                ? "bg-[#141414] text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                                : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                            }`}
                           >
                             <Github size={15} /> GitHub Repo
                           </a>
@@ -1794,13 +1816,11 @@ export default function Portfolio() {
                             href={selectedProject.live}
                             target="_blank"
                             rel="noopener noreferrer"
-                            style={{
-                              background: isDark ? "#ffffff" : "#111111",
-                              color: isDark ? "#000000" : "#ffffff",
-                              borderColor: isDark ? "#ffffff" : "#111111",
-                              boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                            }}
-                            className="text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all"
+                            className={`text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 transition-all cursor-pointer ${
+                              isDark
+                                ? "bg-white text-black border-white shadow-[3px_3px_0px_#ffffff] hover:bg-black hover:text-white"
+                                : "bg-[#111111] text-white border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-white hover:text-black"
+                            }`}
                           >
                             <ExternalLink size={15} /> Launch Live Demo
                           </a>
@@ -1970,13 +1990,11 @@ export default function Portfolio() {
                     <button
                       onClick={() => goToCertPage(Math.max(currentCertPage - 1, 0))}
                       disabled={currentCertPage === 0}
-                      style={{
-                        background: isDark ? "#141414" : "#ffffff",
-                        color: isDark ? "#ffffff" : "#111111",
-                        borderColor: isDark ? "#ffffff" : "#111111",
-                        boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase border-2 disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase border-2 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer ${
+                        isDark
+                          ? "bg-[#141414] text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                          : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                      }`}
                     >
                       <ChevronLeft size={14} strokeWidth={2.5} />
                       Prev
@@ -2004,13 +2022,11 @@ export default function Portfolio() {
                     <button
                       onClick={() => goToCertPage(Math.min(currentCertPage + 1, totalPages - 1))}
                       disabled={currentCertPage >= totalPages - 1}
-                      style={{
-                        background: isDark ? "#141414" : "#ffffff",
-                        color: isDark ? "#ffffff" : "#111111",
-                        borderColor: isDark ? "#ffffff" : "#111111",
-                        boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase border-2 disabled:opacity-30 disabled:cursor-not-allowed hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-all cursor-pointer"
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-bold uppercase border-2 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer ${
+                        isDark
+                          ? "bg-[#141414] text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                          : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                      }`}
                     >
                       Next
                       <ChevronRight size={14} strokeWidth={2.5} />
@@ -2052,13 +2068,11 @@ export default function Portfolio() {
                   <button
                     onClick={() => setSelectedCert(null)}
                     aria-label="Close modal"
-                    style={{
-                      background: isDark ? "#000000" : "#ffffff",
-                      color: isDark ? "#ffffff" : "#111111",
-                      borderColor: isDark ? "#ffffff" : "#111111",
-                      boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                    }}
-                    className="absolute top-4 right-4 z-20 p-2 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer"
+                    className={`absolute top-4 right-4 z-20 p-2 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer ${
+                      isDark
+                        ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
+                        : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                    }`}
                   >
                     <X size={18} strokeWidth={2.5} />
                   </button>
@@ -2138,13 +2152,11 @@ export default function Portfolio() {
                         href={selectedCert.credential}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{
-                          background: isDark ? "#ffffff" : "#111111",
-                          color: isDark ? "#000000" : "#ffffff",
-                          borderColor: isDark ? "#ffffff" : "#111111",
-                          boxShadow: isDark ? "3px 3px 0px #ffffff" : "3px 3px 0px #111111",
-                        }}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-black uppercase tracking-wider border-2 hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-[1px] active:translate-y-[1px] transition-transform"
+                        className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${
+                          isDark
+                            ? "bg-white text-black border-white shadow-[3px_3px_0px_#ffffff] hover:bg-black hover:text-white"
+                            : "bg-[#111111] text-white border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-white hover:text-black"
+                        }`}
                       >
                         <ExternalLink size={14} /> Verify Credential
                       </a>
@@ -2270,12 +2282,14 @@ export default function Portfolio() {
                   <button
                     type="submit"
                     disabled={sending}
-                    className={`comic-btn-primary w-full flex items-center justify-center gap-2 px-6 py-3.5 font-mono font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all disabled:opacity-70 disabled:cursor-not-allowed ${
+                    className={`comic-btn-primary w-full flex items-center justify-center gap-2 px-6 py-3.5 font-mono font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed ${
                       submitted
                         ? "bg-emerald-600 text-white"
                         : sendError
                           ? "bg-red-600 text-white"
-                          : ""
+                          : isDark
+                            ? "bg-white text-black hover:bg-black hover:text-white"
+                            : "bg-black text-white hover:bg-white hover:text-black"
                     }`}
                   >
                     {sending ? (
@@ -2313,13 +2327,11 @@ export default function Portfolio() {
             whileTap={{ scale: 0.95, x: 2, y: 2 }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             aria-label="Scroll to top"
-            style={{
-              background: isDark ? "#000000" : "#ffffff",
-              color: isDark ? "#ffffff" : "#111111",
-              borderColor: isDark ? "#ffffff" : "#111111",
-              boxShadow: isDark ? "4px 4px 0px #ffffff" : "4px 4px 0px #111111",
-            }}
-            className="fixed bottom-24 right-6 z-40 p-3 rounded-xl border-[2.5px] cursor-pointer transition-shadow"
+            className={`fixed bottom-24 right-6 z-40 p-3 rounded-xl border-[2.5px] cursor-pointer transition-all ${
+              isDark
+                ? "bg-black text-white border-white shadow-[4px_4px_0px_#ffffff] hover:bg-white hover:text-black"
+                : "bg-white text-[#111111] border-[#111111] shadow-[4px_4px_0px_#111111] hover:bg-[#111111] hover:text-white"
+            }`}
           >
             <ChevronUp size={20} strokeWidth={2.5} />
           </motion.button>
