@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf8;
+  --foreground: #111111;
 }
 
 @theme inline {
@@ -12,17 +12,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Hide scrollbars while keeping scroll functionality */
@@ -30,178 +24,139 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* ── Performance-optimised CSS animations ───────────────────────────── */
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+/* ── Comic Halftone Ben-Day Dot Textures ────────────────────────────── */
+.comic-dots-light {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
 }
 
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-12px);
-  }
+.comic-dots-dark {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
 }
 
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
+/* ── Comic Diagonal Hatch Texture ──────────────────────────────────── */
+.comic-hatch {
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    rgba(0, 0, 0, 0.04) 6px,
+    rgba(0, 0, 0, 0.04) 7px
+  );
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-/* ── Theme tokens ────────────────────────────────────────────────────── */
+/* ── Comic Neo-Brutalist Theme Tokens ───────────────────────────────── */
 [data-theme="dark"] {
-  --bg-page: #050816;
-  --bg-nav: rgba(5, 8, 22, 0.70);
-  --bg-modal: #0a0f1e;
-  --text-base: #e2e8f0;
-  --text-muted: #94a3b8;
+  --bg-page: #0a0a0a;
+  --bg-panel: #121212;
+  --bg-card: #181818;
+  --bg-nav: rgba(10, 10, 10, 0.95);
+  --bg-modal: #111111;
+  --text-base: #f5f5f5;
+  --text-muted: #a1a1aa;
+  --border-color: #ffffff;
+  --shadow-color: #ffffff;
 }
 
 [data-theme="light"] {
-  --bg-page: #eef2ff;
-  --bg-nav: rgba(238, 242, 255, 0.85);
+  --bg-page: #fafaf8;
+  --bg-panel: #ffffff;
+  --bg-card: #ffffff;
+  --bg-nav: rgba(250, 250, 248, 0.96);
   --bg-modal: #ffffff;
-  --text-base: #1e293b;
-  --text-muted: #475569;
+  --text-base: #111111;
+  --text-muted: #52525b;
+  --border-color: #111111;
+  --shadow-color: #111111;
 }
 
-/* ── Light-mode element-level overrides ──────────────────────────────
-   Tailwind v4 compiles classes into internal names so we CANNOT match
-   them by class. Instead we force colour via element-level selectors
-   and the cascade.                                                     */
+/* ── Tactile Comic Buttons ─────────────────────────────────────────── */
+.comic-btn-primary {
+  border: 2.5px solid currentColor;
+  box-shadow: 4px 4px 0px currentColor;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.comic-btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px currentColor;
+}
+.comic-btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px currentColor;
+}
 
-/* Headings → very dark */
+.comic-btn-secondary {
+  border: 2px solid currentColor;
+  box-shadow: 3px 3px 0px currentColor;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.comic-btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px currentColor;
+}
+.comic-btn-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px currentColor;
+}
+
+/* ── Comic Panels ──────────────────────────────────────────────────── */
+.comic-panel {
+  border: 2.5px solid currentColor;
+  box-shadow: 5px 5px 0px currentColor;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.comic-panel-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px currentColor;
+}
+
+/* ── Comic Speech Bubble Shape ─────────────────────────────────────── */
+.comic-bubble-tail {
+  position: relative;
+}
+.comic-bubble-tail::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 28px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid currentColor;
+}
+
+/* ── Element-level typography overrides for Dark / Light ─────────────── */
 [data-theme="light"] h1,
 [data-theme="light"] h2,
 [data-theme="light"] h3,
 [data-theme="light"] h4,
-[data-theme="light"] h5,
-[data-theme="light"] h6 {
-  color: #0f172a !important;
+[data-theme="light"] h5 {
+  color: #111111 !important;
 }
 
-/* Body text → dark gray */
 [data-theme="light"] p {
-  color: #334155 !important;
+  color: #27272a !important;
 }
 
-/* Spans & inline text → medium gray (pill labels, tags, etc.) */
-[data-theme="light"] span {
-  color: #475569 !important;
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5 {
+  color: #ffffff !important;
 }
 
-/* Keep gradient text (KS., AI/ML) — they use bg-clip-text so color must be transparent */
-[data-theme="light"] .bg-clip-text {
-  color: transparent !important;
+[data-theme="dark"] p {
+  color: #d4d4d8 !important;
 }
 
-/* Keep white text on gradient buttons */
-[data-theme="light"] .from-cyan-500 {
-  color: #fff !important;
-}
-
-/* Links & nav */
-[data-theme="light"] a {
-  color: #334155 !important;
-}
-
-[data-theme="light"] a:hover {
-  color: #0891b2 !important;
-}
-
-/* Buttons */
-[data-theme="light"] button {
-  color: #475569;
-}
-
-/* Cards — give them a visible white bg + subtle border */
-[data-theme="light"] [class*="bg-white"] {
-  background-color: rgba(255, 255, 255, 0.65) !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
-}
-
-/* Borders that use white/ opacity → flip to black/ opacity */
-[data-theme="light"] [class*="border-white"] {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
-/* Slate-colored borders */
-[data-theme="light"] [class*="border-slate"] {
-  border-color: rgba(0, 0, 0, 0.10) !important;
-}
-
-/* Slate backgrounds → light */
-[data-theme="light"] [class*="bg-slate-8"],
-[data-theme="light"] [class*="bg-slate-9"] {
-  background-color: #e2e8f0 !important;
-}
-
-/* Backdrop blur nav → light bg */
-[data-theme="light"] nav {
-  border-color: rgba(0, 0, 0, 0.06) !important;
-}
-
-/* Orbs → reduce intensity in light mode */
-[data-theme="light"] .blur-3xl {
-  opacity: 0.05 !important;
-}
-
-/* Form inputs */
-[data-theme="light"] input,
-[data-theme="light"] textarea {
-  background-color: rgba(255, 255, 255, 0.80) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
-  color: #1e293b !important;
-}
-
-/* Icon colors in cert/badge cards — keep cyan/violet */
-[data-theme="light"] [class*="text-cyan-4"] {
-  color: #0891b2 !important;
-}
-
-[data-theme="light"] [class*="text-violet-4"] {
-  color: #7c3aed !important;
-}
-
-/* Cert/badge backgrounds — keep but bump opacity */
-[data-theme="light"] [class*="bg-cyan-500"] {
-  background-color: rgba(8, 145, 178, 0.08) !important;
-}
-
-[data-theme="light"] [class*="bg-violet-500"] {
-  background-color: rgba(124, 58, 237, 0.08) !important;
-}
-
-/* Gradient divider lines */
-[data-theme="light"] [class*="from-slate-7"] {
-  opacity: 0.25;
-}
-
-/* Tech icon labels */
-[data-theme="light"] [class*="font-mono"][class*="text-center"] {
-  color: #475569 !important;
-}
-
-/* Smooth transitions on root container */
 [data-theme] {
-  transition: background-color 0.35s ease, color 0.35s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
