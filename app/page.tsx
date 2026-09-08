@@ -144,6 +144,7 @@ export default function Portfolio() {
       <ProjectModal
         selectedProject={selectedProject}
         onClose={() => setSelectedProject(null)}
+        onSelectProject={handleSelectProject}
         galleryIndex={galleryIndex}
         setGalleryIndex={setGalleryIndex}
         setIsZoomed={setIsZoomed}

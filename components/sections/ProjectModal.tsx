@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Github, ExternalLink } from "lucide-react";
 import { Project } from "@/types/portfolio";
+import { projects } from "@/data/projects";
 
 type ProjectModalProps = {
   selectedProject: Project | null;
   onClose: () => void;
+  onSelectProject: (project: Project) => void;
   galleryIndex: number;
   setGalleryIndex: React.Dispatch<React.SetStateAction<number>>;
   setIsZoomed: (zoomed: boolean) => void;
@@ -18,11 +20,39 @@ type ProjectModalProps = {
 export const ProjectModal: React.FC<ProjectModalProps> = ({
   selectedProject,
   onClose,
+  onSelectProject,
   galleryIndex,
   setGalleryIndex,
   setIsZoomed,
   isDark,
 }) => {
+  const contentScrollRef = useRef<HTMLDivElement>(null);
+
+  const currentIndex = selectedProject
+    ? projects.findIndex((p) => p.title === selectedProject.title)
+    : -1;
+
+  const handlePrevProject = () => {
+    if (currentIndex === -1 || !onSelectProject) return;
+    const prevIndex = (currentIndex - 1 + projects.length) % projects.length;
+    onSelectProject(projects[prevIndex]);
+    setGalleryIndex(0);
+  };
+
+  const handleNextProject = () => {
+    if (currentIndex === -1 || !onSelectProject) return;
+    const nextIndex = (currentIndex + 1) % projects.length;
+    onSelectProject(projects[nextIndex]);
+    setGalleryIndex(0);
+  };
+
+  // Scroll content to top whenever selected project changes
+  useEffect(() => {
+    if (contentScrollRef.current) {
+      contentScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [selectedProject?.title]);
+
   // Auto-scroll active thumbnail into view
   useEffect(() => {
     if (selectedProject?.gallery) {
@@ -78,7 +108,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               <X size={18} strokeWidth={2.5} />
             </button>
 
-            <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar">
+            <div
+              ref={contentScrollRef}
+              className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar"
+            >
               {/* Two-column body */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-full">
                 {/* LEFT: Image gallery */}
@@ -375,12 +408,59 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                             : "bg-[#111111] text-white border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-white hover:text-black"
                         }`}
                       >
-                        <ExternalLink size={15} /> Launch Live Demo
+                        <ExternalLink size={15} /> Launch Website
                       </a>
                     ) : null}
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* ── Project Navigation Bar (Back / Next) ── */}
+            <div
+              style={{
+                background: isDark ? "#0f0f0f" : "#f4f4f0",
+                borderTopColor: isDark ? "#ffffff" : "#111111",
+              }}
+              className="shrink-0 border-t-[2.5px] px-4 sm:px-6 py-3.5 flex items-center justify-between select-none"
+            >
+              <button
+                type="button"
+                onClick={handlePrevProject}
+                aria-label="Previous project"
+                className={`comic-btn-secondary flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                }`}
+              >
+                <ChevronLeft size={16} strokeWidth={2.5} />
+                <span>Back</span>
+              </button>
+
+              {currentIndex !== -1 && (
+                <div className="flex items-center gap-2 font-mono text-[11px] font-black uppercase tracking-widest text-current">
+                  <span className="hidden sm:inline opacity-70">CASE FILE</span>
+                  <span className="px-2.5 py-1 border-2 border-current rounded-lg bg-black/5 dark:bg-white/10 font-bold shadow-[2px_2px_0px_currentColor]">
+                    {String(currentIndex + 1).padStart(2, "0")} /{" "}
+                    {String(projects.length).padStart(2, "0")}
+                  </span>
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={handleNextProject}
+                aria-label="Next project"
+                className={`comic-btn-secondary flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${
+                  isDark
+                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
+                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                }`}
+              >
+                <span>Next</span>
+                <ChevronRight size={16} strokeWidth={2.5} />
+              </button>
             </div>
           </motion.div>
         </motion.div>
