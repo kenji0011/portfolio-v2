@@ -116,7 +116,7 @@ export const projects: Project[] = [
     date: "2026",
   },
   {
-    title: "Berong E-Learning",
+    title: "Berong E-Learning (SafeScape 2.0)",
     description: "An interactive e-learning platform designed to enhance online education, student engagement, and digital course access.",
     longDescription: "Berong E-Learning is a modern web-based educational platform designed to streamline online learning. It features interactive learning modules, student progress tracking, course management, and an intuitive user interface tailored for engaging and accessible digital education.",
     tags: ["Web Application", "E-Learning", "Education", "UI/UX"],
