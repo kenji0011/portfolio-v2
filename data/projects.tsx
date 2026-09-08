@@ -133,7 +133,7 @@ export const projects: Project[] = [
       "/images/projects/berong-elearning/berong-prof.jpg",
     ],
     github: "https://github.com/kenji0011/berong-safescape-laravel.git",
-    live: "https://drive.google.com/file/d/1fRfpIFKOTnwRhg74Kml0vfaRoxkuubNZ/view?usp=sharing",
+    live: "https://bfpscberong.app",
     date: "2026",
   },
 ];
