@@ -92,7 +92,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
           </motion.a>
           <motion.a
             href="/resume.pdf"
-            download
+            download="Salvahan_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className={`comic-btn-secondary px-5 py-3.5 font-black text-xs uppercase tracking-widest flex items-center gap-2 transition-all cursor-pointer ${
