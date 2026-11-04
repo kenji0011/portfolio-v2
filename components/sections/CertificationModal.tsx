@@ -138,8 +138,9 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
               >
                 {selectedCert.description}
               </p>
-              {selectedCert.credential !== "#" &&
-                selectedCert.category === "Badge" && (
+              {selectedCert.credential &&
+                selectedCert.credential !== "#" &&
+                selectedCert.credential !== "" && (
                   <a
                     href={selectedCert.credential}
                     target="_blank"
