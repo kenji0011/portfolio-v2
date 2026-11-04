@@ -60,7 +60,7 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
       )
     ) {
       answer =
-        "His core focus areas are Data Analytics, Quality Assurance (QA), and Automation. He works with Python, SQL, PostgreSQL, Pandas, Postman, Selenium, PyTest, Power BI, and modern web frameworks like Next.js and Laravel.";
+        "His core strength is in Data Analytics (SQL, PostgreSQL, Pandas, Power BI), and he has a strong interest and learning focus in Quality Assurance (QA) and Automation for his upcoming OJT.";
     } else if (
       /(education|school|study|university|college|degree|student)/.test(
         lowerQuery

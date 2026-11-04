@@ -24,14 +24,14 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({ isDark }) =>
         </div>
         <div className="flex items-center gap-4">
           <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-current whitespace-nowrap">
-            My Expertise
+            Skills & Interests
           </h3>
           <div className="h-[2px] bg-current opacity-30 flex-grow" />
         </div>
       </motion.div>
 
       <motion.div variants={fadeUp} className="grid md:grid-cols-2 gap-6">
-        {/* Left — Core Skills */}
+        {/* Left — Skills & Interests */}
         <div
           style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
           className="rounded-xl border-[2.5px] border-current p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative"
@@ -39,7 +39,7 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({ isDark }) =>
           <div className="flex items-center gap-2 mb-6">
             <span className="w-2.5 h-2.5 bg-current inline-block"></span>
             <h4 className="text-lg font-black uppercase tracking-wider text-current">
-              Core Skills
+              Skills & Interests
             </h4>
           </div>
           <div className="space-y-4">
@@ -51,10 +51,27 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({ isDark }) =>
                 <div className="p-2 rounded-md border-2 border-current bg-black text-white dark:bg-white dark:text-black shrink-0 mt-0.5 shadow-[2px_2px_0px_currentColor]">
                   {item.icon}
                 </div>
-                <div>
-                  <h5 className="text-sm font-black uppercase tracking-wider text-current">
-                    {item.title}
-                  </h5>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <h5 className="text-sm font-black uppercase tracking-wider text-current">
+                      {item.title}
+                    </h5>
+                    {item.badge && (
+                      <span
+                        className={`text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded border-2 shadow-[1px_1px_0px_currentColor] shrink-0 ${
+                          item.badge === "Core Skill"
+                            ? isDark
+                              ? "bg-white text-black border-white"
+                              : "bg-black text-white border-black"
+                            : isDark
+                            ? "bg-[#1f1f1f] text-white/90 border-white/60"
+                            : "bg-black/5 text-black/90 border-black/60"
+                        }`}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
                   <p className="text-xs leading-relaxed mt-1 text-current/80 font-medium">
                     {item.desc}
                   </p>

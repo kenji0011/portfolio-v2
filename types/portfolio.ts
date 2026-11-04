@@ -41,6 +41,7 @@ export type CoreSkill = {
   title: string;
   icon: React.ReactNode;
   desc: string;
+  badge?: string;
 };
 
 export type NavLink = {

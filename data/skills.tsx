@@ -6,17 +6,20 @@ export const coreSkills: CoreSkill[] = [
   {
     title: "Data Analytics & Insights",
     icon: <BarChart3 size={20} />,
-    desc: "Extracting actionable insights from complex datasets, auditing data integrity, and building visual dashboards using SQL, PostgreSQL, Pandas, and Power BI.",
+    desc: "Extracting actionable insights from relational databases, auditing data integrity, and creating reporting dashboards using SQL, PostgreSQL, Pandas, and Power BI.",
+    badge: "Core Skill",
   },
   {
     title: "Quality Assurance (QA) & Testing",
     icon: <CheckCircle2 size={20} />,
-    desc: "Ensuring software reliability through structured technical testing, functional verification, system workflow analysis, and rigorous test case execution.",
+    desc: "Actively exploring and interested in structured testing methodologies, test case design, system workflow analysis, and software reliability for OJT.",
+    badge: "Interest / Learning",
   },
   {
     title: "Workflow & Test Automation",
     icon: <Workflow size={20} />,
-    desc: "Designing automated scripts, ETL data pipelines, and intelligent agent workflows using Python, Selenium/PyTest, and CI/CD tools to accelerate delivery.",
+    desc: "Enthusiastic about learning test automation frameworks (Selenium/PyTest), CI/CD pipelines, and automated scripting to eliminate repetitive tasks.",
+    badge: "Interest / Learning",
   },
 ];
 

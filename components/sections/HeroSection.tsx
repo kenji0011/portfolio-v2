@@ -48,7 +48,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
             variants={fadeUp}
             className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight border-l-4 border-current pl-3 my-2 opacity-90"
           >
-            Data Analytics, QA & Automation Specialist.
+            Data Analytics & Aspiring QA / Automation Specialist.
           </motion.h2>
         </div>
 
@@ -58,11 +58,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
           className="text-base sm:text-lg leading-relaxed font-medium opacity-85"
         >
           I&apos;m an Intelligent Systems Computer Science student specializing
-          in Data Analytics, Quality Assurance, and Workflow Automation. Adept
-          at analyzing system workflows, auditing data integrity, conducting
-          structured technical testing, and building data-driven tools with
-          SQL, Python, and modern web frameworks to ensure platform reliability
-          and efficiency.
+          in Data Analytics with an active interest in Quality Assurance and
+          Automation. Adept at analyzing system workflows, auditing data
+          integrity, and working with SQL, PostgreSQL, and Python, seeking an
+          On-the-Job Training (OJT) role to apply my analytical foundation and
+          grow in technical testing.
         </motion.p>
 
         {/* Action Buttons */}
