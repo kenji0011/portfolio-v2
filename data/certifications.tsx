@@ -11,7 +11,7 @@ export const certifications: Certification[] = [
     description:
       "Proctored certification validating foundational knowledge and skills in data manipulation, SQL & relational databases, analysis, visualization, statistics, and responsible analytics practices.",
     image: "/images/certifications/cert13.png",
-    credential: "#",
+    credential: "https://www.credly.com/badges/7b325661-ef72-42ce-b7da-f942473c9273/public_url",
     category: "Certification",
   },
   {
@@ -23,7 +23,7 @@ export const certifications: Certification[] = [
       "This course provide fundamentals about Excel, functions, vlookups, data sorting, pivot tables, and data analysis.",
     image: "/images/certifications/cert12.png",
     credential:
-      "https://www.credly.com/badges/7b325661-ef72-42ce-b7da-f942473c9273/public_url",
+      "https://lms.simplilearn.com/courses/5990/Data%20Analyst%20101/certificate/download-skillup",
     category: "Certification",
   },
   {
