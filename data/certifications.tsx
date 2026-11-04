@@ -23,7 +23,7 @@ export const certifications: Certification[] = [
       "This course provide fundamentals about Excel, functions, vlookups, data sorting, pivot tables, and data analysis.",
     image: "/images/certifications/cert12.png",
     credential:
-      "https://lms.simplilearn.com/courses/5990/Data%20Analyst%20101/certificate/download-skillup",
+      "https://www.credly.com/badges/7b325661-ef72-42ce-b7da-f942473c9273/public_url",
     category: "Certification",
   },
   {
