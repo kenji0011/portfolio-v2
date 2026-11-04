@@ -98,9 +98,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
               Get In Touch
             </h4>
             <p className="text-current/75 text-xs sm:text-sm leading-relaxed font-medium">
-              I&apos;m currently open to new opportunities, collaborations, or
-              intelligent systems projects. Send me a message and I&apos;ll get
-              back to you!
+              I&apos;m currently open to On-the-Job Training (OJT), internship
+              opportunities, and projects in Data Analytics, Quality Assurance (QA),
+              and Automation. Send me a message and I&apos;ll get back to you!
             </p>
           </div>
 
@@ -118,8 +118,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
               },
               {
                 icon: <Mail size={16} />,
-                href: "mailto:keangabriel101@email.com",
-                label: "keangabriel101@email.com",
+                href: "mailto:keangabriel101@gmail.com",
+                label: "keangabriel101@gmail.com",
               },
               {
                 icon: <Phone size={16} />,

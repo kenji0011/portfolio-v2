@@ -1,32 +1,33 @@
 import React from "react";
-import { Brain, Cpu, Terminal } from "lucide-react";
+import { BarChart3, CheckCircle2, Workflow } from "lucide-react";
 import { CoreSkill } from "@/types/portfolio";
 
 export const coreSkills: CoreSkill[] = [
   {
-    title: "Generative AI",
-    icon: <Brain size={20} />,
-    desc: "Developing advanced RAG pipelines, fine-tuning LLMs, and building creative AI applications.",
+    title: "Data Analytics & Insights",
+    icon: <BarChart3 size={20} />,
+    desc: "Extracting actionable insights from complex datasets, auditing data integrity, and building visual dashboards using SQL, PostgreSQL, Pandas, and Power BI.",
   },
   {
-    title: "Machine Learning",
-    icon: <Cpu size={20} />,
-    desc: "Building predictive models and intelligent agents using Deep Learning and Reinforcement Learning techniques.",
+    title: "Quality Assurance (QA) & Testing",
+    icon: <CheckCircle2 size={20} />,
+    desc: "Ensuring software reliability through structured technical testing, functional verification, system workflow analysis, and rigorous test case execution.",
   },
   {
-    title: "Data Science",
-    icon: <Terminal size={20} />,
-    desc: "Extracting actionable insights from complex datasets through cleaning, visualization, and statistical analysis.",
+    title: "Workflow & Test Automation",
+    icon: <Workflow size={20} />,
+    desc: "Designing automated scripts, ETL data pipelines, and intelligent agent workflows using Python, Selenium/PyTest, and CI/CD tools to accelerate delivery.",
   },
 ];
 
 export const softSkills: string[] = [
-  "Leadership",
+  "Attention to Detail",
+  "System Workflow Analysis",
+  "Root Cause Analysis",
+  "Agile & Scrum",
   "Critical Thinking",
   "Problem Solving",
-  "Creativity",
   "Communication",
-  "Adaptability",
   "Continuous Learning",
   "Time Management",
   "Teamwork",

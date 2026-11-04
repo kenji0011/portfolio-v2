@@ -55,22 +55,22 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
       answer =
         "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), a Fitness Tracker (Rockies), and the Berong E-Learning platform. Check them out in the Featured Projects section!";
     } else if (
-      /(skill|tech|stack|expertise|language|framework|code|know)/.test(
+      /(skill|tech|stack|expertise|language|framework|code|know|qa|test|analytics|automation)/.test(
         lowerQuery
       )
     ) {
       answer =
-        "His core skills revolve around Generative AI, Machine Learning, and Data Science. He primarily works with Python, React, Next.js, and frameworks like TensorFlow and PyTorch.";
+        "His core focus areas are Data Analytics, Quality Assurance (QA), and Automation. He works with Python, SQL, PostgreSQL, Pandas, Postman, Selenium, PyTest, Power BI, and modern web frameworks like Next.js and Laravel.";
     } else if (
       /(education|school|study|university|college|degree|student)/.test(
         lowerQuery
       )
     ) {
       answer =
-        "He is currently a 3rd Year BS Computer Science student at Laguna State Polytechnic University.";
-    } else if (/(contact|email|phone|hire|reach|message)/.test(lowerQuery)) {
+        "He is currently a BS Computer Science student (Major in Intelligent Systems) at Laguna State Polytechnic University.";
+    } else if (/(contact|email|phone|hire|reach|message|ojt|intern)/.test(lowerQuery)) {
       answer =
-        "You can reach Kean via email at keangabriel101@gmail.com or use the contact form at the bottom of the page. He is currently open to new opportunities!";
+        "You can reach Kean via email at keangabriel101@gmail.com or use the contact form at the bottom of the page. He is currently open to OJT / internship opportunities in QA, Data Analytics, and Automation!";
     } else if (/(name|call him)/.test(lowerQuery)) {
       answer =
         "His full name is Kean Gabriel Salvahan. But you can just call him Kean!";
@@ -84,7 +84,7 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
         "You can ask me questions like 'What are your skills?', 'Where did you go to school?', 'What is your name?' or 'What projects have you built?'";
     } else if (/(about|who|background|age|birthday|old)/.test(lowerQuery)) {
       answer =
-        "Kean is a 21-year-old AI/ML Engineer based in Laguna, Philippines. He's passionate about building intelligent systems and intuitive UI designs.";
+        "Kean is a Computer Science student based in Laguna, Philippines, specializing in Data Analytics, Quality Assurance (QA), and Process Automation.";
     }
 
     setMessages((prev) => [...prev, { role: "user", text: query }]);

@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Kean Salvahan | AI/ML Engineer",
-  description: "Portfolio of Kean Gabriel Salvahan - AI/ML Engineer and BS Computer Science student.",
+  title: "Kean Salvahan | Data Analytics, QA & Automation",
+  description:
+    "Portfolio of Kean Gabriel Salvahan - Specializing in Data Analytics, Quality Assurance (QA), and Automation.",
 };
 
 export default function RootLayout({

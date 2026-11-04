@@ -48,7 +48,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
             variants={fadeUp}
             className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight border-l-4 border-current pl-3 my-2 opacity-90"
           >
-            I build AI/ML solutions & intelligent web apps.
+            Data Analytics, QA & Automation Specialist.
           </motion.h2>
         </div>
 
@@ -57,11 +57,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
           variants={fadeUp}
           className="text-base sm:text-lg leading-relaxed font-medium opacity-85"
         >
-          I&apos;m an Intelligent systems specialist with a background in
-          developing machine learning models, computer vision systems, and data
-          management pipelines. Experienced in building full-stack AI solutions
-          and using cloud platforms to deploy and scale data-driven projects that
-          solve real-world problems.
+          I&apos;m an Intelligent Systems Computer Science student specializing
+          in Data Analytics, Quality Assurance, and Workflow Automation. Adept
+          at analyzing system workflows, auditing data integrity, conducting
+          structured technical testing, and building data-driven tools with
+          SQL, Python, and modern web frameworks to ensure platform reliability
+          and efficiency.
         </motion.p>
 
         {/* Action Buttons */}
@@ -91,7 +92,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
             Contact Me
           </motion.a>
           <motion.a
-            href="/resume.pdf"
+            href="/Salvahan_Resume.pdf"
             download="Salvahan_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
@@ -124,7 +125,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
             <Github size={17} />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b"
             target="_blank"
             rel="noopener noreferrer"
             className={`p-2.5 border-2 rounded-lg transition-all ${
