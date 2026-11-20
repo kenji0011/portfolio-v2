@@ -148,13 +148,13 @@ export const projects: Project[] = [
       "/images/projects/tempo/Tempo_Demo_compressed.mp4",
       "/images/projects/tempo/summary.jpg",
       "/images/projects/tempo/feature.jpg",
-      "/images/projects/tempo-dark/workout.jpg",
-      "/images/projects/tempo-dark/progress.jpg",
-      "/images/projects/tempo-dark/profile.jpg",
+      "/images/projects/tempo/workout.jpg",
+      "/images/projects/tempo/progress.jpg",
+      "/images/projects/tempo/profile.jpg",
       
     ],
     github: "https://github.com/kenji0011/fitness-tracker-v2.git",
-    live: "#",
+    live: "",
     date: "2026",
   },
 ];
