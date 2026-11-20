@@ -271,15 +271,6 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 <div className="flex flex-col gap-5 p-6 sm:p-8">
                   {/* Title + tags */}
                   <div className="pr-8">
-                    <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-2 font-mono">
-                      <span>{selectedProject.tags[0]}</span>
-                      {selectedProject.date && (
-                        <>
-                          <span>·</span>
-                          <span>{selectedProject.date}</span>
-                        </>
-                      )}
-                    </div>
                     <h4 className="text-xl sm:text-2xl font-semibold tracking-tight leading-snug mb-3">
                       {selectedProject.title}
                     </h4>
