@@ -145,7 +145,7 @@ export const projects: Project[] = [
     icon: <Activity size={24} />,
     image: "/images/projects/tempo/tempo_app_icon.png",
     gallery: [
-      "/images/projects/tempo/Tempo_Demo.mp4",
+      "/images/projects/tempo/Tempo_Demo_compressed.mp4",
       "/images/projects/tempo/summary.jpg",
       "/images/projects/tempo/feature.jpg",
       "/images/projects/tempo-dark/workout.jpg",
