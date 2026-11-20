@@ -65,17 +65,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeUp}
-        className="flex flex-col gap-2 mb-12"
+        className="mb-8 space-y-1.5"
       >
-        <div className="inline-flex items-center gap-2 self-start border-2 border-current px-2.5 py-0.5 font-mono text-[11px] font-black tracking-widest uppercase bg-black text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_currentColor]">
-          CHAPTER 07 // TRANSMISSION
-        </div>
-        <div className="flex items-center gap-4">
-          <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-current whitespace-nowrap">
-            Contact Me
-          </h3>
-          <div className="h-[2px] bg-current opacity-30 flex-grow" />
-        </div>
+        <p className="text-xs font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+          Contact
+        </p>
+        <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-current">
+          Get in Touch
+        </h3>
       </motion.div>
 
       <motion.div
@@ -83,83 +80,75 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
         variants={staggerContainer}
-        className="max-w-2xl mx-auto"
+        className="max-w-2xl"
       >
         <motion.div
           variants={fadeUp}
-          style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
-          className="relative rounded-2xl border-[3.5px] border-current text-current p-6 sm:p-10 shadow-[10px_10px_0px_currentColor]"
+          className={`rounded-2xl border p-6 sm:p-8 ${
+            isDark
+              ? "bg-[#111113] border-zinc-800"
+              : "bg-white border-zinc-200"
+          }`}
         >
-          <div className="space-y-2 mb-6">
-            <p className="font-mono text-xs font-black uppercase tracking-widest text-current/80">
-              {"// WHAT'S NEXT?"}
-            </p>
-            <h4 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-current">
-              Get In Touch
-            </h4>
-            <p className="text-current/75 text-xs sm:text-sm leading-relaxed font-medium">
-              I&apos;m currently open to On-the-Job Training (OJT), internship
-              opportunities, and projects in Data Analytics, Quality Assurance (QA),
-              and Automation. Send me a message and I&apos;ll get back to you!
-            </p>
-          </div>
+          <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6">
+            I&apos;m currently open to On-the-Job Training (OJT), internship
+            opportunities, and projects in Data Analytics, Quality Assurance
+            (QA), and Automation. Send me a message and I&apos;ll get back to
+            you!
+          </p>
 
-          <div className="flex flex-wrap gap-3 mb-8">
+          <div className="flex flex-wrap gap-2 mb-7">
             {[
               {
-                icon: <Github size={16} />,
+                icon: <Github size={15} />,
                 href: "https://github.com/kenji0011",
                 label: "GitHub",
               },
               {
-                icon: <Linkedin size={16} />,
+                icon: <Linkedin size={15} />,
                 href: "https://www.linkedin.com/in/salvahan-kean-gabriel-e-06760537b",
                 label: "LinkedIn",
               },
               {
-                icon: <Mail size={16} />,
+                icon: <Mail size={15} />,
                 href: "mailto:keangabriel101@gmail.com",
                 label: "keangabriel101@gmail.com",
               },
               {
-                icon: <Phone size={16} />,
+                icon: <Phone size={15} />,
                 href: "tel:+639205815366",
                 label: "+63 920 581 5366",
               },
               {
-                icon: <MapPin size={16} />,
+                icon: <MapPin size={15} />,
                 href: "#",
                 label: "Laguna, Philippines",
               },
             ].map((item) => (
-              <motion.a
+              <a
                 key={item.label}
                 href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={item.href === "#" ? undefined : "_blank"}
+                rel={item.href === "#" ? undefined : "noopener noreferrer"}
                 aria-label={item.label}
-                whileHover={{ scale: 1.05, y: -2 }}
-                className={`flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider border-2 px-3 py-2 rounded-lg transition-all cursor-pointer ${
+                className={`flex items-center gap-2 text-xs font-medium border px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
                   isDark
-                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
-                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                    ? "bg-zinc-900/50 text-zinc-300 border-zinc-800 hover:bg-zinc-900 hover:text-white hover:border-zinc-700"
+                    : "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 hover:border-zinc-300"
                 }`}
               >
-                {item.icon}{" "}
+                {item.icon}
                 <span className="hidden sm:inline-block">{item.label}</span>
-              </motion.a>
+              </a>
             ))}
           </div>
 
-          <motion.form
-            onSubmit={handleSubmit}
-            className="relative z-10 space-y-4"
-          >
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
-            <motion.div variants={fadeUp} className="relative group">
+            <div className="relative">
               <User
-                size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-current/60 transition-colors"
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"
               />
               <input
                 type="text"
@@ -169,15 +158,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
                 onChange={(e) =>
                   setFormState({ ...formState, name: e.target.value })
                 }
-                className="w-full bg-black/5 dark:bg-white/5 border-2 border-current rounded-xl pl-11 pr-4 py-3 text-current placeholder:text-current/50 font-mono text-xs sm:text-sm outline-none focus:bg-transparent focus:shadow-[4px_4px_0px_currentColor] transition-all"
+                className={`w-full border rounded-lg pl-10 pr-4 py-2.5 text-sm outline-none transition-colors ${
+                  isDark
+                    ? "bg-zinc-900/50 border-zinc-800 text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-500"
+                    : "bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-white"
+                }`}
               />
-            </motion.div>
+            </div>
 
             {/* Email */}
-            <motion.div variants={fadeUp} className="relative group">
+            <div className="relative">
               <AtSign
-                size={16}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-current/60 transition-colors"
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"
               />
               <input
                 type="email"
@@ -187,41 +180,49 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
                 onChange={(e) =>
                   setFormState({ ...formState, email: e.target.value })
                 }
-                className="w-full bg-black/5 dark:bg-white/5 border-2 border-current rounded-xl pl-11 pr-4 py-3 text-current placeholder:text-current/50 font-mono text-xs sm:text-sm outline-none focus:bg-transparent focus:shadow-[4px_4px_0px_currentColor] transition-all"
+                className={`w-full border rounded-lg pl-10 pr-4 py-2.5 text-sm outline-none transition-colors ${
+                  isDark
+                    ? "bg-zinc-900/50 border-zinc-800 text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-500"
+                    : "bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-white"
+                }`}
               />
-            </motion.div>
+            </div>
 
             {/* Message */}
-            <motion.div variants={fadeUp} className="relative group">
+            <div className="relative">
               <MessageSquare
-                size={16}
-                className="absolute left-4 top-4 text-current/60 transition-colors"
+                size={15}
+                className="absolute left-3.5 top-3.5 text-zinc-400"
               />
               <textarea
                 placeholder="Your message..."
                 required
-                rows={5}
+                rows={4}
                 value={formState.message}
                 onChange={(e) =>
                   setFormState({ ...formState, message: e.target.value })
                 }
-                className="w-full bg-black/5 dark:bg-white/5 border-2 border-current rounded-xl pl-11 pr-4 py-3 text-current placeholder:text-current/50 font-mono text-xs sm:text-sm outline-none focus:bg-transparent focus:shadow-[4px_4px_0px_currentColor] transition-all resize-none"
+                className={`w-full border rounded-lg pl-10 pr-4 py-2.5 text-sm outline-none transition-colors resize-none ${
+                  isDark
+                    ? "bg-zinc-900/50 border-zinc-800 text-zinc-100 placeholder:text-zinc-500 focus:border-zinc-500"
+                    : "bg-zinc-50 border-zinc-200 text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:bg-white"
+                }`}
               />
-            </motion.div>
+            </div>
 
             {/* Submit */}
-            <motion.div variants={fadeUp}>
+            <div>
               <button
                 type="submit"
                 disabled={sending}
-                className={`comic-btn-primary w-full flex items-center justify-center gap-2 px-6 py-3.5 font-mono font-black text-xs sm:text-sm uppercase tracking-wider rounded-xl transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed ${
+                className={`w-full flex items-center justify-center gap-2 px-5 py-2.5 font-medium text-sm rounded-lg transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed ${
                   submitted
                     ? "bg-emerald-600 text-white"
                     : sendError
                     ? "bg-red-600 text-white"
                     : isDark
-                    ? "bg-white text-black hover:bg-black hover:text-white"
-                    : "bg-black text-white hover:bg-white hover:text-black"
+                    ? "bg-zinc-100 text-zinc-950 hover:bg-zinc-300"
+                    : "bg-zinc-900 text-white hover:bg-zinc-700"
                 }`}
               >
                 {sending ? (
@@ -245,25 +246,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
                         d="M4 12a8 8 0 018-8v8z"
                       />
                     </svg>
-                    TRANSMITTING…
+                    Sending…
                   </span>
                 ) : submitted ? (
-                  <span className="flex items-center gap-2">
-                    ✓ TRANSMISSION SENT!
-                  </span>
+                  <span>✓ Message Sent</span>
                 ) : sendError ? (
-                  <span className="flex items-center gap-2">
-                    ✗ FAILED — RETRY
-                  </span>
+                  <span>Failed — Please Retry</span>
                 ) : (
                   <>
-                    <Send size={16} />
-                    SEND TRANSMISSION
+                    <Send size={15} />
+                    Send Message
                   </>
                 )}
               </button>
-            </motion.div>
-          </motion.form>
+            </div>
+          </form>
         </motion.div>
       </motion.div>
     </section>

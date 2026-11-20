@@ -18,61 +18,68 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({ isDark }) =>
       variants={staggerContainer}
       className="scroll-mt-28"
     >
-      <motion.div variants={fadeUp} className="flex flex-col gap-2 mb-10">
-        <div className="inline-flex items-center gap-2 self-start border-2 border-current px-2.5 py-0.5 font-mono text-[11px] font-black tracking-widest uppercase bg-black text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_currentColor]">
-          CHAPTER 02 // ARSENAL
-        </div>
-        <div className="flex items-center gap-4">
-          <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-current whitespace-nowrap">
-            Skills & Interests
-          </h3>
-          <div className="h-[2px] bg-current opacity-30 flex-grow" />
-        </div>
+      <motion.div variants={fadeUp} className="mb-8 space-y-1.5">
+        <p className="text-xs font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+          Capabilities
+        </p>
+        <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-current">
+          Skills & Interests
+        </h3>
       </motion.div>
 
       <motion.div variants={fadeUp} className="grid md:grid-cols-2 gap-6">
         {/* Left — Skills & Interests */}
         <div
-          style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
-          className="rounded-xl border-[2.5px] border-current p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative"
+          className={`rounded-xl border p-6 sm:p-7 ${
+            isDark
+              ? "bg-[#111113] border-zinc-800"
+              : "bg-white border-zinc-200"
+          }`}
         >
-          <div className="flex items-center gap-2 mb-6">
-            <span className="w-2.5 h-2.5 bg-current inline-block"></span>
-            <h4 className="text-lg font-black uppercase tracking-wider text-current">
-              Skills & Interests
-            </h4>
-          </div>
-          <div className="space-y-4">
+          <h4 className="text-sm font-semibold tracking-tight text-current mb-5">
+            Focus Areas
+          </h4>
+          <div className="space-y-3.5">
             {coreSkills.map((item) => (
               <div
                 key={item.title}
-                className="flex gap-4 items-start p-3.5 rounded-lg border-2 border-current bg-black/5 dark:bg-white/5"
+                className={`flex gap-3.5 items-start p-4 rounded-lg border ${
+                  isDark
+                    ? "border-zinc-800/80 bg-zinc-900/40"
+                    : "border-zinc-200/80 bg-zinc-50/70"
+                }`}
               >
-                <div className="p-2 rounded-md border-2 border-current bg-black text-white dark:bg-white dark:text-black shrink-0 mt-0.5 shadow-[2px_2px_0px_currentColor]">
+                <div
+                  className={`p-2 rounded-lg border shrink-0 mt-0.5 ${
+                    isDark
+                      ? "border-zinc-800 bg-zinc-900 text-zinc-200"
+                      : "border-zinc-200 bg-white text-zinc-800"
+                  }`}
+                >
                   {item.icon}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <h5 className="text-sm font-black uppercase tracking-wider text-current">
+                    <h5 className="text-sm font-semibold text-current">
                       {item.title}
                     </h5>
                     {item.badge && (
                       <span
-                        className={`text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded border-2 shadow-[1px_1px_0px_currentColor] shrink-0 ${
+                        className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${
                           item.badge === "Core Skill"
                             ? isDark
-                              ? "bg-white text-black border-white"
-                              : "bg-black text-white border-black"
+                              ? "bg-zinc-100 text-zinc-950"
+                              : "bg-zinc-900 text-white"
                             : isDark
-                            ? "bg-[#1f1f1f] text-white/90 border-white/60"
-                            : "bg-black/5 text-black/90 border-black/60"
+                            ? "bg-zinc-800 text-zinc-300"
+                            : "bg-zinc-200/80 text-zinc-700"
                         }`}
                       >
                         {item.badge}
                       </span>
                     )}
                   </div>
-                  <p className="text-xs leading-relaxed mt-1 text-current/80 font-medium">
+                  <p className="text-xs leading-relaxed mt-1.5 text-zinc-600 dark:text-zinc-400">
                     {item.desc}
                   </p>
                 </div>
@@ -83,29 +90,27 @@ export const ExpertiseSection: React.FC<ExpertiseSectionProps> = ({ isDark }) =>
 
         {/* Right — Soft Skills */}
         <div
-          style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
-          className="rounded-xl border-[2.5px] border-current p-6 sm:p-8 shadow-[6px_6px_0px_currentColor] relative"
+          className={`rounded-xl border p-6 sm:p-7 ${
+            isDark
+              ? "bg-[#111113] border-zinc-800"
+              : "bg-white border-zinc-200"
+          }`}
         >
-          <div className="flex items-center gap-2 mb-6">
-            <span className="w-2.5 h-2.5 bg-current inline-block"></span>
-            <h4 className="text-lg font-black uppercase tracking-wider text-current">
-              Soft Skills
-            </h4>
-          </div>
-          <div className="flex flex-wrap gap-2.5">
+          <h4 className="text-sm font-semibold tracking-tight text-current mb-5">
+            Soft Skills
+          </h4>
+          <div className="flex flex-wrap gap-2">
             {softSkills.map((skill) => (
-              <motion.span
+              <span
                 key={skill}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-3.5 py-1.5 rounded-lg border-2 text-xs font-mono font-bold uppercase tracking-wider transition-all duration-150 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
                   isDark
-                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
-                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                    ? "bg-zinc-900/50 text-zinc-300 border-zinc-800 hover:border-zinc-700 hover:text-white"
+                    : "bg-zinc-50 text-zinc-700 border-zinc-200 hover:border-zinc-300 hover:text-zinc-950"
                 }`}
               >
                 {skill}
-              </motion.span>
+              </span>
             ))}
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Brain, Send, X } from "lucide-react";
+import { MessageSquare, Sparkles, Send, X } from "lucide-react";
 
 type FloatingAiCopilotProps = {
   isDark: boolean;
@@ -53,7 +53,7 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
       )
     ) {
       answer =
-        "Kean has built several cool projects including an E-Commerce App (GetGoods), a Machine Learning Filipino Recipe Chatbot (Kasangkap-Hunt), a Fitness Tracker (Rockies), and the Berong E-Learning platform. Check them out in the Featured Projects section!";
+        "Kean has built several projects including Tempo (an offline-first Flutter + Rust + SQLite fitness tracker), Berong E-Learning (SafeScape 2.0), Medical Center Bank (Monte Carlo inventory optimization), Kasangkap-Hunt Chefbot, GetGoods, and Rockies. Check them out in the Featured Projects section!";
     } else if (
       /(skill|tech|stack|expertise|language|framework|code|know|qa|test|analytics|automation)/.test(
         lowerQuery
@@ -84,7 +84,7 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
         "You can ask me questions like 'What are your skills?', 'Where did you go to school?', 'What is your name?' or 'What projects have you built?'";
     } else if (/(about|who|background|age|birthday|old)/.test(lowerQuery)) {
       answer =
-        "Kean is a Computer Science student based in Laguna, Philippines, specializing in Data Analytics, Quality Assurance (QA), and Process Automation.";
+        "Kean is a Computer Science student based in Laguna, Philippines, specializing in Data Analytics with an active interest in Quality Assurance (QA) and Process Automation.";
     }
 
     setMessages((prev) => [...prev, { role: "user", text: query }]);
@@ -104,67 +104,68 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
 
   return (
     <>
-      {/* Comic Speech Bubble Button */}
+      {/* Flat Minimal Floating Button */}
       <AnimatePresence>
         {!isOpen && (
           <div className="fixed bottom-6 right-6 z-50">
             <motion.button
-              initial={{ scale: 0, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0, opacity: 0 }}
-              whileHover={{ scale: 1.04, x: -2, y: -2 }}
-              whileTap={{ scale: 0.96, x: 2, y: 2 }}
+              exit={{ scale: 0.9, opacity: 0 }}
               onClick={() => setIsOpen(true)}
-              className={`comic-bubble-tail flex items-center gap-2.5 px-5 py-3 rounded-2xl border-[2.5px] ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-xs font-medium transition-colors cursor-pointer ${
                 isDark
-                  ? "bg-black border-white text-white shadow-[4px_4px_0px_#ffffff] hover:bg-white hover:text-black"
-                  : "bg-white border-black text-black shadow-[4px_4px_0px_#000000] hover:bg-black hover:text-white"
-              } transition-all cursor-pointer font-bold tracking-tight text-xs`}
+                  ? "bg-[#111113] border-zinc-800 text-zinc-200 hover:bg-zinc-900 hover:border-zinc-700"
+                  : "bg-white border-zinc-200 text-zinc-800 hover:bg-zinc-100 hover:border-zinc-300"
+              }`}
               aria-label="Ask KenjiAI"
             >
-              <MessageSquare size={15} className="shrink-0" />
-              <span>Need help? Ask KenjiAI</span>
+              <MessageSquare size={14} className="shrink-0" />
+              <span>Ask KenjiAI</span>
             </motion.button>
           </div>
         )}
       </AnimatePresence>
 
-      {/* Comic Chat Modal */}
+      {/* Flat Minimal Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.96, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 30 }}
-            transition={{ type: "spring", stiffness: 320, damping: 30 }}
-            className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] w-[calc(100vw-2rem)] sm:w-[430px] h-[580px] max-h-[85vh] rounded-2xl border-[3px] flex flex-col overflow-hidden ${
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[60] w-[calc(100vw-2rem)] sm:w-[400px] h-[540px] max-h-[85vh] rounded-2xl border flex flex-col overflow-hidden ${
               isDark
-                ? "bg-[#0f0f0f] border-white shadow-[8px_8px_0px_#ffffff] text-white"
-                : "bg-white border-black shadow-[8px_8px_0px_#000000] text-black"
+                ? "bg-[#111113] border-zinc-800 text-zinc-100"
+                : "bg-white border-zinc-200 text-zinc-950"
             }`}
           >
-            {/* Comic Window Header */}
+            {/* Header */}
             <div
-              className={`flex items-center justify-between px-4 py-3 border-b-[2.5px] select-none ${
-                isDark ? "bg-black border-white" : "bg-[#f4f4f0] border-black"
+              className={`flex items-center justify-between px-4 py-3 border-b select-none ${
+                isDark
+                  ? "bg-[#0d0d0f] border-zinc-800"
+                  : "bg-zinc-50 border-zinc-200"
               }`}
             >
               <div className="flex items-center gap-2">
-                <span className="font-mono font-black text-xs uppercase tracking-widest px-2 py-0.5 border-2 border-current">
-                  KENJIAI // CO-PILOT
+                <Sparkles size={14} className="text-zinc-500 dark:text-zinc-400" />
+                <span className="font-semibold text-xs tracking-tight">
+                  KenjiAI Assistant
                 </span>
               </div>
 
               <button
                 onClick={() => setIsOpen(false)}
-                className={`p-1 border-2 transition-colors cursor-pointer ${
+                className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
                   isDark
-                    ? "bg-black text-white border-white hover:bg-white hover:text-black"
-                    : "bg-white text-black border-black hover:bg-black hover:text-white"
+                    ? "border-zinc-800 text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                    : "border-zinc-200 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-950"
                 }`}
                 aria-label="Close AI Chat"
               >
-                <X size={15} />
+                <X size={14} />
               </button>
             </div>
 
@@ -174,43 +175,28 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
                 {messages.length === 0 ? (
                   <motion.div
                     key="empty"
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="flex flex-col p-6 overflow-y-auto no-scrollbar"
+                    exit={{ opacity: 0, y: -8 }}
+                    className="flex flex-col p-5 overflow-y-auto no-scrollbar"
                   >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-xl border-2 border-current flex items-center justify-center shadow-[2px_2px_0px_currentColor]">
-                        <Brain size={20} />
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-black uppercase tracking-tight">
-                          KenjiAI Assistant
-                        </h4>
-                        <p className="text-[11px] font-mono opacity-70">
-                          Ask me about Kean
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="text-xs leading-relaxed mb-6 opacity-80">
-                      I&apos;m programmed with details about Kean&apos;s
-                      background, tech stack, machine learning projects, and
-                      education. Try a prompt:
+                    <p className="text-xs leading-relaxed mb-5 text-zinc-600 dark:text-zinc-400">
+                      Ask me anything about Kean&apos;s background, skills,
+                      projects, or OJT availability. Try a prompt below:
                     </p>
 
-                    <div className="flex flex-col gap-2.5 w-full">
+                    <div className="flex flex-col gap-2 w-full">
                       {prompts.map((p, i) => (
                         <button
                           key={i}
                           onClick={() => handlePromptClick(p)}
-                          className={`comic-btn-secondary flex items-center gap-3 p-3 rounded-xl text-left transition-all group font-bold text-xs ${
+                          className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-lg border text-left transition-colors text-xs font-medium cursor-pointer ${
                             isDark
-                              ? "bg-black text-white hover:bg-white hover:text-black"
-                              : "bg-white text-black hover:bg-black hover:text-white"
+                              ? "bg-zinc-900/50 border-zinc-800 text-zinc-300 hover:bg-zinc-900 hover:text-white hover:border-zinc-700"
+                              : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100 hover:text-zinc-950 hover:border-zinc-300"
                           }`}
                         >
-                          <MessageSquare size={13} className="shrink-0" />
+                          <MessageSquare size={13} className="shrink-0 opacity-60" />
                           <span>{p}</span>
                         </button>
                       ))}
@@ -219,7 +205,7 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
                 ) : (
                   <div
                     ref={scrollRef}
-                    className="flex-1 overflow-y-auto p-4 space-y-3.5 no-scrollbar"
+                    className="flex-1 overflow-y-auto p-4 space-y-3 no-scrollbar"
                   >
                     {messages.map((m, i) => (
                       <div
@@ -229,14 +215,14 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
                         }`}
                       >
                         <div
-                          className={`px-4 py-2.5 rounded-xl max-w-[85%] text-xs leading-relaxed font-medium ${
+                          className={`px-3.5 py-2.5 rounded-xl max-w-[85%] text-xs leading-relaxed ${
                             m.role === "user"
                               ? isDark
-                                ? "bg-white text-black border-2 border-white font-bold shadow-[2px_2px_0px_#ffffff]"
-                                : "bg-black text-white border-2 border-black font-bold shadow-[2px_2px_0px_#000000]"
+                                ? "bg-zinc-100 text-zinc-950 font-medium"
+                                : "bg-zinc-900 text-white font-medium"
                               : isDark
-                              ? "bg-[#181818] text-white border-2 border-white/60 shadow-[2px_2px_0px_rgba(255,255,255,0.3)]"
-                              : "bg-[#fcfcfc] text-black border-2 border-black/60 shadow-[2px_2px_0px_rgba(0,0,0,0.3)]"
+                              ? "bg-zinc-900 text-zinc-200 border border-zinc-800"
+                              : "bg-zinc-100 text-zinc-800"
                           }`}
                         >
                           {m.text}
@@ -245,17 +231,23 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
                     ))}
                     {isTyping && (
                       <div className="flex justify-start">
-                        <div className="px-4 py-2.5 rounded-xl border-2 border-current flex items-center gap-1.5">
+                        <div
+                          className={`px-3.5 py-2.5 rounded-xl flex items-center gap-1.5 ${
+                            isDark
+                              ? "bg-zinc-900 border border-zinc-800"
+                              : "bg-zinc-100"
+                          }`}
+                        >
                           <span
-                            className="w-1.5 h-1.5 rounded-full animate-bounce bg-current"
+                            className="w-1.5 h-1.5 rounded-full animate-bounce bg-zinc-400"
                             style={{ animationDelay: "0ms" }}
                           />
                           <span
-                            className="w-1.5 h-1.5 rounded-full animate-bounce bg-current"
+                            className="w-1.5 h-1.5 rounded-full animate-bounce bg-zinc-400"
                             style={{ animationDelay: "150ms" }}
                           />
                           <span
-                            className="w-1.5 h-1.5 rounded-full animate-bounce bg-current"
+                            className="w-1.5 h-1.5 rounded-full animate-bounce bg-zinc-400"
                             style={{ animationDelay: "300ms" }}
                           />
                         </div>
@@ -268,32 +260,37 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
 
             {/* Input Bar */}
             <div
-              className={`p-3 border-t-[2.5px] ${
-                isDark ? "bg-black border-white" : "bg-[#f4f4f0] border-black"
+              className={`p-3 border-t ${
+                isDark
+                  ? "bg-[#0d0d0f] border-zinc-800"
+                  : "bg-zinc-50 border-zinc-200"
               }`}
             >
               <form
                 onSubmit={handleInputSubmit}
-                className="relative flex items-center border-2 border-current rounded-xl overflow-hidden"
+                className={`relative flex items-center border rounded-lg overflow-hidden transition-colors ${
+                  isDark
+                    ? "bg-zinc-900/60 border-zinc-800 focus-within:border-zinc-600"
+                    : "bg-white border-zinc-200 focus-within:border-zinc-900"
+                }`}
               >
-                <span className="pl-3 font-bold font-mono text-xs">{">"}</span>
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   disabled={isTyping}
                   placeholder="Ask a question..."
-                  className="w-full !bg-transparent !border-none focus:ring-0 text-xs outline-none pl-2.5 pr-20 py-2.5 font-mono"
+                  className="w-full !bg-transparent !border-none focus:ring-0 text-xs outline-none pl-3 pr-20 py-2.5"
                 />
                 <div className="absolute right-2 flex items-center gap-1.5">
                   {messages.length > 0 && (
                     <button
                       type="button"
                       onClick={() => setMessages([])}
-                      className={`px-1.5 py-0.5 rounded border text-[9px] font-mono font-bold uppercase transition-all cursor-pointer ${
+                      className={`px-2 py-1 rounded text-[10px] font-medium transition-colors cursor-pointer ${
                         isDark
-                          ? "border-white/40 bg-black text-white hover:bg-white hover:text-black"
-                          : "border-black/40 bg-white text-black hover:bg-black hover:text-white"
+                          ? "text-zinc-400 hover:text-white hover:bg-zinc-800"
+                          : "text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100"
                       }`}
                     >
                       Clear
@@ -302,14 +299,14 @@ export const FloatingAiCopilot: React.FC<FloatingAiCopilotProps> = ({
                   <button
                     type="submit"
                     disabled={!inputValue.trim() || isTyping}
-                    className={`p-1.5 border transition-colors ${
+                    className={`p-1.5 rounded-md transition-colors disabled:opacity-30 cursor-pointer ${
                       isDark
-                        ? "border-white bg-black text-white hover:bg-white hover:text-black"
-                        : "border-black bg-white text-black hover:bg-black hover:text-white"
-                    } disabled:opacity-30 cursor-pointer`}
+                        ? "bg-zinc-100 text-zinc-950 hover:bg-zinc-300"
+                        : "bg-zinc-900 text-white hover:bg-zinc-700"
+                    }`}
                     aria-label="Send"
                   >
-                    <Send size={11} />
+                    <Send size={12} />
                   </button>
                 </div>
               </form>

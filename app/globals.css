@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  --background: #fafaf8;
-  --foreground: #111111;
+  --background: #fafafa;
+  --foreground: #09090b;
 }
 
 @theme inline {
@@ -14,10 +14,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   letter-spacing: -0.01em;
 }
 
@@ -30,119 +34,33 @@ body {
   display: none;
 }
 
-/* ── Comic Halftone Ben-Day Dot Textures ────────────────────────────── */
-.comic-dots-light {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.5px, transparent 1.5px);
-  background-size: 16px 16px;
-}
-
-.comic-dots-dark {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.5px, transparent 1.5px);
-  background-size: 16px 16px;
-}
-
-/* ── Comic Diagonal Hatch Texture ──────────────────────────────────── */
-.comic-hatch {
-  background: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 6px,
-    rgba(0, 0, 0, 0.04) 6px,
-    rgba(0, 0, 0, 0.04) 7px
-  );
-}
-
-/* ── Comic Neo-Brutalist Theme Tokens ───────────────────────────────── */
+/* ── Flat Minimal Theme Tokens ──────────────────────────────────────── */
 :root, [data-theme="light"] {
-  --bg-page: #fafaf8;
+  --bg-page: #fafafa;
   --bg-panel: #ffffff;
   --bg-card: #ffffff;
-  --bg-nav: rgba(250, 250, 248, 0.96);
+  --bg-subtle: #f4f4f5;
+  --bg-nav: rgba(250, 250, 250, 0.85);
   --bg-modal: #ffffff;
-  --text-base: #111111;
+  --text-base: #09090b;
   --text-muted: #52525b;
-  --border-color: #111111;
-  --shadow-color: #111111;
-}
-
-[data-theme="dark"] {
-  --bg-page: #0a0a0a;
-  --bg-panel: #121212;
-  --bg-card: #141414;
-  --bg-nav: rgba(10, 10, 10, 0.95);
-  --bg-modal: #111111;
-  --text-base: #f5f5f5;
-  --text-muted: #a1a1aa;
-  --border-color: #ffffff;
-  --shadow-color: #ffffff;
-}
-
-/* ── Tactile Comic Buttons ─────────────────────────────────────────── */
-.comic-btn-primary {
-  border: 2.5px solid currentColor;
-  box-shadow: 4px 4px 0px currentColor;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-.comic-btn-primary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px currentColor;
-}
-.comic-btn-primary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px currentColor;
-}
-
-.comic-btn-secondary {
-  border: 2px solid currentColor;
-  box-shadow: 3px 3px 0px currentColor;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-.comic-btn-secondary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px currentColor;
-}
-.comic-btn-secondary:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0px currentColor;
-}
-
-/* ── Comic Panels ──────────────────────────────────────────────────── */
-.comic-panel {
-  border: 2.5px solid currentColor;
-  box-shadow: 5px 5px 0px currentColor;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.comic-panel-hover:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px currentColor;
-}
-
-/* ── Comic Speech Bubble Shape ─────────────────────────────────────── */
-.comic-bubble-tail {
-  position: relative;
-}
-.comic-bubble-tail::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  right: 28px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid currentColor;
-}
-
-/* ── Element-level typography defaults ───────────────────────────────── */
-[data-theme="light"] {
+  --border-color: #e4e4e7;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
+  --bg-page: #09090b;
+  --bg-panel: #111113;
+  --bg-card: #111113;
+  --bg-subtle: #18181b;
+  --bg-nav: rgba(9, 9, 11, 0.85);
+  --bg-modal: #111113;
+  --text-base: #fafafa;
+  --text-muted: #a1a1aa;
+  --border-color: #27272a;
   color-scheme: dark;
 }
 
 [data-theme] {
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }

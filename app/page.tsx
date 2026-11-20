@@ -90,14 +90,7 @@ export default function Portfolio() {
         isDark ? "dark" : ""
       }`}
     >
-      {/* Comic Halftone Background */}
-      <div
-        className={`fixed inset-0 z-0 pointer-events-none ${
-          isDark ? "comic-dots-dark" : "comic-dots-light"
-        }`}
-      />
-
-      {/* Comic Navigation */}
+      {/* Navigation */}
       <Navbar
         isDark={isDark}
         toggleTheme={toggleTheme}
@@ -105,20 +98,20 @@ export default function Portfolio() {
         setMobileMenuOpen={setMobileMenuOpen}
       />
 
-      <main className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-24 space-y-36">
-        {/* CHAPTER 01: HERO / ORIGIN */}
+      <main className="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-24 space-y-28">
+        {/* Hero */}
         <HeroSection isDark={isDark} />
 
-        {/* CHAPTER 02: ARSENAL / EXPERTISE */}
+        {/* Skills & Interests */}
         <ExpertiseSection isDark={isDark} />
 
-        {/* CHAPTER 03: TOOLKIT / TECH STACK */}
+        {/* Tech Stack */}
         <TechStackSection />
 
-        {/* CHAPTER 04: ACTIVITY LOG / GITHUB */}
+        {/* GitHub Activity */}
         <GithubActivitySection isDark={isDark} />
 
-        {/* CHAPTER 05: CASE FILES / FEATURED PROJECTS */}
+        {/* Featured Projects */}
         <ProjectsSection
           isDark={isDark}
           showAllProjects={showAllProjects}
@@ -126,7 +119,7 @@ export default function Portfolio() {
           onSelectProject={handleSelectProject}
         />
 
-        {/* CHAPTER 06: CREDENTIALS / CERTIFICATIONS */}
+        {/* Certifications */}
         <CertificationsSection
           isDark={isDark}
           isMobile={isMobile}
@@ -136,7 +129,7 @@ export default function Portfolio() {
           onSelectCert={setSelectedCert}
         />
 
-        {/* CHAPTER 07: TRANSMISSION / CONTACT */}
+        {/* Contact */}
         <ContactSection isDark={isDark} />
       </main>
 

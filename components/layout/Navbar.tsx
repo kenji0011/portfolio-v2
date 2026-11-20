@@ -28,31 +28,25 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   return (
     <nav
-      style={{ background: "var(--bg-nav)" }}
-      className="fixed top-0 w-full z-50 border-b-[2.5px] border-current backdrop-blur-md transition-colors duration-200"
+      style={{ background: "var(--bg-nav)", borderColor: "var(--border-color)" }}
+      className="fixed top-0 w-full z-50 border-b backdrop-blur-md transition-colors duration-200"
     >
-      <div className="max-w-6xl mx-auto px-6 py-3.5 flex justify-between items-center">
-        <motion.a
+      <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a
           href="#"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={`text-lg font-black tracking-widest font-mono px-2.5 py-1 border-2 transition-all cursor-pointer ${
-            isDark
-              ? "bg-black text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black"
-              : "bg-white text-black border-black shadow-[2px_2px_0px_#000000] hover:bg-black hover:text-white"
-          }`}
+          className="text-base font-semibold tracking-tight text-current hover:opacity-70 transition-opacity"
         >
-          KS.
-        </motion.a>
+          Kean Salvahan
+        </a>
 
         {/* Desktop Navigation Links */}
-        <div className="flex items-center gap-6 text-xs font-bold uppercase tracking-wider">
+        <div className="flex items-center gap-6">
           <div className="hidden sm:flex items-center gap-6">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="hover:underline underline-offset-4 decoration-2 transition-all opacity-80 hover:opacity-100"
+                className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
               >
                 {link.name}
               </a>
@@ -63,23 +57,23 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className={`p-2 border-2 transition-all cursor-pointer ${
+            className={`p-2 rounded-lg border transition-colors cursor-pointer ${
               isDark
-                ? "bg-black text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black"
-                : "bg-white text-black border-black shadow-[2px_2px_0px_#000000] hover:bg-black hover:text-white"
+                ? "border-zinc-800 text-zinc-300 hover:bg-zinc-900 hover:text-white"
+                : "border-zinc-200 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
             }`}
           >
-            {isDark ? <Sun size={15} /> : <Moon size={15} />}
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
 
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label="Toggle navigation menu"
-            className={`p-2 border-2 sm:hidden transition-all cursor-pointer ${
+            className={`p-2 rounded-lg border sm:hidden transition-colors cursor-pointer ${
               isDark
-                ? "bg-black text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black"
-                : "bg-white text-black border-black shadow-[2px_2px_0px_#000000] hover:bg-black hover:text-white"
+                ? "border-zinc-800 text-zinc-300 hover:bg-zinc-900 hover:text-white"
+                : "border-zinc-200 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
             }`}
           >
             {mobileMenuOpen ? <X size={16} /> : <Menu size={16} />}
@@ -95,8 +89,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className={`sm:hidden border-t-[2.5px] border-current px-6 py-4 flex flex-col gap-2 ${
-              isDark ? "bg-black" : "bg-white"
+            className={`sm:hidden border-t px-6 py-4 flex flex-col gap-1 ${
+              isDark
+                ? "bg-[#09090b] border-zinc-800"
+                : "bg-[#fafafa] border-zinc-200"
             }`}
           >
             {navLinks.map((link) => (
@@ -104,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="py-2 text-sm font-bold uppercase tracking-wider hover:underline underline-offset-4"
+                className="py-2.5 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 transition-colors"
               >
                 {link.name}
               </a>

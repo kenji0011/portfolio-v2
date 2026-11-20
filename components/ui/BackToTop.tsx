@@ -14,20 +14,18 @@ export const BackToTop: React.FC<BackToTopProps> = ({ show, isDark }) => {
     <AnimatePresence>
       {show && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
+          initial={{ opacity: 0, scale: 0.9, y: 12 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          whileHover={{ scale: 1.08, x: -2, y: -2 }}
-          whileTap={{ scale: 0.95, x: 2, y: 2 }}
+          exit={{ opacity: 0, scale: 0.9, y: 12 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Scroll to top"
-          className={`fixed bottom-24 right-6 z-40 p-3 rounded-xl border-[2.5px] cursor-pointer transition-all ${
+          className={`fixed bottom-20 right-6 z-40 p-2.5 rounded-full border cursor-pointer transition-colors ${
             isDark
-              ? "bg-black text-white border-white shadow-[4px_4px_0px_#ffffff] hover:bg-white hover:text-black"
-              : "bg-white text-[#111111] border-[#111111] shadow-[4px_4px_0px_#111111] hover:bg-[#111111] hover:text-white"
+              ? "bg-[#111113] text-zinc-300 border-zinc-800 hover:bg-zinc-900 hover:text-white hover:border-zinc-700"
+              : "bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-100 hover:text-zinc-950 hover:border-zinc-300"
           }`}
         >
-          <ChevronUp size={20} strokeWidth={2.5} />
+          <ChevronUp size={18} strokeWidth={2} />
         </motion.button>
       )}
     </AnimatePresence>

@@ -66,6 +66,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
       }
     }
   }, [galleryIndex, selectedProject]);
+
   return (
     <AnimatePresence>
       {selectedProject && (
@@ -75,37 +76,33 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           exit={{ opacity: 0 }}
           onClick={onClose}
           style={{
-            backgroundColor: isDark ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.55)",
+            backgroundColor: isDark ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.45)",
           }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4 md:p-6 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-5 backdrop-blur-sm"
         >
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.96 }}
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 280, damping: 30 }}
+            exit={{ opacity: 0, y: 16, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
-            style={{
-              background: isDark ? "#141414" : "#ffffff",
-              color: isDark ? "#f5f5f5" : "#111111",
-              borderColor: isDark ? "#ffffff" : "#111111",
-              boxShadow: isDark
-                ? "10px 10px 0px #ffffff"
-                : "10px 10px 0px #111111",
-            }}
-            className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] flex flex-col rounded-2xl border-[3.5px] overflow-hidden"
+            className={`relative w-full max-w-5xl max-h-[92vh] sm:max-h-[90vh] flex flex-col rounded-2xl border overflow-hidden ${
+              isDark
+                ? "bg-[#111113] text-zinc-100 border-zinc-800"
+                : "bg-white text-zinc-950 border-zinc-200"
+            }`}
           >
             {/* Close button */}
             <button
               onClick={onClose}
               aria-label="Close project modal"
-              className={`absolute top-3 right-3 sm:top-5 sm:right-5 z-30 p-2 sm:p-2.5 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer ${
+              className={`absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-30 p-2 rounded-lg border transition-colors cursor-pointer ${
                 isDark
-                  ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
-                  : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                  ? "bg-zinc-900/90 text-zinc-300 border-zinc-800 hover:bg-zinc-800 hover:text-white"
+                  : "bg-white/90 text-zinc-600 border-zinc-200 hover:bg-zinc-100 hover:text-zinc-950"
               }`}
             >
-              <X size={18} strokeWidth={2.5} />
+              <X size={16} strokeWidth={2} />
             </button>
 
             <div
@@ -116,14 +113,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-full">
                 {/* LEFT: Image gallery */}
                 <div
-                  style={{
-                    background: isDark ? "rgba(255,255,255,0.03)" : "#f6f6f4",
-                    borderColor: isDark ? "#ffffff" : "#111111",
-                  }}
-                  className="relative flex flex-col border-b-2 lg:border-b-0 lg:border-r-2 overflow-hidden"
+                  className={`relative flex flex-col border-b lg:border-b-0 lg:border-r overflow-hidden ${
+                    isDark
+                      ? "bg-zinc-950/60 border-zinc-800"
+                      : "bg-zinc-50 border-zinc-200"
+                  }`}
                 >
                   {/* Main image */}
-                  <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[420px] flex items-center justify-center p-3 sm:p-4">
+                  <div className="relative w-full h-64 sm:h-80 md:h-96 lg:h-[420px] flex items-center justify-center p-4">
                     {selectedProject.gallery &&
                     selectedProject.gallery.length > 0 ? (
                       <AnimatePresence mode="wait">
@@ -132,7 +129,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
-                          transition={{ duration: 0.25, ease: "easeOut" }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
                           className="relative w-full h-full p-2 flex items-center justify-center"
                         >
                           <Image
@@ -142,7 +139,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                             }`}
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-contain cursor-zoom-in transition-transform duration-300 hover:scale-[1.02]"
+                            className="object-contain cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
                             onClick={() => setIsZoomed(true)}
                             priority
                           />
@@ -151,12 +148,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     ) : (
                       <div className="w-full h-full flex items-center justify-center p-8">
                         <div
-                          style={{
-                            background: isDark ? "#ffffff" : "#000000",
-                            color: isDark ? "#000000" : "#ffffff",
-                            borderColor: isDark ? "#ffffff" : "#000000",
-                          }}
-                          className="p-8 rounded-2xl border-2"
+                          className={`p-6 rounded-xl border ${
+                            isDark
+                              ? "bg-zinc-900 text-zinc-200 border-zinc-800"
+                              : "bg-white text-zinc-800 border-zinc-200"
+                          }`}
                         >
                           {selectedProject.icon}
                         </div>
@@ -176,13 +172,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                               )
                             }
                             aria-label="Previous image"
-                            className={`absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer ${
+                            className={`absolute left-3 top-1/2 -translate-y-1/2 z-10 p-2 rounded-lg border transition-colors cursor-pointer ${
                               isDark
-                                ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
-                                : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                                ? "bg-zinc-900/90 text-zinc-200 border-zinc-700 hover:bg-zinc-800"
+                                : "bg-white/90 text-zinc-700 border-zinc-200 hover:bg-zinc-100"
                             }`}
                           >
-                            <ChevronLeft size={16} strokeWidth={2.5} />
+                            <ChevronLeft size={16} strokeWidth={2} />
                           </button>
                           <button
                             onClick={() =>
@@ -192,13 +188,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                               )
                             }
                             aria-label="Next image"
-                            className={`absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-2.5 rounded-lg border-2 transition-all active:translate-x-[2px] active:translate-y-[2px] cursor-pointer ${
+                            className={`absolute right-3 top-1/2 -translate-y-1/2 z-10 p-2 rounded-lg border transition-colors cursor-pointer ${
                               isDark
-                                ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
-                                : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                                ? "bg-zinc-900/90 text-zinc-200 border-zinc-700 hover:bg-zinc-800"
+                                : "bg-white/90 text-zinc-700 border-zinc-200 hover:bg-zinc-100"
                             }`}
                           >
-                            <ChevronRight size={16} strokeWidth={2.5} />
+                            <ChevronRight size={16} strokeWidth={2} />
                           </button>
                         </>
                       )}
@@ -208,13 +204,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                   {selectedProject.gallery &&
                     selectedProject.gallery.length > 1 && (
                       <div
-                        style={{
-                          background: isDark
-                            ? "rgba(255,255,255,0.06)"
-                            : "#eaeae6",
-                          borderColor: isDark ? "#ffffff" : "#111111",
-                        }}
-                        className="flex p-2.5 sm:p-3 gap-2 border-t-2 overflow-x-auto no-scrollbar"
+                        className={`flex p-3 gap-2 border-t overflow-x-auto no-scrollbar ${
+                          isDark
+                            ? "bg-zinc-900/50 border-zinc-800"
+                            : "bg-zinc-100/70 border-zinc-200"
+                        }`}
                       >
                         <div className="flex gap-2 mx-auto px-1">
                           {selectedProject.gallery.map((imgSrc, idx) => (
@@ -222,13 +216,14 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                               key={idx}
                               id={`thumbnail-${idx}`}
                               onClick={() => setGalleryIndex(idx)}
-                              style={{
-                                borderColor: isDark ? "#ffffff" : "#111111",
-                              }}
-                              className={`relative shrink-0 w-12 h-9 sm:w-16 sm:h-12 rounded-md overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
+                              className={`relative shrink-0 w-12 h-9 sm:w-16 sm:h-11 rounded-md overflow-hidden border transition-all duration-150 cursor-pointer ${
                                 idx === galleryIndex
-                                  ? "shadow-[3px_3px_0px_currentColor] opacity-100 scale-105"
-                                  : "opacity-60 hover:opacity-100"
+                                  ? isDark
+                                    ? "border-zinc-100 opacity-100"
+                                    : "border-zinc-900 opacity-100"
+                                  : isDark
+                                  ? "border-zinc-800 opacity-50 hover:opacity-85"
+                                  : "border-zinc-200 opacity-55 hover:opacity-90"
                               }`}
                             >
                               <Image
@@ -246,111 +241,30 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 </div>
 
                 {/* RIGHT: Info + description */}
-                <div
-                  className="flex flex-col gap-4 sm:gap-5 p-5 sm:p-7 lg:p-9"
-                  style={{ background: isDark ? "#141414" : "#ffffff" }}
-                >
-                  {/* Project Info Dossier */}
-                  <div
-                    style={{
-                      background: isDark ? "#181818" : "#fbfbfa",
-                      borderColor: isDark ? "#ffffff" : "#111111",
-                      boxShadow: isDark
-                        ? "4px 4px 0px #ffffff"
-                        : "4px 4px 0px #111111",
-                    }}
-                    className="rounded-xl border-2 divide-y-2 divide-current overflow-hidden text-xs"
-                  >
-                    <div
-                      style={{
-                        background: isDark ? "#ffffff" : "#111111",
-                        color: isDark ? "#000000" : "#ffffff",
-                      }}
-                      className="px-4 py-2.5 flex items-center justify-between font-mono"
-                    >
-                      <p className="text-[10px] font-black uppercase tracking-widest">
-                        FILE DOSSIER
-                      </p>
-                      <span className="text-[10px] font-bold">
-                        {selectedProject.date ?? "CLASSIFIED"}
-                      </span>
-                    </div>
-                    <div className="px-4 py-2.5 flex items-center justify-between">
-                      <span
-                        style={{ color: isDark ? "#a1a1aa" : "#52525b" }}
-                        className="font-mono font-bold uppercase text-[11px]"
-                      >
-                        Category
-                      </span>
-                      <span
-                        style={{ color: isDark ? "#ffffff" : "#111111" }}
-                        className="font-mono font-black uppercase text-[11px]"
-                      >
-                        {selectedProject.tags[0]}
-                      </span>
-                    </div>
-                    <div className="px-4 py-2.5 flex items-center justify-between">
-                      <span
-                        style={{ color: isDark ? "#a1a1aa" : "#52525b" }}
-                        className="font-mono font-bold uppercase text-[11px]"
-                      >
-                        Project Date
-                      </span>
-                      <span
-                        style={{ color: isDark ? "#ffffff" : "#111111" }}
-                        className="font-mono font-bold"
-                      >
-                        {selectedProject.date ?? "—"}
-                      </span>
-                    </div>
-                    <div className="px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
-                      <span
-                        style={{ color: isDark ? "#a1a1aa" : "#52525b" }}
-                        className="font-mono font-bold uppercase text-[11px] shrink-0"
-                      >
-                        Source / Live URL
-                      </span>
-                      {selectedProject.live !== "#" ? (
-                        <a
-                          href={selectedProject.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: isDark ? "#ffffff" : "#111111" }}
-                          className="font-mono font-bold underline underline-offset-2 break-all hover:opacity-75 transition-opacity"
-                        >
-                          {selectedProject.live}
-                        </a>
-                      ) : (
-                        <span
-                          style={{ color: isDark ? "#71717a" : "#a1a1aa" }}
-                          className="font-mono"
-                        >
-                          —
-                        </span>
+                <div className="flex flex-col gap-5 p-6 sm:p-8">
+                  {/* Title + tags */}
+                  <div className="pr-8">
+                    <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-2 font-mono">
+                      <span>{selectedProject.tags[0]}</span>
+                      {selectedProject.date && (
+                        <>
+                          <span>·</span>
+                          <span>{selectedProject.date}</span>
+                        </>
                       )}
                     </div>
-                  </div>
-
-                  {/* Title + tags */}
-                  <div>
-                    <h4
-                      style={{ color: isDark ? "#ffffff" : "#111111" }}
-                      className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-tight mb-3"
-                    >
+                    <h4 className="text-xl sm:text-2xl font-semibold tracking-tight leading-snug mb-3">
                       {selectedProject.title}
                     </h4>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {selectedProject.tags.map((tag) => (
                         <span
                           key={tag}
-                          style={{
-                            background: isDark
-                              ? "rgba(255,255,255,0.08)"
-                              : "rgba(0,0,0,0.05)",
-                            borderColor: isDark ? "#ffffff" : "#111111",
-                            color: isDark ? "#ffffff" : "#111111",
-                          }}
-                          className="px-2.5 py-0.5 border-2 text-[11px] font-mono font-black uppercase tracking-wider rounded-md"
+                          className={`px-2.5 py-0.5 text-[11px] font-medium rounded-md ${
+                            isDark
+                              ? "bg-zinc-900 text-zinc-300 border border-zinc-800"
+                              : "bg-zinc-100 text-zinc-700"
+                          }`}
                         >
                           {tag}
                         </span>
@@ -358,11 +272,49 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     </div>
                   </div>
 
-                  {/* Description */}
-                  <p
-                    style={{ color: isDark ? "#d4d4d8" : "#27272a" }}
-                    className="text-xs sm:text-sm leading-relaxed font-medium flex-1"
+                  {/* Metadata details */}
+                  <div
+                    className={`rounded-xl border divide-y text-xs ${
+                      isDark
+                        ? "border-zinc-800 divide-zinc-800 bg-zinc-900/30"
+                        : "border-zinc-200 divide-zinc-200 bg-zinc-50/70"
+                    }`}
                   >
+                    <div className="px-4 py-2.5 flex items-center justify-between">
+                      <span className="text-zinc-500 dark:text-zinc-400">
+                        Category
+                      </span>
+                      <span className="font-medium">
+                        {selectedProject.tags[0]}
+                      </span>
+                    </div>
+                    <div className="px-4 py-2.5 flex items-center justify-between">
+                      <span className="text-zinc-500 dark:text-zinc-400">
+                        Year
+                      </span>
+                      <span className="font-medium font-mono">
+                        {selectedProject.date ?? "—"}
+                      </span>
+                    </div>
+                    {selectedProject.live !== "#" && (
+                      <div className="px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+                        <span className="text-zinc-500 dark:text-zinc-400 shrink-0">
+                          Live URL
+                        </span>
+                        <a
+                          href={selectedProject.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono text-xs underline underline-offset-2 break-all hover:opacity-75 transition-opacity"
+                        >
+                          {selectedProject.live}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 flex-1">
                     {selectedProject.longDescription ||
                       selectedProject.description}
                   </p>
@@ -374,27 +326,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                         href={selectedProject.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 transition-all cursor-pointer ${
+                        className={`text-xs sm:text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 font-medium border transition-colors cursor-pointer ${
                           isDark
-                            ? "bg-[#141414] text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
-                            : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                            ? "border-zinc-800 bg-zinc-900 text-zinc-100 hover:bg-zinc-800"
+                            : "border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-100"
                         }`}
                       >
                         <Github size={15} /> GitHub Repo
                       </a>
                     ) : (
                       <span
-                        style={{
-                          borderColor: isDark
-                            ? "rgba(255,255,255,0.3)"
-                            : "rgba(0,0,0,0.2)",
-                          color: isDark
-                            ? "rgba(255,255,255,0.4)"
-                            : "rgba(0,0,0,0.4)",
-                        }}
-                        className="inline-flex items-center justify-center gap-2 px-4 py-2.5 border-2 text-xs sm:text-sm font-mono font-bold uppercase rounded-xl cursor-not-allowed"
+                        className={`inline-flex items-center justify-center gap-2 px-4 py-2.5 border text-xs sm:text-sm font-medium rounded-lg cursor-not-allowed ${
+                          isDark
+                            ? "border-zinc-800/60 text-zinc-600"
+                            : "border-zinc-200 text-zinc-400"
+                        }`}
                       >
-                        <Github size={15} /> Private Archive
+                        <Github size={15} /> Private Repository
                       </span>
                     )}
                     {selectedProject.live !== "#" ? (
@@ -402,13 +350,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                         href={selectedProject.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`text-xs sm:text-sm py-2.5 rounded-xl flex items-center justify-center gap-2 font-mono font-black uppercase border-2 transition-all cursor-pointer ${
+                        className={`text-xs sm:text-sm py-2.5 rounded-lg flex items-center justify-center gap-2 font-medium transition-colors cursor-pointer ${
                           isDark
-                            ? "bg-white text-black border-white shadow-[3px_3px_0px_#ffffff] hover:bg-black hover:text-white"
-                            : "bg-[#111111] text-white border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-white hover:text-black"
+                            ? "bg-zinc-100 text-zinc-950 hover:bg-zinc-300"
+                            : "bg-zinc-900 text-white hover:bg-zinc-700"
                         }`}
                       >
-                        <ExternalLink size={15} /> Launch Website
+                        <ExternalLink size={15} /> Visit Website
                       </a>
                     ) : null}
                   </div>
@@ -416,50 +364,47 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               </div>
             </div>
 
-            {/* ── Project Navigation Bar (Back / Next) ── */}
+            {/* Project Navigation Bar */}
             <div
-              style={{
-                background: isDark ? "#0f0f0f" : "#f4f4f0",
-                borderTopColor: isDark ? "#ffffff" : "#111111",
-              }}
-              className="shrink-0 border-t-[2.5px] px-4 sm:px-6 py-3.5 flex items-center justify-between select-none"
+              className={`shrink-0 border-t px-4 sm:px-6 py-3 flex items-center justify-between select-none ${
+                isDark
+                  ? "bg-[#0d0d0f] border-zinc-800"
+                  : "bg-zinc-50 border-zinc-200"
+              }`}
             >
               <button
                 type="button"
                 onClick={handlePrevProject}
                 aria-label="Previous project"
-                className={`comic-btn-secondary flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
                   isDark
-                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
-                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                    ? "bg-[#111113] text-zinc-200 border-zinc-800 hover:bg-zinc-900"
+                    : "bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-100"
                 }`}
               >
-                <ChevronLeft size={16} strokeWidth={2.5} />
-                <span>Back</span>
+                <ChevronLeft size={15} strokeWidth={2} />
+                <span>Previous</span>
               </button>
 
               {currentIndex !== -1 && (
-                <div className="flex items-center gap-2 font-mono text-[11px] font-black uppercase tracking-widest text-current">
-                  <span className="hidden sm:inline opacity-70">CASE FILE</span>
-                  <span className="px-2.5 py-1 border-2 border-current rounded-lg bg-black/5 dark:bg-white/10 font-bold shadow-[2px_2px_0px_currentColor]">
-                    {String(currentIndex + 1).padStart(2, "0")} /{" "}
-                    {String(projects.length).padStart(2, "0")}
-                  </span>
-                </div>
+                <span className="font-mono text-xs text-zinc-500 dark:text-zinc-400">
+                  {String(currentIndex + 1).padStart(2, "0")} /{" "}
+                  {String(projects.length).padStart(2, "0")}
+                </span>
               )}
 
               <button
                 type="button"
                 onClick={handleNextProject}
                 aria-label="Next project"
-                className={`comic-btn-secondary flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
                   isDark
-                    ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[4px_4px_0px_#ffffff]"
-                    : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[4px_4px_0px_#111111]"
+                    ? "bg-[#111113] text-zinc-200 border-zinc-800 hover:bg-zinc-900"
+                    : "bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-100"
                 }`}
               >
                 <span>Next</span>
-                <ChevronRight size={16} strokeWidth={2.5} />
+                <ChevronRight size={15} strokeWidth={2} />
               </button>
             </div>
           </motion.div>

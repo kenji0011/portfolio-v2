@@ -1,5 +1,5 @@
 import React from "react";
-import { Cpu, Brain, Terminal, GraduationCap } from "lucide-react";
+import { Cpu, Brain, Terminal, GraduationCap, Activity } from "lucide-react";
 import { Project } from "@/types/portfolio";
 
 export const projects: Project[] = [
@@ -134,6 +134,21 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/kenji0011/berong-safescape-laravel.git",
     live: "https://bfpscberong.app",
+    date: "2026",
+  },
+  {
+    title: "Tempo — Local Fitness Tracker",
+    description: "A fast, 100% offline-first personal fitness tracker built with Flutter and an embedded Rust + SQLite native core, featuring an Apple-inspired UI and a Liquid Glass navigation bar.",
+    longDescription: "Tempo is a lightweight, 100% offline-first personal fitness tracker built with Flutter and an embedded Rust + SQLite (rusqlite) native core accessed via dart:ffi — requiring zero cloud accounts. It supports multiple isolated local profiles secured by SHA-256 salted 4-digit PINs, Apple-inspired Light and OLED Dark modes, a floating Liquid Glass navigation bar, workout and exercise logging, body measurements, daily step tracking, and private on-device progress photos and guided workout videos.",
+    tags: ["Mobile", "Flutter", "Rust", "SQLite", "Offline-First"],
+    techIcons: ["flutter", "dart", "rust", "sqlite"],
+    icon: <Activity size={24} />,
+    image: "/images/projects/tempo/tempo_app_icon.png",
+    gallery: [
+      "/images/projects/tempo/tempo_app_icon.png",
+    ],
+    github: "https://github.com/kenji0011/fitness-tracker-v2.git",
+    live: "#",
     date: "2026",
   },
 ];

@@ -58,22 +58,22 @@ export const GithubActivitySection: React.FC<GithubActivitySectionProps> = ({
       variants={staggerContainer}
       className="scroll-mt-28"
     >
-      <motion.div variants={fadeUp} className="flex flex-col gap-2 mb-10">
-        <div className="inline-flex items-center gap-2 self-start border-2 border-current px-2.5 py-0.5 font-mono text-[11px] font-black tracking-widest uppercase bg-black text-white dark:bg-white dark:text-black shadow-[2px_2px_0px_currentColor]">
-          CHAPTER 04 // ACTIVITY LOG
-        </div>
-        <div className="flex items-center gap-4">
-          <h3 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-current whitespace-nowrap">
-            GitHub Activity
-          </h3>
-          <div className="h-[2px] bg-current opacity-30 flex-grow" />
-        </div>
+      <motion.div variants={fadeUp} className="mb-8 space-y-1.5">
+        <p className="text-xs font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
+          Open Source
+        </p>
+        <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-current">
+          GitHub Activity
+        </h3>
       </motion.div>
 
       <motion.div
         variants={fadeUp}
-        style={{ background: "var(--bg-card)", color: "var(--text-base)" }}
-        className="rounded-xl border-[2.5px] border-current p-4 sm:p-6 lg:p-8 shadow-[6px_6px_0px_currentColor] flex flex-col"
+        className={`rounded-xl border p-5 sm:p-7 flex flex-col ${
+          isDark
+            ? "bg-[#111113] border-zinc-800"
+            : "bg-white border-zinc-200"
+        }`}
       >
         {/* Scrollable calendar view */}
         <div
@@ -85,17 +85,17 @@ export const GithubActivitySection: React.FC<GithubActivitySectionProps> = ({
               username="kenji0011"
               colorScheme={isDark ? "dark" : "light"}
               theme={{
-                light: ["#ebebeb", "#c6c6c6", "#8e8e8e", "#4f4f4f", "#111111"],
-                dark: ["#181818", "#383838", "#6a6a6a", "#b5b5b5", "#ffffff"],
+                light: ["#f4f4f5", "#d4d4d8", "#a1a1aa", "#52525b", "#18181b"],
+                dark: ["#18181b", "#27272a", "#52525b", "#a1a1aa", "#fafafa"],
               }}
               style={{ color: "currentColor", fontFamily: "inherit" }}
-              blockSize={13}
+              blockSize={12}
             />
           </div>
         </div>
 
         {/* Mobile Navigation Controls */}
-        <div className="mt-3 pt-3 border-t-2 border-current/15 flex items-center justify-between text-[11px] font-mono font-bold uppercase sm:hidden">
+        <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-xs font-medium sm:hidden">
           <button
             type="button"
             onClick={() => {
@@ -106,13 +106,13 @@ export const GithubActivitySection: React.FC<GithubActivitySectionProps> = ({
                 });
               }
             }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 transition-all cursor-pointer ${
+            className={`px-3 py-1.5 rounded-lg border transition-colors cursor-pointer ${
               isDark
-                ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[3px_3px_0px_#ffffff]"
-                : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[3px_3px_0px_#111111]"
+                ? "border-zinc-800 text-zinc-300 hover:bg-zinc-900"
+                : "border-zinc-200 text-zinc-700 hover:bg-zinc-100"
             }`}
           >
-            <span>◂ 1 Year Ago</span>
+            ← 1 Year Ago
           </button>
           <button
             type="button"
@@ -124,13 +124,13 @@ export const GithubActivitySection: React.FC<GithubActivitySectionProps> = ({
                 });
               }
             }}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border-2 transition-all cursor-pointer font-black ${
+            className={`px-3 py-1.5 rounded-lg border transition-colors cursor-pointer ${
               isDark
-                ? "bg-[#141414] text-white border-white shadow-[2px_2px_0px_#ffffff] hover:bg-white hover:text-black hover:shadow-[3px_3px_0px_#ffffff]"
-                : "bg-white text-[#111111] border-[#111111] shadow-[2px_2px_0px_#111111] hover:bg-[#111111] hover:text-white hover:shadow-[3px_3px_0px_#111111]"
+                ? "border-zinc-800 text-zinc-300 hover:bg-zinc-900"
+                : "border-zinc-200 text-zinc-700 hover:bg-zinc-100"
             }`}
           >
-            <span>Recent (Now) ▸</span>
+            Recent →
           </button>
         </div>
       </motion.div>

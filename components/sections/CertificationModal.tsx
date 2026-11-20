@@ -26,81 +26,69 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
           exit={{ opacity: 0 }}
           onClick={onClose}
           style={{
-            backgroundColor: isDark ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.55)",
+            backgroundColor: isDark ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.45)",
           }}
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 backdrop-blur-sm"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            initial={{ opacity: 0, scale: 0.96, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 30 }}
-            transition={{ type: "spring", stiffness: 280, damping: 28 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
             onClick={(e) => e.stopPropagation()}
-            style={{
-              background: isDark ? "#141414" : "#ffffff",
-              color: isDark ? "#f5f5f5" : "#111111",
-              borderColor: isDark ? "#ffffff" : "#111111",
-              boxShadow: isDark
-                ? "10px 10px 0px #ffffff"
-                : "10px 10px 0px #111111",
-            }}
-            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border-[3.5px]"
+            className={`relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border ${
+              isDark
+                ? "bg-[#111113] text-zinc-100 border-zinc-800"
+                : "bg-white text-zinc-950 border-zinc-200"
+            }`}
           >
             {/* Close button */}
             <button
               onClick={onClose}
               aria-label="Close modal"
-              className={`absolute top-4 right-4 z-20 p-2 rounded-lg border-2 active:translate-x-[2px] active:translate-y-[2px] transition-all cursor-pointer ${
+              className={`absolute top-4 right-4 z-20 p-2 rounded-lg border transition-colors cursor-pointer ${
                 isDark
-                  ? "bg-black text-white border-white shadow-[3px_3px_0px_#ffffff] hover:bg-white hover:text-black"
-                  : "bg-white text-[#111111] border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-[#111111] hover:text-white"
+                  ? "bg-zinc-900/90 text-zinc-300 border-zinc-800 hover:bg-zinc-800 hover:text-white"
+                  : "bg-white/90 text-zinc-600 border-zinc-200 hover:bg-zinc-100 hover:text-zinc-950"
               }`}
             >
-              <X size={18} strokeWidth={2.5} />
+              <X size={16} strokeWidth={2} />
             </button>
 
             {/* Certificate image — full visible, no cropping */}
             {selectedCert.image ? (
               <div
-                style={{
-                  background: isDark ? "rgba(255,255,255,0.03)" : "#f6f6f4",
-                  borderBottomColor: isDark ? "#ffffff" : "#111111",
-                }}
-                className="relative w-full border-b-[2.5px] flex items-center justify-center p-4 sm:p-6"
+                className={`relative w-full border-b flex items-center justify-center p-5 sm:p-6 ${
+                  isDark
+                    ? "bg-zinc-950/60 border-zinc-800"
+                    : "bg-zinc-50 border-zinc-200"
+                }`}
               >
                 <Image
                   src={selectedCert.image}
                   alt={selectedCert.title}
                   width={900}
                   height={700}
-                  className="w-full h-auto object-contain rounded-lg border-2"
-                  style={{
-                    maxHeight: "55vh",
-                    borderColor: isDark ? "#ffffff" : "#111111",
-                    boxShadow: isDark
-                      ? "4px 4px 0px #ffffff"
-                      : "4px 4px 0px #111111",
-                  }}
+                  className={`w-full h-auto object-contain rounded-lg border ${
+                    isDark ? "border-zinc-800" : "border-zinc-200"
+                  }`}
+                  style={{ maxHeight: "55vh" }}
                 />
               </div>
             ) : (
               <div
-                style={{
-                  background: isDark ? "rgba(255,255,255,0.03)" : "#f6f6f4",
-                  borderBottomColor: isDark ? "#ffffff" : "#111111",
-                }}
-                className="w-full h-44 border-b-[2.5px] flex items-center justify-center"
+                className={`w-full h-44 border-b flex items-center justify-center ${
+                  isDark
+                    ? "bg-zinc-950/60 border-zinc-800"
+                    : "bg-zinc-50 border-zinc-200"
+                }`}
               >
                 <div
-                  style={{
-                    background: isDark ? "#ffffff" : "#000000",
-                    color: isDark ? "#000000" : "#ffffff",
-                    borderColor: isDark ? "#ffffff" : "#000000",
-                    boxShadow: isDark
-                      ? "4px 4px 0px #ffffff"
-                      : "4px 4px 0px #000000",
-                  }}
-                  className="p-6 rounded-2xl border-2"
+                  className={`p-5 rounded-xl border ${
+                    isDark
+                      ? "bg-zinc-900 text-zinc-200 border-zinc-800"
+                      : "bg-white text-zinc-800 border-zinc-200"
+                  }`}
                 >
                   {selectedCert.icon}
                 </div>
@@ -108,34 +96,16 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
             )}
 
             {/* Content */}
-            <div
-              className="p-6 space-y-4"
-              style={{ background: isDark ? "#141414" : "#ffffff" }}
-            >
+            <div className="p-6 space-y-4">
               <div>
-                <div
-                  style={{
-                    background: isDark
-                      ? "rgba(255,255,255,0.08)"
-                      : "rgba(0,0,0,0.06)",
-                    borderColor: isDark ? "#ffffff" : "#111111",
-                    color: isDark ? "#ffffff" : "#111111",
-                  }}
-                  className="inline-flex items-center gap-2 border-2 px-2.5 py-1 text-[11px] font-mono font-black uppercase tracking-wider mb-2 rounded-md"
-                >
+                <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400 mb-1.5">
                   {selectedCert.year} · {selectedCert.issuer}
-                </div>
-                <h4
-                  style={{ color: isDark ? "#ffffff" : "#111111" }}
-                  className="text-xl sm:text-2xl font-black uppercase tracking-tight"
-                >
+                </p>
+                <h4 className="text-lg sm:text-xl font-semibold tracking-tight">
                   {selectedCert.title}
                 </h4>
               </div>
-              <p
-                style={{ color: isDark ? "#d4d4d8" : "#27272a" }}
-                className="text-xs sm:text-sm leading-relaxed font-medium"
-              >
+              <p className="text-xs sm:text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {selectedCert.description}
               </p>
               {selectedCert.credential &&
@@ -145,10 +115,10 @@ export const CertificationModal: React.FC<CertificationModalProps> = ({
                     href={selectedCert.credential}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-mono font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${
+                    className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium transition-colors cursor-pointer ${
                       isDark
-                        ? "bg-white text-black border-white shadow-[3px_3px_0px_#ffffff] hover:bg-black hover:text-white"
-                        : "bg-[#111111] text-white border-[#111111] shadow-[3px_3px_0px_#111111] hover:bg-white hover:text-black"
+                        ? "bg-zinc-100 text-zinc-950 hover:bg-zinc-300"
+                        : "bg-zinc-900 text-white hover:bg-zinc-700"
                     }`}
                   >
                     <ExternalLink size={14} /> Verify Credential
