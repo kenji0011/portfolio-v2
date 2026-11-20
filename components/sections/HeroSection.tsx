@@ -32,8 +32,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
                 : "border-zinc-200 bg-white text-zinc-600"
             }`}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            Available for OJT Opportunities
           </span>
         </motion.div>
 

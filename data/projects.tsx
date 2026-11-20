@@ -145,7 +145,13 @@ export const projects: Project[] = [
     icon: <Activity size={24} />,
     image: "/images/projects/tempo/tempo_app_icon.png",
     gallery: [
-      "/images/projects/tempo/tempo_app_icon.png",
+      "/images/projects/tempo/Tempo_Demo.mp4",
+      "/images/projects/tempo/summary.jpg",
+      "/images/projects/tempo/feature.jpg",
+      "/images/projects/tempo-dark/workout.jpg",
+      "/images/projects/tempo-dark/progress.jpg",
+      "/images/projects/tempo-dark/profile.jpg",
+      
     ],
     github: "https://github.com/kenji0011/fitness-tracker-v2.git",
     live: "#",

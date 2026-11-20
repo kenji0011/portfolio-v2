@@ -3,9 +3,11 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Github, ExternalLink } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Github, ExternalLink, Play } from "lucide-react";
 import { Project } from "@/types/portfolio";
 import { projects } from "@/data/projects";
+
+const isVideoFile = (src: string) => /\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(src);
 
 type ProjectModalProps = {
   selectedProject: Project | null;
@@ -132,17 +134,27 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                           transition={{ duration: 0.2, ease: "easeOut" }}
                           className="relative w-full h-full p-2 flex items-center justify-center"
                         >
-                          <Image
-                            src={selectedProject.gallery[galleryIndex]}
-                            alt={`${selectedProject.title} screenshot ${
-                              galleryIndex + 1
-                            }`}
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-contain cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
-                            onClick={() => setIsZoomed(true)}
-                            priority
-                          />
+                          {isVideoFile(selectedProject.gallery[galleryIndex]) ? (
+                            <video
+                              src={selectedProject.gallery[galleryIndex]}
+                              controls
+                              playsInline
+                              preload="metadata"
+                              className="w-full h-full max-h-full object-contain rounded-lg bg-black"
+                            />
+                          ) : (
+                            <Image
+                              src={selectedProject.gallery[galleryIndex]}
+                              alt={`${selectedProject.title} screenshot ${
+                                galleryIndex + 1
+                              }`}
+                              fill
+                              sizes="(max-width: 1024px) 100vw, 50vw"
+                              className="object-contain cursor-zoom-in transition-transform duration-300 hover:scale-[1.01]"
+                              onClick={() => setIsZoomed(true)}
+                              priority
+                            />
+                          )}
                         </motion.div>
                       </AnimatePresence>
                     ) : (
@@ -226,13 +238,28 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                                   : "border-zinc-200 opacity-55 hover:opacity-90"
                               }`}
                             >
-                              <Image
-                                src={imgSrc}
-                                alt={`Thumbnail ${idx + 1}`}
-                                fill
-                                sizes="70px"
-                                className="object-cover"
-                              />
+                              {isVideoFile(imgSrc) ? (
+                                <div className="relative w-full h-full bg-zinc-900 flex items-center justify-center">
+                                  <video
+                                    src={imgSrc}
+                                    muted
+                                    playsInline
+                                    preload="metadata"
+                                    className="w-full h-full object-cover opacity-75"
+                                  />
+                                  <span className="absolute inset-0 flex items-center justify-center bg-black/30 text-white">
+                                    <Play size={14} fill="currentColor" />
+                                  </span>
+                                </div>
+                              ) : (
+                                <Image
+                                  src={imgSrc}
+                                  alt={`Thumbnail ${idx + 1}`}
+                                  fill
+                                  sizes="70px"
+                                  className="object-cover"
+                                />
+                              )}
                             </button>
                           ))}
                         </div>

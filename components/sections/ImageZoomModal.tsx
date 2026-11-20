@@ -34,15 +34,27 @@ export const ImageZoomModal: React.FC<ImageZoomModalProps> = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.96, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="relative w-full h-full max-w-[95vw] max-h-[95vh]"
+            className="relative w-full h-full max-w-[95vw] max-h-[95vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
           >
-            <Image
-              src={project.gallery[galleryIndex]}
-              alt="Zoomed screenshot"
-              fill
-              sizes="100vw"
-              className="object-contain"
-            />
+            {/\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(project.gallery[galleryIndex]) ? (
+              <video
+                src={project.gallery[galleryIndex]}
+                controls
+                autoPlay
+                playsInline
+                className="max-w-full max-h-full object-contain rounded-lg"
+              />
+            ) : (
+              <Image
+                src={project.gallery[galleryIndex]}
+                alt="Zoomed screenshot"
+                fill
+                sizes="100vw"
+                className="object-contain cursor-zoom-out"
+                onClick={onClose}
+              />
+            )}
           </motion.div>
           {/* Close Button */}
           <button
