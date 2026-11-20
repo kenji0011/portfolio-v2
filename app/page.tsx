@@ -13,7 +13,6 @@ import { ImageZoomModal } from "@/components/sections/ImageZoomModal";
 import { CertificationsSection } from "@/components/sections/CertificationsSection";
 import { CertificationModal } from "@/components/sections/CertificationModal";
 import { ContactSection } from "@/components/sections/ContactSection";
-import { FloatingAiCopilot } from "@/components/ai/FloatingAiCopilot";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { Project, Certification } from "@/types/portfolio";
 
@@ -35,7 +34,7 @@ export default function Portfolio() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [aiChatOpen, setAiChatOpen] = useState(false);
+  const [showNavName, setShowNavName] = useState(false);
 
   // Responsive mobile screen check (< 768px)
   useEffect(() => {
@@ -96,11 +95,16 @@ export default function Portfolio() {
         toggleTheme={toggleTheme}
         mobileMenuOpen={mobileMenuOpen}
         setMobileMenuOpen={setMobileMenuOpen}
+        showBrand={showNavName}
       />
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-24 space-y-28">
         {/* Hero */}
-        <HeroSection isDark={isDark} />
+        <HeroSection
+          isDark={isDark}
+          isNameInNav={showNavName}
+          onNameScrolledChange={setShowNavName}
+        />
 
         {/* Skills & Interests */}
         <ExpertiseSection isDark={isDark} />
@@ -161,21 +165,8 @@ export default function Portfolio() {
 
       {/* Floating Back to Top Button */}
       <BackToTop
-        show={
-          showBackToTop &&
-          !selectedProject &&
-          !selectedCert &&
-          !isZoomed &&
-          !aiChatOpen
-        }
+        show={showBackToTop && !selectedProject && !selectedCert && !isZoomed}
         isDark={isDark}
-      />
-
-      {/* Floating AI Copilot */}
-      <FloatingAiCopilot
-        isDark={isDark}
-        isOpen={aiChatOpen}
-        setIsOpen={setAiChatOpen}
       />
 
       {/* Footer */}

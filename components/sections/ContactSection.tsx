@@ -65,7 +65,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={fadeUp}
-        className="mb-8 space-y-1.5"
+        className="mb-8 space-y-1.5 text-center"
       >
         <p className="text-xs font-mono uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
           Contact
@@ -80,7 +80,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
         variants={staggerContainer}
-        className="max-w-2xl"
+        className="max-w-2xl mx-auto"
       >
         <motion.div
           variants={fadeUp}
@@ -90,14 +90,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDark }) => {
               : "bg-white border-zinc-200"
           }`}
         >
-          <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6">
+          <p className="text-zinc-600 dark:text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6 text-center">
             I&apos;m currently open to On-the-Job Training (OJT), internship
             opportunities, and projects in Data Analytics, Quality Assurance
             (QA), and Automation. Send me a message and I&apos;ll get back to
             you!
           </p>
 
-          <div className="flex flex-wrap gap-2 mb-7">
+          <div className="flex flex-wrap justify-center gap-2 mb-7">
             {[
               {
                 icon: <Github size={15} />,

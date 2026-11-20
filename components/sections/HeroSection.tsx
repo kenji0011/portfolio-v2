@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
@@ -8,9 +8,34 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 
 type HeroSectionProps = {
   isDark: boolean;
+  isNameInNav: boolean;
+  onNameScrolledChange: (scrolled: boolean) => void;
 };
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  isDark,
+  isNameInNav,
+  onNameScrolledChange,
+}) => {
+  const nameRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const checkPosition = () => {
+      if (!nameRef.current) return;
+      const rect = nameRef.current.getBoundingClientRect();
+      // Transition name into navbar once the hero heading reaches the navbar bar
+      onNameScrolledChange(rect.top <= 76);
+    };
+
+    checkPosition();
+    window.addEventListener("scroll", checkPosition, { passive: true });
+    window.addEventListener("resize", checkPosition, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", checkPosition);
+      window.removeEventListener("resize", checkPosition);
+    };
+  }, [onNameScrolledChange]);
+
   return (
     <section
       id="about"
@@ -23,18 +48,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
         variants={staggerContainer}
         className="flex-1 space-y-6 max-w-2xl"
       >
-        {/* Minimal Eyebrow */}
-        <motion.div variants={fadeUp}>
-          <span
-            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${
-              isDark
-                ? "border-zinc-800 bg-zinc-900/60 text-zinc-400"
-                : "border-zinc-200 bg-white text-zinc-600"
-            }`}
-          >
-          </span>
-        </motion.div>
-
         {/* Main Greeting & Headings */}
         <div className="space-y-3">
           <motion.p
@@ -43,12 +56,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ isDark }) => {
           >
             Hi, my name is
           </motion.p>
-          <motion.h1
-            variants={fadeUp}
-            className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.08]"
-          >
-            Kean Salvahan
-          </motion.h1>
+          <motion.div ref={nameRef} variants={fadeUp}>
+            <h1
+              className={`text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.08] transition-all duration-300 ease-out ${
+                isNameInNav
+                  ? "opacity-0 -translate-y-3"
+                  : "opacity-100 translate-y-0"
+              }`}
+            >
+              Kean Salvahan
+            </h1>
+          </motion.div>
           <motion.h2
             variants={fadeUp}
             className="text-lg sm:text-2xl font-medium tracking-tight text-zinc-600 dark:text-zinc-400"

@@ -10,6 +10,7 @@ type NavbarProps = {
   toggleTheme: () => void;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  showBrand: boolean;
 };
 
 const navLinks: NavLink[] = [
@@ -25,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   toggleTheme,
   mobileMenuOpen,
   setMobileMenuOpen,
+  showBrand,
 }) => {
   return (
     <nav
@@ -32,12 +34,22 @@ export const Navbar: React.FC<NavbarProps> = ({
       className="fixed top-0 w-full z-50 border-b backdrop-blur-md transition-colors duration-200"
     >
       <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-        <a
+        <motion.a
           href="#"
-          className="text-base font-semibold tracking-tight text-current hover:opacity-70 transition-opacity"
+          initial={false}
+          animate={{
+            opacity: showBrand ? 1 : 0,
+            y: showBrand ? 0 : 10,
+          }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          aria-hidden={!showBrand}
+          tabIndex={showBrand ? 0 : -1}
+          className={`text-base font-semibold tracking-tight text-current hover:opacity-70 transition-opacity ${
+            showBrand ? "pointer-events-auto" : "pointer-events-none select-none"
+          }`}
         >
           Kean Salvahan
-        </a>
+        </motion.a>
 
         {/* Desktop Navigation Links */}
         <div className="flex items-center gap-6">
