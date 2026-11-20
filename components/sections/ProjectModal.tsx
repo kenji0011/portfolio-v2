@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Github, ExternalLink, Play } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Github, ExternalLink, Play, Download } from "lucide-react";
 import { Project } from "@/types/portfolio";
 import { projects } from "@/data/projects";
 
@@ -323,10 +323,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                         {selectedProject.date ?? "—"}
                       </span>
                     </div>
-                    {selectedProject.live !== "#" && (
+                    {selectedProject.live && selectedProject.live !== "#" && (
                       <div className="px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
                         <span className="text-zinc-500 dark:text-zinc-400 shrink-0">
-                          Live URL
+                          {selectedProject.live.includes("/releases")
+                            ? "Release"
+                            : "Live URL"}
                         </span>
                         <a
                           href={selectedProject.live}
@@ -372,7 +374,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                         <Github size={15} /> Private Repository
                       </span>
                     )}
-                    {selectedProject.live !== "#" ? (
+                    {selectedProject.live && selectedProject.live !== "#" ? (
                       <a
                         href={selectedProject.live}
                         target="_blank"
@@ -383,7 +385,15 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                             : "bg-zinc-900 text-white hover:bg-zinc-700"
                         }`}
                       >
-                        <ExternalLink size={15} /> Visit Website
+                        {selectedProject.live.includes("/releases") ? (
+                          <>
+                            <Download size={15} /> Download APK
+                          </>
+                        ) : (
+                          <>
+                            <ExternalLink size={15} /> Visit Website
+                          </>
+                        )}
                       </a>
                     ) : null}
                   </div>
